@@ -1,2 +1,2 @@
-#ceci est le fichier main du projet j'adrore les poissons et les fonctions
+#ceci est le fichier main du projet j'adrore Thomas
 function main() 
