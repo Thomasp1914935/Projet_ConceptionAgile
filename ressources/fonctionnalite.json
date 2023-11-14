@@ -1,6 +1,23 @@
-{"nom": "Adrien", "id": 1, "admis": true}
-{"nom": "Adrien", "id": 1, "admis": true}
-{"nom": "Adrien", "id": 1, "admis": true}
-{"nom": "Adrien", "id": 1, "admis": true}
-{"nom": "Adrien", "id": 1, "admis": true}
-{"nom": "Adrien", "id": 1, "admis": true}
+{
+    "features": [
+      {
+        "id": 1,
+        "name": "Ajouter une nouvelle fonctionnalité",
+        "description": "Ajouter une nouvelle fonctionnalité au produit",
+        "estimate": 3
+      },
+      {
+        "id": 2,
+        "name": "Mettre à jour une fonctionnalité existante",
+        "description": "Mettre à jour une fonctionnalité existante du produit",
+        "estimate": 2
+      },
+      {
+        "id": 3,
+        "name": "Supprimer une fonctionnalité existante",
+        "description": "Supprimer une fonctionnalité existante du produit",
+        "estimate": 1
+      }
+    ]
+  }
+  
