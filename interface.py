@@ -1,120 +1,79 @@
-import tkinter as tk
+import pygame
+import sys
 
-class FenetreAccueil(tk.Tk):
+class FenetreAccueil:
+    # Méthode pour initialiser la fenêtre d'accueil
     def __init__(self):
-        super().__init__()
-        self.title("Planning Poker - Accueil")
-        self.geometry("500x300")
+        # Initialisation de toutes les bibliothèques Pygame et leurs modules associés
+        pygame.init()
 
-        # Bouton pour ouvrir la fenêtre Joueur
-        self.btn_joueurs = tk.Button(self, text="Lancer une partie", command=self.ouvrir_fenetre_joueurs)
-        self.btn_joueurs.pack()
+        # Configuration de la fenêtre accueil
+        self.screen_width = 400                                                        # Largeur de la fenêtre
+        self.screen_height = 300                                                       # Hauteur de la fenêtre
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height)) # Initialisation de la fenêtre accueil
+        pygame.display.set_caption('Planning Poker - Accueil')                         # Titre de la fenêtre
+        self.clock = pygame.time.Clock()                                               # Objet pour contrôler la vitesse de la boucle de jeu
+        self.font = pygame.font.Font(None, 36)                                         # Police utilisée pour le texte
 
-    def ouvrir_fenetre_joueurs(self):
-        self.fenetre_joueurs = FenetreJoueurs()
-        self.fenetre_joueurs.mainloop()
-
-class FenetreJoueurs(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Paramètres de la partie - Joueurs")
-        self.geometry("500x300")
-
-        # Liste des noms des joueurs
-        self.noms_joueurs = []
-
-        # Bouton pour ajouter un joueur
-        self.btn_ajouter = tk.Button(self, text="Ajouter un joueur", command=self.ajouter_joueur)
-        self.btn_ajouter.pack()
-
-        # Crée les paramètres des deux premiers joueurs
-        nom_joueur1 = tk.Entry(self)
-        nom_joueur2 = tk.Entry(self)
-
-        # Affiche les paramètres des deux premiers joueurs
-        nom_joueur1.pack()
-        nom_joueur2.pack()
-
-        # Ajoute l'entrée à la liste
-        self.noms_joueurs.append(nom_joueur1)
-        self.noms_joueurs.append(nom_joueur2)
-
-    def ajouter_joueur(self):
-        """
-        Ajoute un joueur à la fenêtre.
-        """
-
-        # Crée une nouvelle entrée
-        nom_joueur = tk.Entry(self)
-        nom_joueur.pack()
-
-        # Ajoute l'entrée à la liste
-        self.noms_joueurs.append(nom_joueur)
-
-        # Crée un bouton pour supprimer le joueur
-        if len(self.noms_joueurs) >= 3:
-            btn_supprimer = tk.Button(self, text="Supprimer", command=lambda: self.supprimer_joueur(nom_joueur))
-            btn_supprimer.pack()
-
-        # Si le nombre de joueurs est atteint, désactive le bouton d'ajout
-        if len(self.noms_joueurs) >= 10:
-            self.btn_ajouter.config(state=tk.DISABLED)
-
-    def supprimer_joueur(self, nom_joueur):
-        """
-        Supprime un joueur de la fenêtre.
-
-        Args:
-            entree: L'entrée contenant le nom du joueur à supprimer.
-        """
-
-        # Supprime l'entrée de la liste
-        self.noms_joueurs.remove(nom_joueur)
-
-        # Supprime l'entrée de la fenêtre
-        nom_joueur.destroy()
-
-        # Recherche le bouton supprimé associé à l'entrée
-        btn_supprimer = None
-        for widget in self.children.values():
-            if isinstance(widget, tk.Button):
-                btn_supprimer = widget
-
-        # Supprime le bouton de la fenêtre
-        if btn_supprimer is not None:
-            btn_supprimer.destroy()
-
-        # Si le nombre de joueurs est inférieur à 10, réactive le bouton d'ajout
-        if len(self.noms_joueurs) < 10:
-            self.btn_ajouter.config(state=tk.NORMAL)
-
-    def ouvrir_fenetre_taches(self):
-        """
-        Vérifie si le nombre de joueurs est compris entre 2 et 10.
-
-        Args:
-            entree: L'entrée contenant le nombre de joueurs.
-
-        Returns:
-            True si le nombre de joueurs est valide et change de fenêtre, False sinon.
-        """
-        try:
-            nb_joueurs = int(self.entree_joueurs.get())
-            if nb_joueurs >= 2 and nb_joueurs <= 10:
-                self.fenetre_taches = FenetreTaches()
-                self.fenetre_taches.mainloop()
-                return True
-            else:
-                # messagebox.showerror("Erreur", "Le nombre de joueurs doit être compris entre 2 et 10.")
-                return False
-        except ValueError:
-            return False
+        # Configuration du bouton pour lancer une partie
+        button_width = 250                                                         # Largeur du bouton
+        button_height = 50                                                         # Hauteur du bouton
+        button_x = (self.screen_width - button_width) // 2                         # Position x du bouton
+        button_y = (self.screen_height - button_height) // 2                       # Position y du bouton
+        self.button = pygame.Rect(button_x, button_y, button_width, button_height) # Création du bouton
+        self.button_color = (0, 0, 0)                                              # Couleur du bouton
+        self.text_color = (255, 255, 255)                                          # Couleur du texte
         
-class FenetreTaches(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Paramètres de la partie - Tâches")
-        self.geometry("500x300")
+        # Variable de contrôle pour la boucle principale du jeu
+        self.is_running = True
 
-    def mainloop(self):
-        super().mainloop()
+    # Méthode pour contrôler l'interface utilisateur de la fenêtre d'accueil
+    def run(self):
+        while self.is_running:                # Boucle principale tant que le jeu est en cours
+            self.screen.fill((255, 255, 255)) # Remplit l'écran avec du blanc
+
+            # Boucle pour gérer les événements (clics de souris, fermeture de fenêtre)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:               # Si l'utilisateur ferme la fenêtre
+                    self.is_running = False                 # Met fin à la boucle du jeu
+                elif event.type == pygame.MOUSEBUTTONDOWN:  # Si un clic de souris est détecté
+                    if self.button.collidepoint(event.pos): # Vérification si le clic est sur le bouton
+                        self.open_joueurs_window()          # Ouverture de la fenêtre de configuration des joueurs
+
+            pygame.draw.rect(self.screen, self.button_color, self.button)       # Dessin du bouton avec la couleur spécifiée
+            text = self.font.render('Lancer une partie', True, self.text_color) # Création du texte pour le bouton
+            text_rect = text.get_rect(center=self.button.center)                # Centrage du texte par rapport au bouton
+            self.screen.blit(text, text_rect)                                   # Affichage du texte sur le bouton
+
+            pygame.display.flip() # Mise à jour de l'affichage sur l'écran
+            self.clock.tick(120)   # Contrôle de la vitesse de rafraîchissement de l'écran
+
+        pygame.quit() # Quitte Pygame
+        sys.exit()    # Quitte le programme
+
+    # Méthode pour ouvrir une nouvelle fenêtre de configuration des joueurs
+    def open_joueurs_window(self):
+        fenetre_joueurs = FenetreJoueurs() # Création d'une nouvelle instance de FenetreJoueurs
+        fenetre_joueurs.run()              # Exécution de la méthode run() de FenetreJoueurs pour afficher la fenêtre
+
+class FenetreJoueurs(FenetreAccueil):
+    # Méthode pour initialiser la fenêtre de configuration des joueurs
+    def __init__(self):
+        super().__init__()                                              # Récupération des paramètres de la classe parent
+        pygame.display.set_caption('Paramètres de la partie - Joueurs') # Titre de la fenêtre
+
+    # Méthode pour contrôler l'interface utilisateur de la fenêtre d'accueil
+    def run(self):
+        while self.is_running:                # Boucle principale tant que le jeu est en cours
+            self.screen.fill((255, 255, 255)) # Remplit l'écran avec du blanc
+
+            # Boucle pour gérer les événements (clics de souris, fermeture de fenêtre)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: # Si l'utilisateur ferme la fenêtre
+                    self.is_running = False   # Met fin à la boucle du jeu
+
+            pygame.display.flip() # Mise à jour de l'affichage sur l'écran
+            self.clock.tick(120)  # Contrôle de la vitesse de rafraîchissement de l'écran
+
+        pygame.quit() # Quitte Pygame
+        sys.exit()    # Quitte le programme
