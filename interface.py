@@ -21,6 +21,8 @@ class FenetreAccueil:
         button_x = (self.screen_width - button_width) // 2                         # Position x du bouton
         button_y = (self.screen_height - button_height) // 2                       # Position y du bouton
         self.button = pygame.Rect(button_x, button_y, button_width, button_height) # Création du bouton
+        border_radius = 15                                                         # Rayon de l'arrondi des coins
+        self.button_radius = border_radius                                         # Ajout d'un attribut pour le rayon d'arrondi du bouton
         self.button_color = (0, 0, 0)                                              # Couleur du bouton
         self.text_color = (255, 255, 255)                                          # Couleur du texte
         
@@ -41,10 +43,10 @@ class FenetreAccueil:
                         self.open_joueurs_window()          # Ouverture de la fenêtre de configuration des joueurs
 
             # Paramètres d'affichage du bouton "Lancer une partie"
-            pygame.draw.rect(self.screen, self.button_color, self.button)       # Dessin du bouton avec la couleur spécifiée
-            text = self.font.render('Lancer une partie', True, self.text_color) # Création du texte pour le bouton
-            text_rect = text.get_rect(center=self.button.center)                # Centrage du texte par rapport au bouton
-            self.screen.blit(text, text_rect)                                   # Affichage du texte sur le bouton
+            pygame.draw.rect(self.screen, self.button_color, self.button, border_radius=self.button_radius) # Dessin du bouton avec la couleur spécifiée
+            text = self.font.render('Lancer une partie', True, self.text_color)                             # Création du texte pour le bouton
+            text_rect = text.get_rect(center=self.button.center)                                            # Centrage du texte par rapport au bouton
+            self.screen.blit(text, text_rect)                                                               # Affichage du texte sur le bouton
 
             pygame.display.flip() # Mise à jour de l'affichage sur l'écran
             self.clock.tick(120)   # Contrôle de la vitesse de rafraîchissement de l'écran
@@ -71,6 +73,8 @@ class FenetreJoueurs(FenetreAccueil):
 
         # Configuration du bouton retour
         self.return_button = pygame.Rect(10, 10, 30, 30) # Création du bouton retour
+        border_radius = 3                                # Rayon de l'arrondi des coins
+        self.return_button_radius = border_radius        # Ajout d'un attribut pour le rayon d'arrondi du bouton
 
         # Configuration du bouton valider
         button_width = 100                                                                  # Largeur du bouton
@@ -78,6 +82,8 @@ class FenetreJoueurs(FenetreAccueil):
         button_x = (self.screen_width - button_width) // 2                                  # Position x du bouton
         button_y = self.screen_height - 60                                                  # Position y du bouton
         self.validate_button = pygame.Rect(button_x, button_y, button_width, button_height) # Création du bouton valider
+        border_radius = 10                                                                  # Rayon de l'arrondi des coins
+        self.validate_button_radius = border_radius                                         # Ajout d'un attribut pour le rayon d'arrondi du bouton
 
     # Méthode pour contrôler l'interface utilisateur de la fenêtre de configuration des joueurs
     def run(self):
@@ -95,16 +101,16 @@ class FenetreJoueurs(FenetreAccueil):
                         self.go_to_config_taches()                     # Appel de la méthode pour aller à la fenêtre de configuration des tâches
             
             # Paramètres d'affichage du bouton retour
-            pygame.draw.rect(self.screen, self.button_color, self.return_button) # Dessin du bouton avec la couleur spécifiée
-            text = self.font.render('<', True, self.text_color)                  # Création du texte pour le bouton
-            text_rect = text.get_rect(center=self.return_button.center)          # Centrage du texte par rapport au bouton
-            self.screen.blit(text, text_rect)                                    # Affichage du texte sur le bouton
+            pygame.draw.rect(self.screen, self.button_color, self.return_button, border_radius=self.return_button_radius) # Dessin du bouton avec la couleur spécifiée
+            text = self.font.render('<', True, self.text_color)                                                           # Création du texte pour le bouton
+            text_rect = text.get_rect(center=self.return_button.center)                                                   # Centrage du texte par rapport au bouton
+            self.screen.blit(text, text_rect)                                                                             # Affichage du texte sur le bouton
 
             # Paramètres d'affichage du bouton valider
-            pygame.draw.rect(self.screen, self.button_color, self.validate_button)  # Dessin du bouton avec la couleur spécifiée
-            text_next = self.font.render('Valider', True, self.text_color)          # Création du texte pour le bouton
-            text_rect_next = text_next.get_rect(center=self.validate_button.center) # Centrage du texte par rapport au bouton
-            self.screen.blit(text_next, text_rect_next)                             # Affichage du texte sur le bouton
+            pygame.draw.rect(self.screen, self.button_color, self.validate_button, border_radius=self.validate_button_radius) # Dessin du bouton avec la couleur spécifiée
+            text_next = self.font.render('Valider', True, self.text_color)                                                    # Création du texte pour le bouton
+            text_rect_next = text_next.get_rect(center=self.validate_button.center)                                           # Centrage du texte par rapport au bouton
+            self.screen.blit(text_next, text_rect_next)                                                                       # Affichage du texte sur le bouton
 
             pygame.display.flip() # Mise à jour de l'affichage sur l'écran
             self.clock.tick(120)  # Contrôle de la vitesse de rafraîchissement de l'écran
@@ -135,6 +141,8 @@ class FenetreTaches(FenetreAccueil):
 
         # Configuration du bouton retour
         self.return_button = pygame.Rect(10, 10, 30, 30) # Création du bouton retour
+        border_radius = 3                                # Rayon de l'arrondi des coins
+        self.return_button_radius = border_radius        # Ajout d'un attribut pour le rayon d'arrondi du bouton
 
     # Méthode pour contrôler l'interface utilisateur de la fenêtre de configuration des tâches
     def run(self):
@@ -150,10 +158,10 @@ class FenetreTaches(FenetreAccueil):
                         self.return_to_config_joueurs()            # Appel de la méthode pour retourner à la configuration des joueurs
             
             # Paramètres d'affichage du bouton retour
-            pygame.draw.rect(self.screen, self.button_color, self.return_button) # Dessin du bouton avec la couleur spécifiée
-            text = self.font.render('<', True, self.text_color)                  # Création du texte pour le bouton
-            text_rect = text.get_rect(center=self.return_button.center)          # Centrage du texte par rapport au bouton
-            self.screen.blit(text, text_rect)                                    # Affichage du texte sur le bouton
+            pygame.draw.rect(self.screen, self.button_color, self.return_button, border_radius=self.return_button_radius) # Dessin du bouton avec la couleur spécifiée
+            text = self.font.render('<', True, self.text_color)                                                           # Création du texte pour le bouton
+            text_rect = text.get_rect(center=self.return_button.center)                                                   # Centrage du texte par rapport au bouton
+            self.screen.blit(text, text_rect)                                                                             # Affichage du texte sur le bouton
 
             pygame.display.flip() # Mise à jour de l'affichage sur l'écran
             self.clock.tick(120)  # Contrôle de la vitesse de rafraîchissement de l'écran
