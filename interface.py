@@ -61,6 +61,7 @@ class FenetreJoueurs(FenetreAccueil):
     def __init__(self):
         super().__init__()                                              # Récupération des paramètres de la classe parent
         pygame.display.set_caption('Paramètres de la partie - Joueurs') # Titre de la fenêtre
+        self.return_button = pygame.Rect(10, 10, 30, 30)                # Création du bouton retour
 
     # Méthode pour contrôler l'interface utilisateur de la fenêtre d'accueil
     def run(self):
@@ -71,9 +72,22 @@ class FenetreJoueurs(FenetreAccueil):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Si l'utilisateur ferme la fenêtre
                     self.is_running = False   # Met fin à la boucle du jeu
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.return_button.collidepoint(event.pos):  # Vérification du clic sur le bouton retour
+                        self.return_to_menu()                       # Appel de la méthode pour retourner à l'accueil
+            
+            pygame.draw.rect(self.screen, self.button_color, self.return_button) # Dessin du bouton avec la couleur spécifiée
+            text = self.font.render('<', True, self.text_color)                  # Création du texte pour le bouton
+            text_rect = text.get_rect(center=self.return_button.center)          # Centrage du texte par rapport au bouton
+            self.screen.blit(text, text_rect)                                    # Affichage du texte sur le bouton
 
             pygame.display.flip() # Mise à jour de l'affichage sur l'écran
             self.clock.tick(120)  # Contrôle de la vitesse de rafraîchissement de l'écran
 
         pygame.quit() # Quitte Pygame
         sys.exit()    # Quitte le programme
+
+    def return_to_menu(self):
+        self.is_running = False            # Met fin à la boucle de la fenêtre de joueurs
+        fenetre_accueil = FenetreAccueil() # Création d'une nouvelle instance de FenetreAccueil
+        fenetre_accueil.run()              # Exécution de la méthode run de FenetreAccueil pour revenir à l'accueil
