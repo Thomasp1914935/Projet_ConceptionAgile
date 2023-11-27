@@ -1,5 +1,4 @@
 class Joueur:
-
     def __init__(self, numero, nom):
         self.numero = numero
         self.nom = nom
