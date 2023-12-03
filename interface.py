@@ -179,6 +179,7 @@ class FenetreJoueurs(FenetreAccueil):
             if name:
                 nouveau_joueur = Joueur(len(self.joueurs) + 1, name)
                 self.joueurs.append(nouveau_joueur)
+     
     
     # Méthode pour aller à la fenêtre de configuration des tâches
     def go_to_config_taches(self):
