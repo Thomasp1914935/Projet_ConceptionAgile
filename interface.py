@@ -131,7 +131,7 @@ class FenetreJoueurs(FenetreAccueil):
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
             else:                                                             # Si aucun bouton n'est survolé
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-            
+                
             # Paramètres d'affichage du bouton retour
             pygame.draw.rect(self.screen, self.button_color, self.return_button, border_radius=self.return_button_radius) # Dessin du bouton avec la couleur spécifiée
             text = self.font.render('<', True, self.text_color)                                                           # Création du texte pour le bouton
