@@ -103,6 +103,15 @@ class FenetreJoueurs(FenetreAccueil):
         border_radius = 10                                     # Rayon de l'arrondi des coins
         self.add_player_button_radius = border_radius          # Ajout d'un attribut pour le rayon d'arrondi du bouton
 
+        # Configuration du bouton Supprimer
+        button_width = 100                                                               # Largeur du bouton
+        button_height = 40                                                               # Hauteur du bouton
+        button_x = 100                                                                   # Position x du bouton
+        button_y = 30                                                                    # Position y du bouton
+        self.suppr_button = pygame.Rect(button_x, button_y, button_width, button_height) # Création du bouton valider
+        border_radius = 10                                                               # Rayon de l'arrondi des coins
+        self.suppr_button_radius = border_radius                                         # Ajout d'un attribut pour le rayon d'arrondi du bouton
+
         # Configuration du bouton valider
         button_width = 100                                                                  # Largeur du bouton
         button_height = 40                                                                  # Hauteur du bouton
@@ -140,7 +149,7 @@ class FenetreJoueurs(FenetreAccueil):
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
             # Liste de tous les boutons
-            buttons = [self.return_button, self.add_player_button, self.validate_button]
+            buttons = [self.return_button, self.add_player_button, self.suppr_button, self.validate_button]
 
             # Vérifier si la souris survole un bouton
             for button in buttons:
@@ -199,8 +208,26 @@ class FenetreJoueurs(FenetreAccueil):
             # Ajoutez la nouvelle boîte de saisie à la liste
             self.input_boxes.append(new_box)
 
+            # Si c'est la troisième boîte de saisie ou plus, ajoutez un bouton "Supprimer"
+            if len(self.input_boxes) > 2:
+                # Paramètres d'affichage du bouton Supprimer
+                pygame.draw.rect(self.screen, self.button_color, self.suppr_button, border_radius=self.suppr_button_radius) # Dessin du bouton avec la couleur spécifiée
+                self.suppr_button_text = self.font.render('Supprimer', True, self.text_color)                               # Création du texte pour le bouton
+                self.text_rect_suppr = self.suppr_button_text.get_rect(center=self.suppr_button.center)                     # Centrage du texte par rapport au bouton
+                self.screen.blit(self.suppr_button_text, self.text_rect_suppr)
+                
             # Déplacez le bouton "Ajouter un joueur" vers le bas
             self.add_player_button.y = y + 50  # 50 est l'espace entre la dernière boîte de saisie et le bouton
+    
+    def suppr_player(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # Vérifiez si l'utilisateur a cliqué sur l'un des boutons "Supprimer"
+            for i, button in enumerate(self.suppr_button):
+                if button.collidepoint(event.pos):
+                    # Supprimez la boîte de saisie correspondante
+                    del self.input_boxes[i+2]  # i+2 car les deux premières boîtes de saisie n'ont pas de bouton "Supprimer"
+                    del self.suppr_button[i]
+                    break
      
     # Méthode pour aller à la fenêtre de configuration des tâches
     def go_to_config_taches(self):
