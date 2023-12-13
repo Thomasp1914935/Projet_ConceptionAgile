@@ -1,6 +1,7 @@
 import pygame
 
 from interface import BoiteSaisie, FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
+from jeu import Joueurs
 
 if __name__ == "__main__":
 
@@ -104,6 +105,20 @@ if __name__ == "__main__":
 
                     elif fnt_config_joueurs.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
+                        
+                         # Parcourir toutes les boîtes de saisie
+                        for i, boite_saisie in enumerate(fnt_config_joueurs.get_boites_saisie()):
+                            # Créer un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
+                            joueur = Joueurs(i+1, boite_saisie.get_texte())
+
+                            # Ajouter le joueur à la liste des joueurs
+                            Joueurs.joueurs.append(joueur)
+                        # Afficher la liste des joueurs [DEBUG]
+                        print("\nListe des joueurs :")
+                        for joueur in Joueurs.joueurs:
+                            print(joueur)
+                        print("")
+
                         fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
                         fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
                         fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
