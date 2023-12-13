@@ -114,10 +114,9 @@ if __name__ == "__main__":
                             # Ajouter le joueur à la liste des joueurs
                             Joueurs.joueurs.append(joueur)
                         # Afficher la liste des joueurs [DEBUG]
-                        print("\nListe des joueurs :")
+                        print("Liste des joueurs :")
                         for joueur in Joueurs.joueurs:
                             print(joueur)
-                        print("")
 
                         fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
                         fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
