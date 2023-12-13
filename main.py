@@ -1,6 +1,6 @@
 import pygame
 
-from interface import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
+from interface import BoiteSaisie, FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
 
 if __name__ == "__main__":
 
@@ -30,27 +30,34 @@ if __name__ == "__main__":
             # Evénements si la souris est déplacée
             elif event.type == pygame.MOUSEMOTION:
 
-                # Création d'une liste de tous les boutons
-                boutons = []
+                # Création d'une liste de tous les éléments interactifs (boutons et boîtes de saisie)
+                elements = []
                 if fnt_accueil is not None:
-                    boutons.append(fnt_accueil.get_btn_lancer())
+                    elements.append(fnt_accueil.get_btn_lancer())
                 if fnt_config_joueurs is not None:
-                    boutons.append(fnt_config_joueurs.get_btn_ajouter_joueur())
-                    boutons.append(fnt_config_joueurs.get_btn_valider())
-                    boutons.append(fnt_config_joueurs.get_btn_retour())
+                    elements.append(fnt_config_joueurs.get_btn_ajouter_joueur())
+                    elements.append(fnt_config_joueurs.get_btn_supprimer_joueur())
+                    elements.append(fnt_config_joueurs.get_btn_valider())
+                    elements.append(fnt_config_joueurs.get_btn_retour())
+                    elements.extend(fnt_config_joueurs.get_boites_saisie())
                 if fnt_config_taches is not None:
-                    boutons.append(fnt_config_taches.get_btn_valider())
-                    boutons.append(fnt_config_taches.get_btn_retour())
+                    elements.append(fnt_config_taches.get_btn_valider())
+                    elements.append(fnt_config_taches.get_btn_retour())
                 if fnt_jeu is not None:
-                    boutons.append(fnt_jeu.get_btn_quitter())
+                    elements.append(fnt_jeu.get_btn_quitter())
 
-                # Vérification si le curseur de la souris est sur un bouton
-                for bouton in boutons:
-                    if bouton.est_survole(souris_x, souris_y):
-                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND) # Changement du curseur de la souris en forme de main
+                # Vérification si le curseur de la souris est sur un élément interactif
+                cursor = pygame.SYSTEM_CURSOR_ARROW  # Initialisation du curseur en mode normal
+                for element in elements:
+                    if element.est_survole(souris_x, souris_y):
+                        if isinstance(element, BoiteSaisie):
+                            cursor = pygame.SYSTEM_CURSOR_IBEAM  # Mode texte pour les boîtes de saisie
+                        else:
+                            cursor = pygame.SYSTEM_CURSOR_HAND  # Mode main pour les boutons
                         break
-                else:
-                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW) # Changement du curseur de la souris en forme de flèche
+
+                # Changement du curseur de la souris
+                pygame.mouse.set_cursor(cursor)
 
             # Evénements si un bouton de la souris est cliqué
             elif event.type == pygame.MOUSEBUTTONDOWN:

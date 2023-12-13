@@ -94,6 +94,13 @@ class BoiteSaisie:
                     self.texte += event.unicode
         self.dessiner()
 
+    # Méthode pour vérifier si un bouton est survolé
+    def est_survole(self, souris_x, souris_y):
+        if self.x <= souris_x <= self.x + self.largeur and self.y <= souris_y <= self.y + self.hauteur:
+            return True
+        else:
+            return False
+
     # Méthode pour vérifier si une boîte de saisie est cliquée
     def est_clique(self, x, y):
         return self.x <= x <= self.x + self.largeur and self.y <= y <= self.y + self.hauteur
