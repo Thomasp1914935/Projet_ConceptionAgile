@@ -16,9 +16,6 @@ if __name__ == "__main__":
     fnt_config_taches = None
     fnt_jeu = None
 
-    # Initialisation des variables globales
-    nb_joueurs = 2 # Nombre de joueurs
-
     # Boucle d'événements de l'application
     running = True
     while running:
@@ -65,6 +62,8 @@ if __name__ == "__main__":
                         fnt_accueil = None # Réinitialisation de fnt_accueil
                         fnt_config_joueurs = FntConfigJoueurs() # Création de la fenêtre de configuration des joueurs
                         fnt_config_joueurs.afficher() # Affichage de la fenêtre de configuration des joueurs
+                        nb_joueurs = 2 # Nombre de joueurs
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                 
                 elif fnt_config_joueurs is not None:
                     if fnt_config_joueurs.get_btn_ajouter_joueur().est_clique(souris_x, souris_y):
@@ -77,9 +76,24 @@ if __name__ == "__main__":
                             nb_joueurs += 1
                             print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
                             fnt_config_joueurs.ajouter_boite_saisie() # Ajout d'une boîte de saisie
-                            fnt_config_joueurs.desactiver_btn_ajouter_joueur()  # Désactiver le bouton "Ajouter un joueur"
+                            fnt_config_joueurs.desactiver_btn_ajouter_joueur()  # Désactiver le bouton "Supprimer un joueur"
                         else:
-                            print("[UPDATE] : Nombre de joueurs maximum atteint") # [DEBUG]
+                            print("[WARNING] : Nombre de joueurs maximum atteint") # [DEBUG]
+                    
+                    elif fnt_config_joueurs.get_btn_supprimer_joueur().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Supprimer un joueur' cliqué") # [DEBUG]
+                        if nb_joueurs > 3:
+                            nb_joueurs -= 1
+                            print("[UPDATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
+                            fnt_config_joueurs.supprimer_boite_saisie() # Suppresion d'une boîte de saisie
+                        elif nb_joueurs == 3:
+                            nb_joueurs -= 1
+                            print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
+                            fnt_config_joueurs.supprimer_boite_saisie() # Suppression d'une boîte de saisie
+                            fnt_config_joueurs.desactiver_btn_supprimer_joueur()  # Désactiver le bouton "Supprimer un joueur"
+                        else:
+                            print("[WARNING] : Nombre de joueurs minimum atteint") # [DEBUG]
+                
 
                     elif fnt_config_joueurs.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
@@ -109,6 +123,7 @@ if __name__ == "__main__":
                         fnt_config_taches = None # Réinitialisation de fnt_config_taches
                         fnt_config_joueurs = FntConfigJoueurs() # Création de la fenêtre de configuration des joueurs
                         fnt_config_joueurs.afficher() # Affichage de la fenêtre de configuration des joueurs
+                        nb_joueurs = 2 # Nombre de joueurs
                     
                 elif fnt_jeu is not None:
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):

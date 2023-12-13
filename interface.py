@@ -150,17 +150,12 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         self.max_caracteres = 15
         self.boites_saisie = [BoiteSaisie(self.boite_saisie_x, self.boite_saisie_y, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)] # Liste des boîtes de saisie
 
-        # Création du bouton "Ajouter un joueur"
-        self.btn_ajouter_joueur_l = 150
-        self.btn_ajouter_joueur_h = 30
-        self.btn_ajouter_joueur_x = fnt_config_joueurs_l / 3 - self.btn_ajouter_joueur_l / 2
-        self.btn_ajouter_joueur_y = 150
-
-        # Création du bouton "Ajouter un joueur"
-        self.btn_ajouter_joueur_l = 150
-        self.btn_ajouter_joueur_h = 30
-        self.btn_ajouter_joueur_x = fnt_config_joueurs_l * 2 / 3 - self.btn_ajouter_joueur_l / 2
-        self.btn_ajouter_joueur_y = 150
+        # Création du bouton "Ajouter un joueur" et "Supprimer un joueur"
+        self.btn_joueur_l = 150
+        self.btn_joueur_h = 30
+        self.btn_ajouter_joueur_x = fnt_config_joueurs_l * 1.2 / 4 - self.btn_joueur_l / 2
+        self.btn_supprimer_joueur_x = fnt_config_joueurs_l * 2.8 / 4 - self.btn_joueur_l / 2
+        self.btn_joueur_y = 150
 
         # Création du bouton "Valider"
         btn_valider_l = 100
@@ -188,40 +183,81 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 50, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)
         self.boites_saisie.append(nouvelle_boite)
 
-        # Faire descendre le bouton "Ajouter un joueur" de 50 pixels
-        ancien_y = self.btn_ajouter_joueur_y
-        self.btn_ajouter_joueur_y += 50
+        # Faire descendre les boutons "Ajouter un joueur" et "Supprimer un joueur" de 50 pixels
+        ancien_y = self.btn_joueur_y
+        self.btn_joueur_y += 50
 
         # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
-        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h))
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
+
+        # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_supprimer_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
 
         # Redessiner toutes les boîtes de saisie
         for boite in self.boites_saisie:
             boite.dessiner()
 
         # Redessiner le bouton "Ajouter un joueur"
-        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_ajouter_joueur_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h, (0, 0, 0), "Ajouter un joueur")
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Ajouter un joueur")
         self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+
+        # Redessiner le bouton "Supprimer un joueur"
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Supprimer un joueur")
+        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
 
         # Mettre à jour l'affichage
         pygame.display.flip()
-    
-    # Méthode pour récupérer la boîte de saisie 1
-    def get_boite_saisie1(self):
-        return self.boite_saisie1
-    
-    # Méthode pour récupérer la boîte de saisie 2
-    def get_boite_saisie2(self):
-        return self.boite_saisie2
+
+    # Méthode pour supprimer une boîte de saisie
+    def supprimer_boite_saisie(self):
+        # Supprimer la dernière boîte de saisie
+        derniere_boite = self.boites_saisie.pop()
+
+        # Faire monter le bouton "Ajouter un joueur" et "Supprimer un joueur" de 50 pixels
+        ancien_y = self.btn_joueur_y
+        self.btn_joueur_y -= 50
+
+        # Effacer l'ancienne boîte de saisie en dessinant un rectangle de la couleur de fond sur sa position
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_boite.x, derniere_boite.y, self.boite_saisie_l, self.boite_saisie_h))
+
+        # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
+
+        # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_supprimer_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
+
+        # Redessiner toutes les boîtes de saisie
+        for boite in self.boites_saisie:
+            boite.dessiner()
+
+        # Redessiner le bouton "Ajouter un joueur"
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Ajouter un joueur")
+        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+
+        # Redessiner le bouton "Supprimer un joueur"
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Supprimer un joueur")
+        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
     
     # Méthode pour récupérer le bouton "Ajouter un joueur"
     def get_btn_ajouter_joueur(self):
         return self.btn_ajouter_joueur
     
+    # Méthode pour récupérer le bouton "Supprimer un joueur"
+    def get_btn_supprimer_joueur(self):
+        return self.btn_supprimer_joueur
+    
     # Méthode pour désactiver le bouton "Ajouter un joueur"
     def desactiver_btn_ajouter_joueur(self):
-        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_ajouter_joueur_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h, (125, 125, 125), "Ajouter un joueur")
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (125, 125, 125), "Ajouter un joueur")
         self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+
+    # Méthode pour désactiver le bouton "Supprimer un joueur"
+    def desactiver_btn_supprimer_joueur(self):
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (125, 125, 125), "Supprimer un joueur")
+        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
 
     # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):
