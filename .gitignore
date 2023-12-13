@@ -1,2 +1,2 @@
-
-__pycache__/interface.cpython-311.pyc
+# Ignore __pycache__ folder
+__pycache__/

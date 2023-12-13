@@ -19,7 +19,7 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
+
             # Evénements si la souris est déplacée
             elif event.type == pygame.MOUSEMOTION:
                 souris_x, souris_y = pygame.mouse.get_pos() # Récupération des coordonnées de la souris
