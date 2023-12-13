@@ -1,7 +1,4 @@
-from jeu import Joueur
-
-import sys    # Importation du module sys pour accéder aux fonctionnalités système de Python
-import pygame # Importation de la bibliothèque Pygame pour créer des jeux et des applications multimédias
+import pygame
 
 # Initialisation de toutes les bibliothèques Pygame et leurs modules associés
 pygame.init()
@@ -67,31 +64,39 @@ class Bouton:
     
 class BoiteSaisie:
     # Méthode pour initialiser une boîte de saisie
-    def __init__(self, x, y, largeur, hauteur, taille_police, couleur, texte=''):
+    def __init__(self, x, y, largeur, hauteur, taille_police, couleur, max_caracteres, fenetre):
+        self.x = x
+        self.y = y
+        self.largeur = largeur
+        self.hauteur = hauteur
         self.rect = pygame.Rect(x, y, largeur, hauteur)
         self.couleur = couleur
-        self.texte = texte
         self.police = pygame.font.Font(None, taille_police)
-        self.texte_surface = self.police.render(self.texte, True, self.couleur) 
-        self.taille_max = 15
-
-    # Méthode pour gérer les événements
-    def evenement(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                print(self.texte)
-                self.texte = ''
-            elif event.key == pygame.K_BACKSPACE:
-                self.texte = self.texte[:-1]
-            else:
-                if len(self.texte) < self.taille_max:
-                    self.texte += event.unicode
-            self.texte_surface = self.police.render(self.texte, True, self.couleur)
+        self.texte = ""
+        self.max_caracteres = max_caracteres
+        self.fenetre = fenetre
+        self.selectionnee = False
 
     # Méthode pour dessiner une boîte de saisie
-    def dessiner(self, fenetre):
-        fenetre.blit(self.texte_surface, (self.rect.x+5, self.rect.y+5))
-        pygame.draw.rect(fenetre, self.couleur, self.rect, 2)
+    def dessiner(self):
+        pygame.draw.rect(self.fenetre, (255, 255, 255), self.rect)
+        pygame.draw.rect(self.fenetre, self.couleur, self.rect, 2)
+        texte_surface = self.police.render(self.texte, True, self.couleur)
+        self.fenetre.blit(texte_surface, (self.rect.x + 5, self.rect.y + 5))
+
+    # Méthode pour vérifier si une boîte de saisie est cliquée
+    def evenement(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                self.texte = self.texte[:-1]
+            else:
+                if len(self.texte) < self.max_caracteres:
+                    self.texte += event.unicode
+        self.dessiner()
+
+    # Méthode pour vérifier si une boîte de saisie est cliquée
+    def est_clique(self, x, y):
+        return self.x <= x <= self.x + self.largeur and self.y <= y <= self.y + self.hauteur
 
     # Méthode pour récupérer le texte d'une boîte de saisie
     def get_texte(self):
@@ -135,22 +140,27 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         self.set_titre("Planning Poker : Configuration des joueurs")
         self.set_couleur_fond((255, 255, 255))
 
-        # Création de deux boîtes de saisie
-        boite_saisie_l = 200
-        boite_saisie_h = 32
-        boite_saisie_x = (fnt_config_joueurs_l - boite_saisie_l) / 2
-        self.boite_saisie1 = BoiteSaisie(boite_saisie_x, 100, boite_saisie_l, boite_saisie_h, 32, (0, 0, 0))
-        self.boite_saisie1.dessiner(self.fenetre)
-        self.boite_saisie2 = BoiteSaisie(boite_saisie_x, 150, boite_saisie_l, boite_saisie_h, 32, (0, 0, 0))
-        self.boite_saisie2.dessiner(self.fenetre)
+        # Création de la boîte de saisie
+        self.boite_saisie_l = 250
+        self.boite_saisie_h = 32
+        self.boite_saisie_x = (fnt_config_joueurs_l - self.boite_saisie_l) / 2
+        self.boite_saisie_y = 100
+        self.taille_police = 30
+        self.couleur = (0, 0, 0)
+        self.max_caracteres = 15
+        self.boites_saisie = [BoiteSaisie(self.boite_saisie_x, self.boite_saisie_y, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)] # Liste des boîtes de saisie
 
         # Création du bouton "Ajouter un joueur"
-        btn_ajouter_joueur_l = 200
-        btn_ajouter_joueur_h = 40
-        btn_ajouter_joueur_x = (fnt_config_joueurs_l - btn_ajouter_joueur_l) / 2
-        btn_ajouter_joueur_y = 200
-        self.btn_ajouter_joueur = Bouton(btn_ajouter_joueur_x, btn_ajouter_joueur_y, btn_ajouter_joueur_l, btn_ajouter_joueur_h, (0, 0, 0), "Ajouter un joueur")
-        self.btn_ajouter_joueur.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_ajouter_joueur_l = 150
+        self.btn_ajouter_joueur_h = 30
+        self.btn_ajouter_joueur_x = fnt_config_joueurs_l / 3 - self.btn_ajouter_joueur_l / 2
+        self.btn_ajouter_joueur_y = 150
+
+        # Création du bouton "Ajouter un joueur"
+        self.btn_ajouter_joueur_l = 150
+        self.btn_ajouter_joueur_h = 30
+        self.btn_ajouter_joueur_x = fnt_config_joueurs_l * 2 / 3 - self.btn_ajouter_joueur_l / 2
+        self.btn_ajouter_joueur_y = 150
 
         # Création du bouton "Valider"
         btn_valider_l = 100
@@ -168,6 +178,34 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, (0, 0, 0), "<")
         self.btn_retour.dessiner(self.fenetre, 30, (255, 255, 255))
 
+        # Création de la boîte de saisie 2
+        self.ajouter_boite_saisie()
+    
+    # Méthode pour ajouter une boîte de saisie
+    def ajouter_boite_saisie(self):
+        # Créer une nouvelle boîte de saisie en dessous de la dernière
+        derniere_boite = self.boites_saisie[-1]
+        nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 50, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)
+        self.boites_saisie.append(nouvelle_boite)
+
+        # Faire descendre le bouton "Ajouter un joueur" de 50 pixels
+        ancien_y = self.btn_ajouter_joueur_y
+        self.btn_ajouter_joueur_y += 50
+
+        # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h))
+
+        # Redessiner toutes les boîtes de saisie
+        for boite in self.boites_saisie:
+            boite.dessiner()
+
+        # Redessiner le bouton "Ajouter un joueur"
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_ajouter_joueur_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h, (0, 0, 0), "Ajouter un joueur")
+        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
+    
     # Méthode pour récupérer la boîte de saisie 1
     def get_boite_saisie1(self):
         return self.boite_saisie1
@@ -179,6 +217,11 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     # Méthode pour récupérer le bouton "Ajouter un joueur"
     def get_btn_ajouter_joueur(self):
         return self.btn_ajouter_joueur
+    
+    # Méthode pour désactiver le bouton "Ajouter un joueur"
+    def desactiver_btn_ajouter_joueur(self):
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_ajouter_joueur_y, self.btn_ajouter_joueur_l, self.btn_ajouter_joueur_h, (125, 125, 125), "Ajouter un joueur")
+        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
 
     # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):

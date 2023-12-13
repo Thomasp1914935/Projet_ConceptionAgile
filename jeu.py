@@ -1,4 +1,6 @@
-class Joueur:
+class Joueurs:
+    joueurs = []  # Liste de classe pour stocker tous les joueurs
+
     # Méthode pour initialiser un joueur
     def __init__(self, numero, nom):
         self.numero = numero
