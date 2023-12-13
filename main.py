@@ -136,12 +136,11 @@ if __name__ == "__main__":
             # Evénements si une touche du clavier est pressée
             elif event.type == pygame.KEYDOWN:
                 if fnt_config_joueurs is not None:
-                    if fnt_config_joueurs.get_boite_saisie1().est_clique(souris_x, souris_y):
-                        fnt_config_joueurs.get_boite_saisie1().evenement(event)
-                        print("[Boite de saisie 1] : " + fnt_config_joueurs.get_boite_saisie1().get_texte()) # [DEBUG]
-                    elif fnt_config_joueurs.get_boite_saisie2().est_clique(souris_x, souris_y):
-                        fnt_config_joueurs.get_boite_saisie2().evenement(event)
-                        print("[Boite de saisie 2] : " + fnt_config_joueurs.get_boite_saisie2().get_texte()) # [DEBUG]
+                    # Parcourir toutes les boîtes de saisie
+                    for i, boite_saisie in enumerate(fnt_config_joueurs.get_boites_saisie()):
+                        if boite_saisie.est_clique(souris_x, souris_y):
+                            boite_saisie.evenement(event)
+                            print("[UPDATE] Boite de saisie {} : ".format(i+1) + boite_saisie.get_texte()) # [DEBUG]
 
         # Mettre à jour l'affichage
         pygame.display.flip()

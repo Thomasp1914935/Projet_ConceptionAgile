@@ -139,6 +139,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         super().__init__(fnt_config_joueurs_l, fnt_config_joueurs_h)
         self.set_titre("Planning Poker : Configuration des joueurs")
         self.set_couleur_fond((255, 255, 255))
+        self.boites_saisie = []
 
         # Création de la boîte de saisie
         self.boite_saisie_l = 250
@@ -240,6 +241,9 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
 
         # Mettre à jour l'affichage
         pygame.display.flip()
+
+    def get_boites_saisie(self):
+        return self.boites_saisie
     
     # Méthode pour récupérer le bouton "Ajouter un joueur"
     def get_btn_ajouter_joueur(self):
