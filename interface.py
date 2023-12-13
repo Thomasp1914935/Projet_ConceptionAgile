@@ -141,9 +141,9 @@ class FntAccueil(Fenetre, Bouton):
 class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     def __init__(self):
         # Paramètres de la fenêtre
-        fnt_config_joueurs_l = 400
-        fnt_config_joueurs_h = 700
-        super().__init__(fnt_config_joueurs_l, fnt_config_joueurs_h)
+        self.fnt_config_joueurs_l = 400
+        self.fnt_config_joueurs_h = 700
+        super().__init__(self.fnt_config_joueurs_l, self.fnt_config_joueurs_h)
         self.set_titre("Planning Poker : Configuration des joueurs")
         self.set_couleur_fond((255, 255, 255))
         self.boites_saisie = []
@@ -151,7 +151,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         # Création de la boîte de saisie
         self.boite_saisie_l = 250
         self.boite_saisie_h = 32
-        self.boite_saisie_x = (fnt_config_joueurs_l - self.boite_saisie_l) / 2
+        self.boite_saisie_x = (self.fnt_config_joueurs_l - self.boite_saisie_l) / 2
         self.boite_saisie_y = 100
         self.taille_police = 30
         self.couleur = (0, 0, 0)
@@ -161,15 +161,15 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         # Création du bouton "Ajouter un joueur" et "Supprimer un joueur"
         self.btn_joueur_l = 150
         self.btn_joueur_h = 30
-        self.btn_ajouter_joueur_x = fnt_config_joueurs_l * 1.2 / 4 - self.btn_joueur_l / 2
-        self.btn_supprimer_joueur_x = fnt_config_joueurs_l * 2.8 / 4 - self.btn_joueur_l / 2
+        self.btn_ajouter_joueur_x = self.fnt_config_joueurs_l * 1.2 / 4 - self.btn_joueur_l / 2
+        self.btn_supprimer_joueur_x = self.fnt_config_joueurs_l * 2.8 / 4 - self.btn_joueur_l / 2
         self.btn_joueur_y = 150
 
         # Création du bouton "Valider"
         btn_valider_l = 100
         btn_valider_h = 40
-        btn_valider_x = (fnt_config_joueurs_l - btn_valider_l) / 2
-        btn_valider_y = fnt_config_joueurs_h - 50
+        btn_valider_x = (self.fnt_config_joueurs_l - btn_valider_l) / 2
+        btn_valider_y = self.fnt_config_joueurs_h - 50
         self.btn_valider = Bouton(btn_valider_x, btn_valider_y, btn_valider_l, btn_valider_h, (0, 0, 0), "Valider")
         self.btn_valider.dessiner(self.fenetre, 30, (255, 255, 255))
 
@@ -277,6 +277,14 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     # Méthode pour récupérer le bouton "Retour"
     def get_btn_retour(self):
         return self.btn_retour
+    
+    # Méthode pour afficher un message d'erreur
+    def afficher_message_erreur(self, message):
+        font = pygame.font.Font(None, 20)
+        text = font.render(message, True, (200, 0, 0))
+        text_rect = text.get_rect(center=(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 20))
+        self.fenetre.blit(text, text_rect)
+        pygame.display.flip()
 
     # Méthode pour afficher la fenêtre
     def afficher(self):

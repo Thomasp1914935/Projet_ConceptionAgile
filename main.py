@@ -106,6 +106,7 @@ if __name__ == "__main__":
                     elif fnt_config_joueurs.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         
+                        Joueurs.joueurs = []
                          # Parcourir toutes les boîtes de saisie
                         for i, boite_saisie in enumerate(fnt_config_joueurs.get_boites_saisie()):
                             # Créer un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
@@ -118,10 +119,15 @@ if __name__ == "__main__":
                         for joueur in Joueurs.joueurs:
                             print(joueur)
 
-                        fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
-                        fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
-                        fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
-                        fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
+                        # Vérifier si tous les joueurs ont un nom non vide
+                        if all(joueur.nom for joueur in Joueurs.joueurs):
+                            fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
+                            fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
+                            fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
+                            fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
+                        else:
+                            print("[WARNING] : Tous les joueurs doivent avoir un nom")
+                            fnt_config_joueurs.afficher_message_erreur("Attention : tous les joueurs doivent avoir un nom !")
                 
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
