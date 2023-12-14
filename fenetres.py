@@ -37,22 +37,22 @@ class FntAccueil(Fenetre, Bouton):
 class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     def __init__(self):
         # Paramètres de la fenêtre
-        self.fnt_config_joueurs_l = 400
-        self.fnt_config_joueurs_h = 700
+        self.fnt_config_joueurs_l = 450
+        self.fnt_config_joueurs_h = 500
         super().__init__(self.fnt_config_joueurs_l, self.fnt_config_joueurs_h)
         self.set_titre("Planning Poker : Configuration des joueurs")
         self.set_couleur_fond((255, 255, 255))
         self.boites_saisie = []
 
         # Création des boîtes de saisie des noms de joueurs
-        self.boite_saisie_l = 250
-        self.boite_saisie_h = 32
+        self.boite_saisie_l = 300
+        self.boite_saisie_h = 30
         self.boite_saisie_x = (self.fnt_config_joueurs_l - self.boite_saisie_l) / 2
         self.boite_saisie_y = 100
         self.taille_police = 30
         self.couleur = (0, 0, 0)
         self.max_caracteres = 15
-        self.boites_saisie = [BoiteSaisie(self.boite_saisie_x, self.boite_saisie_y, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)] # Liste des boîtes de saisie
+        self.boites_saisie = [BoiteSaisie(self.boite_saisie_x, self.boite_saisie_y, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, 15, self.fenetre)] # Liste des boîtes de saisie
 
         # Création du bouton "Ajouter un joueur" et "Supprimer un joueur"
         self.btn_joueur_l = 150
@@ -84,7 +84,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     def ajouter_bs_joueur(self):
         # Créer une nouvelle boîte de saisie en dessous de la dernière
         derniere_boite = self.boites_saisie[-1]
-        nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 50, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)
+        nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 50, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, 15, self.fenetre)
         self.boites_saisie.append(nouvelle_boite)
 
         # Faire descendre les boutons "Ajouter un joueur" et "Supprimer un joueur" de 50 pixels
@@ -192,8 +192,8 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
 class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     def __init__(self):
         # Paramètres généraux de la fenêtre
-        fnt_config_taches_l = 400
-        fnt_config_taches_h = 700
+        fnt_config_taches_l = 450
+        fnt_config_taches_h = 500
         super().__init__(fnt_config_taches_l, fnt_config_taches_h)
         self.set_titre("Planning Poker : Configuration des tâches")
         self.set_couleur_fond((255, 255, 255))
@@ -203,33 +203,33 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         bs_taille_police = 30
 
         # Création de la boite de saisie du titre de la tâche
-        bs_titre_l = 300
-        bs_titre_h = 32
+        bs_titre_l = 380
+        bs_titre_h = 30
         bs_titre_x = (fnt_config_taches_l - bs_titre_l) / 2
         bs_titre_y = 100
         bs_titre_max_caracteres = 20
-        self.bs_titre = BoiteSaisie(bs_titre_x, bs_titre_y, bs_titre_l, bs_titre_h, bs_taille_police, bs_couleur, bs_titre_max_caracteres, self.fenetre)
+        self.bs_titre = BoiteSaisie(bs_titre_x, bs_titre_y, bs_titre_l, bs_titre_h, bs_taille_police, bs_couleur, bs_titre_max_caracteres, 20, self.fenetre)
         self.bs_titre.dessiner()
 
         # Création d'un texte au-dessus de la boîte de saisie du titre
         bt_titre = BoiteTexte(bs_titre_x + 10, bs_titre_y, "Titre de la tâche", bt_taille_police, bt_couleur, False, self.fenetre)
         bt_titre.dessiner()
 
-        # Création de la boite de saisie du titre de la tâche
-        bs_description_l = 300
-        bs_description_h = 160
+        # Création de la boite de saisie de la description de la tâche
+        bs_description_l = 380
+        bs_description_h = 170
         bs_description_x = (fnt_config_taches_l - bs_description_l) / 2
         bs_description_y = 175
-        bs_desription_max_caracteres = 100
-        self.bs_description = BoiteSaisie(bs_description_x, bs_description_y, bs_description_l, bs_description_h, bs_taille_police, bs_couleur, bs_desription_max_caracteres, self.fenetre)
+        bs_desription_max_caracteres = 160
+        self.bs_description = BoiteSaisie(bs_description_x, bs_description_y, bs_description_l, bs_description_h, bs_taille_police, bs_couleur, bs_desription_max_caracteres, 20, self.fenetre)
         self.bs_description.dessiner()
 
-        # Création d'un texte au-dessus de la boîte de saisie du titre
+        # Création d'un texte au-dessus de la description de la tâche
         bt_description = BoiteTexte(bs_description_x + 10, bs_description_y, "Description de la tâche", bt_taille_police, bt_couleur, False, self.fenetre)
         bt_description.dessiner()
 
         # Création du bouton "Enregistrer cette tâche"
-        btn_enregistrer_l = 250
+        btn_enregistrer_l = 260
         btn_enregistrer_h = 40
         btn_enregistrer_x = (fnt_config_taches_l - btn_enregistrer_l) / 2
         btn_enregistrer_y = fnt_config_taches_h - 100

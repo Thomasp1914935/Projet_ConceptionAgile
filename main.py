@@ -2,7 +2,7 @@ import pygame
 
 from interface import BoiteSaisie
 from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
-from jeu import Joueurs
+from jeu import Joueurs, Taches
 
 if __name__ == "__main__":
 
@@ -43,6 +43,8 @@ if __name__ == "__main__":
                     elements.append(fnt_config_joueurs.get_btn_valider())
                     elements.append(fnt_config_joueurs.get_btn_retour())
                 if fnt_config_taches is not None:
+                    elements.append(fnt_config_taches.get_bs_titre())
+                    elements.append(fnt_config_taches.get_bs_description())
                     elements.append(fnt_config_taches.get_btn_enregistrer())
                     elements.append(fnt_config_taches.get_btn_valider())
                     elements.append(fnt_config_taches.get_btn_retour())
@@ -109,7 +111,7 @@ if __name__ == "__main__":
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         
                         Joueurs.joueurs = []
-                         # Parcourir toutes les boîtes de saisie
+                        # Parcourir toutes les boîtes de saisie
                         for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
                             # Créer un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
                             joueur = Joueurs(i+1, boite_saisie.get_texte())
@@ -139,7 +141,34 @@ if __name__ == "__main__":
                         fnt_accueil.afficher() # Réaffichage de la fenêtre d'accueil
 
                 elif fnt_config_taches is not None:
-                    if fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
+                    if fnt_config_taches.get_btn_enregistrer().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Enregistrer cette tache' cliqué") # [DEBUG]
+                        print("[EVENT] : Bouton 'Enregistrer cette tache' cliqué") # [DEBUG]
+
+                        Taches.taches = []
+                        titre = fnt_config_taches.get_bs_titre().get_texte()
+                        description = fnt_config_taches.get_bs_description().get_texte()
+
+                        if titre:  # Vérifier si le titre n'est pas vide
+                            if not description:  # Si la description est vide
+                                description = "Aucune description"  # Définir la description par défaut
+
+                            # Enregistrer la tâche
+                            numero = len(Taches.taches) + 1  # Numéro de la tâche
+                            difficulte = None  # Difficulté de la tâche (à modifier selon vos besoins)
+                            tache = Taches(numero, titre, description, difficulte)
+                            Taches.taches.append(tache)
+
+                            print(f"[INFO] : La tâche '{titre}' enregistrée avec succès")
+                        else:
+                            print("[WARNING] : Le titre de la tâche ne peut pas être vide")
+
+                        # Afficher la liste des tâches [DEBUG]
+                        print("Liste des tâches :")
+                        for tache in Taches.taches:
+                            print(tache)
+
+                    elif fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
                         fnt_config_taches = None # Réinitialisation de fnt_config_taches
@@ -164,12 +193,22 @@ if __name__ == "__main__":
             
             # Evénements si une touche du clavier est pressée
             elif event.type == pygame.KEYDOWN:
+
                 if fnt_config_joueurs is not None:
                     # Parcourir toutes les boîtes de saisie
                     for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
                         if boite_saisie.est_clique(souris_x, souris_y):
                             boite_saisie.evenement(event)
                             print("[UPDATE] Boite de saisie {} : ".format(i+1) + boite_saisie.get_texte()) # [DEBUG]
+                
+                elif fnt_config_taches is not None:
+                    if fnt_config_taches.get_bs_titre().est_clique(souris_x, souris_y):
+                        fnt_config_taches.get_bs_titre().evenement(event)
+                        print("[UPDATE] Boite de saisie 'Titre' : " + fnt_config_taches.get_bs_titre().get_texte()) # [DEBUG]
+                        
+                    elif fnt_config_taches.get_bs_description().est_clique(souris_x, souris_y):
+                        fnt_config_taches.get_bs_description().evenement(event)
+                        print("[UPDATE] Boite de saisie 'Description' : " + fnt_config_taches.get_bs_description().get_texte()) # [DEBUG]
 
         # Mettre à jour l'affichage
         pygame.display.flip()

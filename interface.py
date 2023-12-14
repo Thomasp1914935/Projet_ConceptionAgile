@@ -1,4 +1,5 @@
 import pygame
+import textwrap
 
 # Initialisation de toutes les bibliothèques Pygame et leurs modules associés
 pygame.init()
@@ -88,7 +89,7 @@ class BoiteTexte:
     
 class BoiteSaisie:
     # Méthode pour initialiser une boîte de saisie
-    def __init__(self, x, y, largeur, hauteur, taille_police, couleur, max_caracteres, fenetre):
+    def __init__(self, x, y, largeur, hauteur, taille_police, couleur, max_caracteres, longueur_ligne, fenetre):
         self.x = x
         self.y = y
         self.largeur = largeur
@@ -98,6 +99,7 @@ class BoiteSaisie:
         self.police = pygame.font.Font(None, taille_police)
         self.texte = ""
         self.max_caracteres = max_caracteres
+        self.longueur_ligne = longueur_ligne
         self.fenetre = fenetre
 
     # Méthode pour dessiner une boîte de saisie
@@ -105,9 +107,16 @@ class BoiteSaisie:
         # Dessiner un rectangle avec des bords arrondis
         pygame.draw.rect(self.fenetre, self.couleur, (self.x, self.y, self.largeur, self.hauteur), 2, border_radius=20)
 
+        # Effacer l'ancien texte en dessinant un rectangle de la couleur d'arrière-plan
+        pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x + 10, self.y + 5, self.largeur - 20, self.hauteur - 10))
+
         # Dessiner le texte
-        texte_surface = self.police.render(self.texte, True, (0, 0, 0))
-        self.fenetre.blit(texte_surface, (self.x + 10, self.y + 5))
+        lines = textwrap.wrap(self.texte, self.longueur_ligne)  # Découper le texte en lignes
+        y = self.y + 5
+        for line in lines:
+            texte_surface = self.police.render(line, True, (0, 0, 0))
+            self.fenetre.blit(texte_surface, (self.x + 10, y))
+            y += self.police.get_height()  # Passer à la ligne suivante
 
     # Méthode pour remplir une boîte de saisie
     def evenement(self, event):
