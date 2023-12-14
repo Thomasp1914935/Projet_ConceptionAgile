@@ -62,6 +62,22 @@ class Bouton:
     def est_clique(self, x, y):
         return self.x <= x <= self.x + self.largeur and self.y <= y <= self.y + self.hauteur
     
+class BoiteTexte:
+    # Méthode pour initialiser une boîte de texte
+    def __init__(self, x, y, texte, taille_police, couleur, fenetre):
+        self.x = x
+        self.y = y
+        self.texte = texte
+        self.taille_police = taille_police
+        self.couleur = couleur
+        self.fenetre = fenetre
+        self.police = pygame.font.Font(None, self.taille_police)
+
+    # Méthode pour dessiner une boîte de texte
+    def dessiner(self):
+        texte_surface = self.police.render(self.texte, True, self.couleur)
+        self.fenetre.blit(texte_surface, (self.x, self.y - texte_surface.get_height()))
+    
 class BoiteSaisie:
     # Méthode pour initialiser une boîte de saisie
     def __init__(self, x, y, largeur, hauteur, taille_police, couleur, max_caracteres, fenetre):
@@ -75,16 +91,17 @@ class BoiteSaisie:
         self.texte = ""
         self.max_caracteres = max_caracteres
         self.fenetre = fenetre
-        self.selectionnee = False
 
     # Méthode pour dessiner une boîte de saisie
     def dessiner(self):
-        pygame.draw.rect(self.fenetre, (255, 255, 255), self.rect)
-        pygame.draw.rect(self.fenetre, self.couleur, self.rect, 2)
-        texte_surface = self.police.render(self.texte, True, self.couleur)
-        self.fenetre.blit(texte_surface, (self.rect.x + 5, self.rect.y + 5))
+        # Dessiner un rectangle avec des bords arrondis
+        pygame.draw.rect(self.fenetre, self.couleur, (self.x, self.y, self.largeur, self.hauteur), 2, border_radius=20)
 
-    # Méthode pour vérifier si une boîte de saisie est cliquée
+        # Dessiner le texte
+        texte_surface = self.police.render(self.texte, True, (0, 0, 0))
+        self.fenetre.blit(texte_surface, (self.x + 10, self.y + 5))
+
+    # Méthode pour remplir une boîte de saisie
     def evenement(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_BACKSPACE:
@@ -148,7 +165,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         self.set_couleur_fond((255, 255, 255))
         self.boites_saisie = []
 
-        # Création de la boîte de saisie
+        # Création des boîtes de saisie des noms de joueurs
         self.boite_saisie_l = 250
         self.boite_saisie_h = 32
         self.boite_saisie_x = (self.fnt_config_joueurs_l - self.boite_saisie_l) / 2
@@ -249,6 +266,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         # Mettre à jour l'affichage
         pygame.display.flip()
 
+    # Méthode pour récupérer les boîtes de saisie
     def get_boites_saisie(self):
         return self.boites_saisie
     
@@ -294,14 +312,52 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     def fermer(self):
         super().fermer()
 
-class FntConfigTaches(Fenetre, Bouton):
+class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     def __init__(self):
-        # Paramètres de la fenêtre
+        # Paramètres généraux de la fenêtre
         fnt_config_taches_l = 400
         fnt_config_taches_h = 700
         super().__init__(fnt_config_taches_l, fnt_config_taches_h)
         self.set_titre("Planning Poker : Configuration des tâches")
         self.set_couleur_fond((255, 255, 255))
+        bt_couleur = (0, 0, 0)
+        bs_couleur = (0, 0, 0)
+        bt_taille_police = 25
+        bs_taille_police = 30
+
+        # Création de la boite de saisie du titre de la tâche
+        bs_titre_l = 300
+        bs_titre_h = 32
+        bs_titre_x = (fnt_config_taches_l - bs_titre_l) / 2
+        bs_titre_y = 100
+        bs_titre_max_caracteres = 20
+        bs_titre = BoiteSaisie(bs_titre_x, bs_titre_y, bs_titre_l, bs_titre_h, bs_taille_police, bs_couleur, bs_titre_max_caracteres, self.fenetre)
+        bs_titre.dessiner()
+
+        # Création d'un texte au-dessus de la boîte de saisie du titre
+        bt_titre = BoiteTexte(bs_titre_x + 10, bs_titre_y, "Titre de la tâche", bt_taille_police, bt_couleur, self.fenetre)
+        bt_titre.dessiner()
+
+        # Création de la boite de saisie du titre de la tâche
+        bs_description_l = 300
+        bs_description_h = 160
+        bs_description_x = (fnt_config_taches_l - bs_description_l) / 2
+        bs_description_y = 175
+        bs_desription_max_caracteres = 100
+        bs_description = BoiteSaisie(bs_description_x, bs_description_y, bs_description_l, bs_description_h, bs_taille_police, bs_couleur, bs_desription_max_caracteres, self.fenetre)
+        bs_description.dessiner()
+
+        # Création d'un texte au-dessus de la boîte de saisie du titre
+        bt_description = BoiteTexte(bs_description_x + 10, bs_description_y, "Description de la tâche", bt_taille_police, bt_couleur, self.fenetre)
+        bt_description.dessiner()
+
+        # Création du bouton "Enregistrer cette tâche"
+        btn_enregistrer_l = 250
+        btn_enregistrer_h = 40
+        btn_enregistrer_x = (fnt_config_taches_l - btn_enregistrer_l) / 2
+        btn_enregistrer_y = fnt_config_taches_h - 100
+        self.btn_enregistrer = Bouton(btn_enregistrer_x, btn_enregistrer_y, btn_enregistrer_l, btn_enregistrer_h, (0, 0, 0), "Enregistrer cette tâche")
+        self.btn_enregistrer.dessiner(self.fenetre, 30, (255, 255, 255))
 
         # Création du bouton "Valider"
         btn_valider_l = 100
@@ -318,6 +374,10 @@ class FntConfigTaches(Fenetre, Bouton):
         btn_retour_y = 10
         self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, (0, 0, 0), "<")
         self.btn_retour.dessiner(self.fenetre, 30, (255, 255, 255))
+
+    # Méthode pour récupérer le bouton "Enregistrer cette tâche"
+    def get_btn_enregistrer(self):
+        return self.btn_enregistrer
 
     # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):
