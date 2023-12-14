@@ -1,3 +1,4 @@
+import os
 import pygame
 
 from interface import Fenetre, Bouton, BoiteTexte, BoiteSaisie
@@ -327,17 +328,34 @@ class FntJeu(Fenetre, Bouton):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
         self.ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        ecran_l, ecran_h = self.ecran.get_size() # Récupération de la taille de l'écran
+        self.ecran_l, self.ecran_h = self.ecran.get_size() # Récupération de la taille de l'écran
         self.set_titre("Planning Poker : Plateau de jeu")
         self.set_couleur_fond((255, 255, 255))
 
         # Création du bouton "Quitter la partie"
         btn_quitter_l = 200
         btn_quitter_h = 40
-        btn_quitter_x = (ecran_l - btn_quitter_l) - 10 # Calcul de la coordonnée x du bouton
+        btn_quitter_x = (self.ecran_l - btn_quitter_l) - 10 # Calcul de la coordonnée x du bouton
         btn_quitter_y = 10
         self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
         self.btn_quitter.dessiner()
+
+        # Construire le chemin
+        chemin_script = os.path.dirname(__file__)
+        chemin_cartes = (chemin_script, 'ressources', 'cartes')
+        chemin_cartes = os.path.join(os.path.sep, *chemin_cartes)
+
+        # c'est seulement un test d'affichage (a supprier plus tard)
+        print(chemin_cartes)
+        test = 0
+        for nom_fichier in os.listdir(chemin_cartes):
+            if nom_fichier.endswith(".png"):  # Remplacez par l'extension de vos images de cartes
+                test += 100
+                chemin_image = os.path.join(chemin_cartes, nom_fichier)
+                image = pygame.image.load(chemin_image)
+                self.fenetre.blit(image, (test, self.ecran_h / 2))
+
+        pygame.display.flip()
     
     # Méthode pour récupérer le bouton "Quitter la partie"
     def get_btn_quitter(self):

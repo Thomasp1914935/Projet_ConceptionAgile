@@ -1,3 +1,4 @@
+import os
 import pygame
 import textwrap
 
@@ -11,6 +12,13 @@ class Fenetre:
         self.largeur = largeur
         self.hauteur = hauteur
         self.fenetre = pygame.display.set_mode((self.largeur, self.hauteur))
+
+        # Charger l'image de l'icône
+        chemin_script = os.path.dirname(__file__)
+        chemin_icone = (chemin_script, 'ressources', 'icone.png')
+        chemin_icone = os.path.join(os.path.sep, *chemin_icone)
+        icone = pygame.image.load(chemin_icone)
+        pygame.display.set_icon(icone)
 
     # Méthode pour définir le titre de la fenêtre
     def set_titre(self, titre):
