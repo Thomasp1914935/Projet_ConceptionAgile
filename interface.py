@@ -67,19 +67,24 @@ class Bouton:
     
 class BoiteTexte:
     # Méthode pour initialiser une boîte de texte
-    def __init__(self, x, y, texte, taille_police, couleur, fenetre):
+    def __init__(self, x, y, texte, taille_police, couleur, texte_centre, fenetre):
         self.x = x
         self.y = y
         self.texte = texte
         self.taille_police = taille_police
-        self.couleur = couleur
-        self.fenetre = fenetre
         self.police = pygame.font.Font(None, self.taille_police)
+        self.couleur = couleur
+        self.texte_centre = texte_centre
+        self.fenetre = fenetre
 
     # Méthode pour dessiner une boîte de texte
     def dessiner(self):
         texte_surface = self.police.render(self.texte, True, self.couleur)
-        self.fenetre.blit(texte_surface, (self.x, self.y - texte_surface.get_height()))
+        if self.texte_centre:
+            x_centre = self.x - texte_surface.get_width() // 2
+        else:
+            x_centre = self.x
+        self.fenetre.blit(texte_surface, (x_centre, self.y - texte_surface.get_height()))
     
 class BoiteSaisie:
     # Méthode pour initialiser une boîte de saisie

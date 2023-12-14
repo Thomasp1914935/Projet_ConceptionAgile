@@ -78,10 +78,10 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         self.btn_retour.dessiner()
 
         # Création de la boîte de saisie 2
-        self.ajouter_boite_saisie()
+        self.ajouter_bs_joueur()
     
     # Méthode pour ajouter une boîte de saisie
-    def ajouter_boite_saisie(self):
+    def ajouter_bs_joueur(self):
         # Créer une nouvelle boîte de saisie en dessous de la dernière
         derniere_boite = self.boites_saisie[-1]
         nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 50, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, self.fenetre)
@@ -113,7 +113,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         pygame.display.flip()
 
     # Méthode pour supprimer une boîte de saisie
-    def supprimer_boite_saisie(self):
+    def supprimer_bs_joueur(self):
         # Supprimer la dernière boîte de saisie
         derniere_boite = self.boites_saisie.pop()
 
@@ -146,7 +146,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         pygame.display.flip()
 
     # Méthode pour récupérer les boîtes de saisie
-    def get_boites_saisie(self):
+    def get_bs_joueurs(self):
         return self.boites_saisie
     
     # Méthode pour récupérer le bouton "Ajouter un joueur"
@@ -176,12 +176,10 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         return self.btn_retour
     
     # Méthode pour afficher un message d'erreur
-    def afficher_message_erreur(self, message):
-        font = pygame.font.Font(None, 20)
-        text = font.render(message, True, (200, 0, 0))
-        text_rect = text.get_rect(center=(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 20))
-        self.fenetre.blit(text, text_rect)
-        pygame.display.flip()
+    def afficher_msg_erreur(self, message):
+        # Création d'un texte au-dessus de la boîte de saisie du titre
+        bt_titre = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 20, message, 20, (200, 0, 0), True, self.fenetre)
+        bt_titre.dessiner()
 
     # Méthode pour afficher la fenêtre
     def afficher(self):
@@ -210,11 +208,11 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         bs_titre_x = (fnt_config_taches_l - bs_titre_l) / 2
         bs_titre_y = 100
         bs_titre_max_caracteres = 20
-        bs_titre = BoiteSaisie(bs_titre_x, bs_titre_y, bs_titre_l, bs_titre_h, bs_taille_police, bs_couleur, bs_titre_max_caracteres, self.fenetre)
-        bs_titre.dessiner()
+        self.bs_titre = BoiteSaisie(bs_titre_x, bs_titre_y, bs_titre_l, bs_titre_h, bs_taille_police, bs_couleur, bs_titre_max_caracteres, self.fenetre)
+        self.bs_titre.dessiner()
 
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_titre = BoiteTexte(bs_titre_x + 10, bs_titre_y, "Titre de la tâche", bt_taille_police, bt_couleur, self.fenetre)
+        bt_titre = BoiteTexte(bs_titre_x + 10, bs_titre_y, "Titre de la tâche", bt_taille_police, bt_couleur, False, self.fenetre)
         bt_titre.dessiner()
 
         # Création de la boite de saisie du titre de la tâche
@@ -223,11 +221,11 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         bs_description_x = (fnt_config_taches_l - bs_description_l) / 2
         bs_description_y = 175
         bs_desription_max_caracteres = 100
-        bs_description = BoiteSaisie(bs_description_x, bs_description_y, bs_description_l, bs_description_h, bs_taille_police, bs_couleur, bs_desription_max_caracteres, self.fenetre)
-        bs_description.dessiner()
+        self.bs_description = BoiteSaisie(bs_description_x, bs_description_y, bs_description_l, bs_description_h, bs_taille_police, bs_couleur, bs_desription_max_caracteres, self.fenetre)
+        self.bs_description.dessiner()
 
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_description = BoiteTexte(bs_description_x + 10, bs_description_y, "Description de la tâche", bt_taille_police, bt_couleur, self.fenetre)
+        bt_description = BoiteTexte(bs_description_x + 10, bs_description_y, "Description de la tâche", bt_taille_police, bt_couleur, False, self.fenetre)
         bt_description.dessiner()
 
         # Création du bouton "Enregistrer cette tâche"
@@ -253,6 +251,14 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         btn_retour_y = 10
         self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, "<", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
         self.btn_retour.dessiner()
+
+    # Méthode pour récupérer la boîte de saisie du titre de la tâche
+    def get_bs_titre(self):
+        return self.bs_titre
+    
+    # Méthode pour récupérer la boîte de saisie de la description de la tâche
+    def get_bs_description(self):
+        return self.bs_description
 
     # Méthode pour récupérer le bouton "Enregistrer cette tâche"
     def get_btn_enregistrer(self):

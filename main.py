@@ -37,12 +37,13 @@ if __name__ == "__main__":
                 if fnt_accueil is not None:
                     elements.append(fnt_accueil.get_btn_lancer())
                 if fnt_config_joueurs is not None:
+                    elements.extend(fnt_config_joueurs.get_bs_joueurs())
                     elements.append(fnt_config_joueurs.get_btn_ajouter_joueur())
                     elements.append(fnt_config_joueurs.get_btn_supprimer_joueur())
                     elements.append(fnt_config_joueurs.get_btn_valider())
                     elements.append(fnt_config_joueurs.get_btn_retour())
-                    elements.extend(fnt_config_joueurs.get_boites_saisie())
                 if fnt_config_taches is not None:
+                    elements.append(fnt_config_taches.get_btn_enregistrer())
                     elements.append(fnt_config_taches.get_btn_valider())
                     elements.append(fnt_config_taches.get_btn_retour())
                 if fnt_jeu is not None:
@@ -80,11 +81,11 @@ if __name__ == "__main__":
                         if nb_joueurs < 4:
                             nb_joueurs += 1
                             print("[UPDATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.ajouter_boite_saisie() # Ajout d'une boîte de saisie
+                            fnt_config_joueurs.ajouter_bs_joueur() # Ajout d'une boîte de saisie
                         elif nb_joueurs == 4:
                             nb_joueurs += 1
                             print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.ajouter_boite_saisie() # Ajout d'une boîte de saisie
+                            fnt_config_joueurs.ajouter_bs_joueur() # Ajout d'une boîte de saisie
                             fnt_config_joueurs.desactiver_btn_ajouter_joueur()  # Désactiver le bouton "Supprimer un joueur"
                         else:
                             print("[WARNING] : Nombre de joueurs maximum atteint") # [DEBUG]
@@ -94,11 +95,11 @@ if __name__ == "__main__":
                         if nb_joueurs > 3:
                             nb_joueurs -= 1
                             print("[UPDATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.supprimer_boite_saisie() # Suppresion d'une boîte de saisie
+                            fnt_config_joueurs.supprimer_bs_joueur() # Suppresion d'une boîte de saisie
                         elif nb_joueurs == 3:
                             nb_joueurs -= 1
                             print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.supprimer_boite_saisie() # Suppression d'une boîte de saisie
+                            fnt_config_joueurs.supprimer_bs_joueur() # Suppression d'une boîte de saisie
                             fnt_config_joueurs.desactiver_btn_supprimer_joueur()  # Désactiver le bouton "Supprimer un joueur"
                         else:
                             print("[WARNING] : Nombre de joueurs minimum atteint") # [DEBUG]
@@ -109,7 +110,7 @@ if __name__ == "__main__":
                         
                         Joueurs.joueurs = []
                          # Parcourir toutes les boîtes de saisie
-                        for i, boite_saisie in enumerate(fnt_config_joueurs.get_boites_saisie()):
+                        for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
                             # Créer un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
                             joueur = Joueurs(i+1, boite_saisie.get_texte())
 
@@ -128,7 +129,7 @@ if __name__ == "__main__":
                             fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
                         else:
                             print("[WARNING] : Tous les joueurs doivent avoir un nom")
-                            fnt_config_joueurs.afficher_message_erreur("Attention : tous les joueurs doivent avoir un nom !")
+                            fnt_config_joueurs.afficher_msg_erreur("Attention : tous les joueurs doivent avoir un nom !")
                 
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
@@ -165,7 +166,7 @@ if __name__ == "__main__":
             elif event.type == pygame.KEYDOWN:
                 if fnt_config_joueurs is not None:
                     # Parcourir toutes les boîtes de saisie
-                    for i, boite_saisie in enumerate(fnt_config_joueurs.get_boites_saisie()):
+                    for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
                         if boite_saisie.est_clique(souris_x, souris_y):
                             boite_saisie.evenement(event)
                             print("[UPDATE] Boite de saisie {} : ".format(i+1) + boite_saisie.get_texte()) # [DEBUG]
