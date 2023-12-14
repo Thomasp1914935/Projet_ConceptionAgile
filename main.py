@@ -129,8 +129,9 @@ if __name__ == "__main__":
                             fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
                             fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
                             fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
+                            nb_taches = 0 # Nombre de tâches
                         else:
-                            print("[WARNING] : Tous les joueurs doivent avoir un nom")
+                            print("[WARNING] : Tous les joueurs doivent avoir un nom") # [DEBUG]
                             fnt_config_joueurs.afficher_msg_erreur("Attention : tous les joueurs doivent avoir un nom !")
                 
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
@@ -143,9 +144,7 @@ if __name__ == "__main__":
                 elif fnt_config_taches is not None:
                     if fnt_config_taches.get_btn_enregistrer().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Enregistrer cette tache' cliqué") # [DEBUG]
-                        print("[EVENT] : Bouton 'Enregistrer cette tache' cliqué") # [DEBUG]
 
-                        Taches.taches = []
                         titre = fnt_config_taches.get_bs_titre().get_texte()
                         description = fnt_config_taches.get_bs_description().get_texte()
 
@@ -159,9 +158,17 @@ if __name__ == "__main__":
                             tache = Taches(numero, titre, description, difficulte)
                             Taches.taches.append(tache)
 
-                            print(f"[INFO] : La tâche '{titre}' enregistrée avec succès")
+                            # Incrémenter le nombre de tâches
+                            nb_taches += 1
+
+                            # Actualisation de l'affichage
+                            fnt_config_taches.actualiser_bt_titre(nb_taches+1)
+                            fnt_config_taches.actualiser_bt_description(nb_taches+1)
+                            fnt_config_taches.reset_bs()
+                            print(f"[INFO] : La tâche '{titre}' enregistrée avec succès") # [DEBUG]
                         else:
-                            print("[WARNING] : Le titre de la tâche ne peut pas être vide")
+                            print("[WARNING] : Le titre de la tâche ne peut pas être vide") # [DEBUG]
+                            fnt_config_taches.afficher_msg_erreur("Attention : le titre de la tâche ne peut pas être vide !")
 
                         # Afficher la liste des tâches [DEBUG]
                         print("Liste des tâches :")
@@ -170,10 +177,14 @@ if __name__ == "__main__":
 
                     elif fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
-                        fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
-                        fnt_config_taches = None # Réinitialisation de fnt_config_taches
-                        fnt_jeu = FntJeu() # Création de la fenêtre de jeu
-                        fnt_jeu.afficher() # Affichage de la fenêtre de jeu
+                        if nb_taches == 0:
+                            fnt_config_taches.afficher_msg_erreur("       Attention : aucune tâche n'a été enregistrée !       ")
+                            print("[WARNING] : Aucune tâche enregistrée") # [DEBUG]
+                        else:
+                            fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
+                            fnt_config_taches = None # Réinitialisation de fnt_config_taches
+                            fnt_jeu = FntJeu() # Création de la fenêtre de jeu
+                            fnt_jeu.afficher() # Affichage de la fenêtre de jeu
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
@@ -182,6 +193,7 @@ if __name__ == "__main__":
                         fnt_config_joueurs = FntConfigJoueurs() # Création de la fenêtre de configuration des joueurs
                         fnt_config_joueurs.afficher() # Affichage de la fenêtre de configuration des joueurs
                         nb_joueurs = 2 # Nombre de joueurs
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):

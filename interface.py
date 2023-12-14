@@ -74,18 +74,29 @@ class BoiteTexte:
         self.texte = texte
         self.taille_police = taille_police
         self.police = pygame.font.Font(None, self.taille_police)
+        self.texte_surface = self.police.render(texte, True, couleur)
         self.couleur = couleur
         self.texte_centre = texte_centre
         self.fenetre = fenetre
 
     # Méthode pour dessiner une boîte de texte
     def dessiner(self):
-        texte_surface = self.police.render(self.texte, True, self.couleur)
         if self.texte_centre:
-            x_centre = self.x - texte_surface.get_width() // 2
+            x_centre = self.x - self.texte_surface.get_width() / 2
+            pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y - self.texte_surface.get_height(), self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
         else:
             x_centre = self.x
-        self.fenetre.blit(texte_surface, (x_centre, self.y - texte_surface.get_height()))
+            pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y - self.texte_surface.get_height(), self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
+        self.fenetre.blit(self.texte_surface, (x_centre, self.y - self.texte_surface.get_height()))
+
+    # Méthode pour obtenir la taille de la boîte de texte
+    def get_taille(self):
+        return self.texte_surface.get_size()
+
+    # Méthode pour réinitialiser le texte d'une boîte de saisie
+    def reset_texte(self):
+        self.texte = ""  # Réinitialiser le contenu
+        self.dessiner()  # Redessiner la boîte de saisie
     
 class BoiteSaisie:
     # Méthode pour initialiser une boîte de saisie
@@ -142,3 +153,8 @@ class BoiteSaisie:
     # Méthode pour récupérer le texte d'une boîte de saisie
     def get_texte(self):
         return self.texte
+    
+    # Méthode pour réinitialiser le texte d'une boîte de saisie
+    def reset_texte(self):
+        self.texte = ""  # Réinitialiser le contenu
+        self.dessiner()  # Redessiner la boîte de saisie
