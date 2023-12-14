@@ -29,27 +29,30 @@ class Fenetre:
 
 class Bouton:
     # Méthode pour initialiser un bouton
-    def __init__(self, x, y, largeur, hauteur, couleur, texte):
+    def __init__(self, x, y, largeur, hauteur, texte, taille_police, couleur_texte, couleur_bouton, fenetre):
         self.x = x
         self.y = y
         self.largeur = largeur
         self.hauteur = hauteur
-        self.couleur = couleur
         self.texte = texte
+        self.taille_police = taille_police
+        self.couleur_texte = couleur_texte
+        self.couleur_bouton = couleur_bouton
+        self.fenetre = fenetre
 
     # Méthode pour dessiner un bouton
-    def dessiner(self, fenetre, taille_police, couleur_texte):
+    def dessiner(self):
         rayon = self.hauteur // 2
-        pygame.draw.ellipse(fenetre, self.couleur, (self.x, self.y, 2*rayon, 2*rayon))  # Coin supérieur gauche
-        pygame.draw.ellipse(fenetre, self.couleur, (self.x + self.largeur - 2*rayon, self.y, 2*rayon, 2*rayon))  # Coin supérieur droit
-        pygame.draw.ellipse(fenetre, self.couleur, (self.x, self.y + self.hauteur - 2*rayon, 2*rayon, 2*rayon))  # Coin inférieur gauche
-        pygame.draw.ellipse(fenetre, self.couleur, (self.x + self.largeur - 2*rayon, self.y + self.hauteur - 2*rayon, 2*rayon, 2*rayon))  # Coin inférieur droit
-        pygame.draw.rect(fenetre, self.couleur, (self.x, self.y + rayon, self.largeur, self.hauteur - 2*rayon))  # Partie centrale verticale
-        pygame.draw.rect(fenetre, self.couleur, (self.x + rayon, self.y, self.largeur - 2*rayon, self.hauteur))  # Partie centrale horizontale
+        pygame.draw.ellipse(self.fenetre, self.couleur_bouton, (self.x, self.y, 2*rayon, 2*rayon))  # Coin supérieur gauche
+        pygame.draw.ellipse(self.fenetre, self.couleur_bouton, (self.x + self.largeur - 2*rayon, self.y, 2*rayon, 2*rayon))  # Coin supérieur droit
+        pygame.draw.ellipse(self.fenetre, self.couleur_bouton, (self.x, self.y + self.hauteur - 2*rayon, 2*rayon, 2*rayon))  # Coin inférieur gauche
+        pygame.draw.ellipse(self.fenetre, self.couleur_bouton, (self.x + self.largeur - 2*rayon, self.y + self.hauteur - 2*rayon, 2*rayon, 2*rayon))  # Coin inférieur droit
+        pygame.draw.rect(self.fenetre, self.couleur_bouton, (self.x, self.y + rayon, self.largeur, self.hauteur - 2*rayon))  # Partie centrale verticale
+        pygame.draw.rect(self.fenetre, self.couleur_bouton, (self.x + rayon, self.y, self.largeur - 2*rayon, self.hauteur))  # Partie centrale horizontale
 
-        police = pygame.font.Font(None, taille_police)
-        texte = police.render(self.texte, True, couleur_texte)
-        fenetre.blit(texte, (self.x + (self.largeur - texte.get_width()) // 2, self.y + (self.hauteur - texte.get_height()) // 2))
+        police = pygame.font.Font(None, self.taille_police)
+        texte = police.render(self.texte, True, self.couleur_texte)
+        self.fenetre.blit(texte, (self.x + (self.largeur - texte.get_width()) // 2, self.y + (self.hauteur - texte.get_height()) // 2))
     
     # Méthode pour vérifier si un bouton est survolé
     def est_survole(self, souris_x, souris_y):
@@ -134,14 +137,17 @@ class FntAccueil(Fenetre, Bouton):
         super().__init__(fnt_accueil_l, fnt_accueil_h)
         self.set_titre("Planning Poker : Accueil")
         self.set_couleur_fond((255, 255, 255))
+        btn_taille_police = 30
+        btn_couleur_texte = (255, 255, 255)
+        btn_couleur = (0, 0, 0)
 
         # Création du bouton "Lancer une partie"
         btn_lancer_l = 250
         btn_lancer_h = 50
         btn_lancer_x = (fnt_accueil_l - btn_lancer_l) / 2
         btn_lancer_y = (fnt_accueil_h - btn_lancer_h) / 2
-        self.btn_lancer = Bouton(btn_lancer_x, btn_lancer_y, btn_lancer_l, btn_lancer_h, (0, 0, 0), "Lancer une partie")
-        self.btn_lancer.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_lancer = Bouton(btn_lancer_x, btn_lancer_y, btn_lancer_l, btn_lancer_h,  "Lancer une partie", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_lancer.dessiner()
 
     # Méthode pour récupérer le bouton "Lancer une partie"
     def get_btn_lancer(self):
@@ -187,16 +193,16 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
         btn_valider_h = 40
         btn_valider_x = (self.fnt_config_joueurs_l - btn_valider_l) / 2
         btn_valider_y = self.fnt_config_joueurs_h - 50
-        self.btn_valider = Bouton(btn_valider_x, btn_valider_y, btn_valider_l, btn_valider_h, (0, 0, 0), "Valider")
-        self.btn_valider.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_valider = Bouton(btn_valider_x, btn_valider_y, btn_valider_l, btn_valider_h, "Valider", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_valider.dessiner()
 
         # Création du bouton "Retour"
         btn_retour_l = 40
         btn_retour_h = 40
         btn_retour_x = 10
         btn_retour_y = 10
-        self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, (0, 0, 0), "<")
-        self.btn_retour.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, "<", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_retour.dessiner()
 
         # Création de la boîte de saisie 2
         self.ajouter_boite_saisie()
@@ -223,12 +229,12 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
             boite.dessiner()
 
         # Redessiner le bouton "Ajouter un joueur"
-        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Ajouter un joueur")
-        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Ajouter un joueur", 20, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_ajouter_joueur.dessiner()
 
         # Redessiner le bouton "Supprimer un joueur"
-        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Supprimer un joueur")
-        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Supprimer un joueur", 20, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_supprimer_joueur.dessiner()
 
         # Mettre à jour l'affichage
         pygame.display.flip()
@@ -256,12 +262,12 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
             boite.dessiner()
 
         # Redessiner le bouton "Ajouter un joueur"
-        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Ajouter un joueur")
-        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Ajouter un joueur", 20, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_ajouter_joueur.dessiner()
 
         # Redessiner le bouton "Supprimer un joueur"
-        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (0, 0, 0), "Supprimer un joueur")
-        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Supprimer un joueur", 20, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_supprimer_joueur.dessiner()
 
         # Mettre à jour l'affichage
         pygame.display.flip()
@@ -280,13 +286,13 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteSaisie):
     
     # Méthode pour désactiver le bouton "Ajouter un joueur"
     def desactiver_btn_ajouter_joueur(self):
-        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (125, 125, 125), "Ajouter un joueur")
-        self.btn_ajouter_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Ajouter un joueur", 20, (255, 255, 255), (125, 125, 125), self.fenetre)
+        self.btn_ajouter_joueur.dessiner()
 
     # Méthode pour désactiver le bouton "Supprimer un joueur"
     def desactiver_btn_supprimer_joueur(self):
-        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, (125, 125, 125), "Supprimer un joueur")
-        self.btn_supprimer_joueur.dessiner(self.fenetre, 20, (255, 255, 255))
+        self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Supprimer un joueur", 20, (255, 255, 255), (125, 125, 125), self.fenetre)
+        self.btn_supprimer_joueur.dessiner()
 
     # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):
@@ -356,24 +362,24 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         btn_enregistrer_h = 40
         btn_enregistrer_x = (fnt_config_taches_l - btn_enregistrer_l) / 2
         btn_enregistrer_y = fnt_config_taches_h - 100
-        self.btn_enregistrer = Bouton(btn_enregistrer_x, btn_enregistrer_y, btn_enregistrer_l, btn_enregistrer_h, (0, 0, 0), "Enregistrer cette tâche")
-        self.btn_enregistrer.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_enregistrer = Bouton(btn_enregistrer_x, btn_enregistrer_y, btn_enregistrer_l, btn_enregistrer_h, "Enregistrer cette tâche", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_enregistrer.dessiner()
 
         # Création du bouton "Valider"
         btn_valider_l = 100
         btn_valider_h = 40
         btn_valider_x = (fnt_config_taches_l - btn_valider_l) / 2
         btn_valider_y = fnt_config_taches_h - 50
-        self.btn_valider = Bouton(btn_valider_x, btn_valider_y, btn_valider_l, btn_valider_h, (0, 0, 0), "Valider")
-        self.btn_valider.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_valider = Bouton(btn_valider_x, btn_valider_y, btn_valider_l, btn_valider_h, "Valider", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_valider.dessiner()
 
         # Création du bouton "Retour"
         btn_retour_l = 40
         btn_retour_h = 40
         btn_retour_x = 10
         btn_retour_y = 10
-        self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, (0, 0, 0), "<")
-        self.btn_retour.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, "<", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
+        self.btn_retour.dessiner()
 
     # Méthode pour récupérer le bouton "Enregistrer cette tâche"
     def get_btn_enregistrer(self):
@@ -409,8 +415,8 @@ class FntJeu(Fenetre, Bouton):
         btn_quitter_h = 40
         btn_quitter_x = (ecran_l - btn_quitter_l) - 10 # Calcul de la coordonnée x du bouton
         btn_quitter_y = 10
-        self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, (200, 0, 0), "Quitter la partie")
-        self.btn_quitter.dessiner(self.fenetre, 30, (255, 255, 255))
+        self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
+        self.btn_quitter.dessiner()
     
     # Méthode pour récupérer le bouton "Quitter la partie"
     def get_btn_quitter(self):
