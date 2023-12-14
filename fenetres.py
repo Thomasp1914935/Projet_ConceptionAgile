@@ -42,23 +42,23 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         super().__init__(self.fnt_config_joueurs_l, self.fnt_config_joueurs_h)
         self.set_titre("Planning Poker : Configuration des joueurs")
         self.set_couleur_fond((255, 255, 255))
-        self.boites_saisie = []
+        self.bs_joueurs = []
         self.bt_joueurs = []
         self.bt_couleur = (0, 0, 0)
+        self.bs_couleur = (0, 0, 0)
         self.bt_taille_police = 25
+        self.bs_taille_police = 30
 
         # Création des boîtes de saisie des noms de joueurs
-        self.boite_saisie_l = 300
-        self.boite_saisie_h = 30
-        self.boite_saisie_x = (self.fnt_config_joueurs_l - self.boite_saisie_l) / 2
-        self.boite_saisie_y = 100
-        self.taille_police = 30
-        self.couleur = (0, 0, 0)
-        self.max_caracteres = 15
-        self.boites_saisie = [BoiteSaisie(self.boite_saisie_x, self.boite_saisie_y, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, 15, self.fenetre)] # Liste des boîtes de saisie
+        self.bs_joueur_l = 300
+        self.bs_joueur_h = 30
+        self.bs_joueur_x = (self.fnt_config_joueurs_l - self.bs_joueur_l) / 2
+        self.bs_joueur_y = 100
+        self.bs_joueur_max_caracteres = 15
+        self.bs_joueurs = [BoiteSaisie(self.bs_joueur_x, self.bs_joueur_y, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)] # Liste des boîtes de saisie
 
         # Création d'un texte au-dessus de la boîte de saisie des noms de joueurs
-        self.bt_joueur = BoiteTexte(self.boite_saisie_x + 10, self.boite_saisie_y, "Nom du joueur n°1", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_joueur = BoiteTexte(self.bs_joueur_x + 10, self.bs_joueur_y, "Nom du joueur n°1", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
         self.bt_joueur.dessiner()
 
         # Création du bouton "Ajouter un joueur" et "Supprimer un joueur"
@@ -90,12 +90,12 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour ajouter une boîte de saisie
     def ajouter_bs_joueur(self):
         # Créer une nouvelle boîte de saisie en dessous de la dernière
-        derniere_boite = self.boites_saisie[-1]
-        nouvelle_boite = BoiteSaisie(derniere_boite.x, derniere_boite.y + 60, self.boite_saisie_l, self.boite_saisie_h, self.taille_police, self.couleur, self.max_caracteres, 15, self.fenetre)
-        self.boites_saisie.append(nouvelle_boite)
+        derniere_bs_joueur = self.bs_joueurs[-1]
+        nouvelle_bs_joueur = BoiteSaisie(derniere_bs_joueur.x, derniere_bs_joueur.y + 60, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)
+        self.bs_joueurs.append(nouvelle_bs_joueur)
 
         # Création de la nouvelle étiquette
-        nouvelle_bt_joueur = BoiteTexte(self.boite_saisie_x + 10, derniere_boite.y + 60, f"Nom du joueur n°{len(self.boites_saisie)}", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        nouvelle_bt_joueur = BoiteTexte(self.bs_joueur_x + 10, derniere_bs_joueur.y + 60, f"Nom du joueur n°{len(self.bs_joueurs)}", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
         self.bt_joueurs.append(nouvelle_bt_joueur)
 
         # Faire descendre les boutons "Ajouter un joueur" et "Supprimer un joueur" de 50 pixels
@@ -109,8 +109,8 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_supprimer_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
 
         # Redessiner toutes les boîtes de saisie
-        for boite in self.boites_saisie:
-            boite.dessiner()
+        for bs_joueur in self.bs_joueurs:
+            bs_joueur.dessiner()
 
         # Redessiner toutes les boîtes de texte
         for bt_joueur in self.bt_joueurs:
@@ -130,21 +130,21 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour supprimer une boîte de saisie
     def supprimer_bs_joueur(self):
         # Supprimer la dernière boîte de saisie
-        derniere_boite = self.boites_saisie.pop()
+        derniere_bs_joueur = self.bs_joueurs.pop()
 
         # Supprimer la dernière étiquette
-        derniere_etiquette = self.bt_joueurs.pop()
+        derniere_bt_joueur = self.bt_joueurs.pop()
 
         # Faire monter le bouton "Ajouter un joueur" et "Supprimer un joueur" de 60 pixels
         ancien_y = self.btn_joueur_y
         self.btn_joueur_y -= 60
 
         # Effacer l'ancienne boîte de saisie en dessinant un rectangle de la couleur de fond sur sa position
-        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_boite.x, derniere_boite.y, self.boite_saisie_l, self.boite_saisie_h))
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_bs_joueur.x, derniere_bs_joueur.y, self.bs_joueur_l, self.bs_joueur_h))
 
         # Effacer l'ancienne étiquette en dessinant un rectangle de la couleur de fond sur sa position
-        largeur_etiquette, hauteur_etiquette = derniere_etiquette.get_taille()
-        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_etiquette.x, derniere_etiquette.y - 18, largeur_etiquette, hauteur_etiquette))
+        bt_joueur_largeur, bt_joueur_hauteur = derniere_bt_joueur.get_taille()
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_bt_joueur.x, derniere_bt_joueur.y - 18, bt_joueur_largeur, bt_joueur_hauteur))
 
         # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
         pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
@@ -165,7 +165,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
 
     # Méthode pour récupérer les boîtes de saisie
     def get_bs_joueurs(self):
-        return self.boites_saisie
+        return self.bs_joueurs
     
     # Méthode pour récupérer le bouton "Ajouter un joueur"
     def get_btn_ajouter_joueur(self):
