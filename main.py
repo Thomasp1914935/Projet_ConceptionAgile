@@ -1,6 +1,7 @@
 import pygame
 
-from interface import BoiteSaisie, FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
+from interface import BoiteSaisie
+from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
 from jeu import Joueurs
 
 if __name__ == "__main__":
