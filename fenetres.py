@@ -2,6 +2,7 @@ import os
 import pygame
 
 from interface import Fenetre, Bouton, BoiteTexte, BoiteSaisie
+from jeu import Cartes
 
 class FntAccueil(Fenetre, Bouton):
     def __init__(self):
@@ -323,7 +324,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     def fermer(self):
         super().fermer()
 
-class FntJeu(Fenetre, Bouton):
+class FntJeu(Fenetre, Bouton, Cartes):
     def __init__(self):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
@@ -340,22 +341,37 @@ class FntJeu(Fenetre, Bouton):
         self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
         self.btn_quitter.dessiner()
 
-        # Construire le chemin
-        chemin_script = os.path.dirname(__file__)
-        chemin_cartes = (chemin_script, 'ressources', 'cartes')
-        chemin_cartes = os.path.join(os.path.sep, *chemin_cartes)
+        self.plateau_cartes()
 
-        # c'est seulement un test d'affichage (a supprier plus tard)
-        print(chemin_cartes)
-        test = 0
-        for nom_fichier in os.listdir(chemin_cartes):
-            if nom_fichier.endswith(".png"):  # Remplacez par l'extension de vos images de cartes
-                test += 100
-                chemin_image = os.path.join(chemin_cartes, nom_fichier)
-                image = pygame.image.load(chemin_image)
-                self.fenetre.blit(image, (test, self.ecran_h / 2))
+    def plateau_cartes(self):
+        # Définir la taille et l'espacement des cartes
+        taille_carte = (self.ecran_l // 11, self.ecran_h // 5)
+        espacement = 20
+        marge = 20  # Ajouter une marge de 20 pixels
 
+        # Calculer la position de départ du plateau de cartes
+        x_debut = self.ecran_l - (6 * taille_carte[0] + 5 * espacement) - marge
+        y_debut = self.ecran_h - (2 * taille_carte[1] + espacement) - marge
+
+        self.noms_cartes = ['0', '1', '2', '3', '5', '8', '13', '20', '40', '100', 'interro', 'cafe']
+
+        self.liste_cartes = []
+        for i, nom_carte in enumerate(self.noms_cartes):
+            x = x_debut + (i % 6) * (taille_carte[0] + espacement)
+            y = y_debut + (i // 6) * (taille_carte[1] + espacement)
+
+            carte = Cartes(nom_carte, (x, y), self.fenetre, taille_carte)
+            self.liste_cartes.append(carte)
+        
+        for carte in self.liste_cartes:
+            carte.afficher()
+
+        # Mettre à jour l'affichage
         pygame.display.flip()
+
+    # Méthode pour récupérer la liste des cartes
+    def get_cartes(self):
+        return self.liste_cartes
     
     # Méthode pour récupérer le bouton "Quitter la partie"
     def get_btn_quitter(self):

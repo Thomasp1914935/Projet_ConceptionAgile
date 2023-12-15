@@ -49,6 +49,7 @@ if __name__ == "__main__":
                     elements.append(fnt_config_taches.get_btn_valider())
                     elements.append(fnt_config_taches.get_btn_retour())
                 if fnt_jeu is not None:
+                    elements.extend(fnt_jeu.get_cartes())
                     elements.append(fnt_jeu.get_btn_quitter())
 
                 # Vérification si le curseur de la souris est sur un élément interactif
@@ -196,6 +197,10 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
+                    for carte in fnt_jeu.liste_cartes:
+                        if carte.est_clique(souris_x, souris_y):
+                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]*
+
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
                         fnt_jeu.fermer() # Fermeture de la fenêtre de jeu
