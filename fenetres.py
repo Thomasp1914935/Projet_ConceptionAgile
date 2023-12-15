@@ -110,13 +110,11 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
         pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_supprimer_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
 
+        nouvelle_bt_joueur.dessiner()
+
         # Redessiner toutes les boîtes de saisie
         for bs_joueur in self.bs_joueurs:
             bs_joueur.dessiner()
-
-        # Redessiner toutes les boîtes de texte
-        for bt_joueur in self.bt_joueurs:
-            bt_joueur.dessiner()
 
         # Redessiner le bouton "Ajouter un joueur"
         self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Ajouter un joueur", 20, (255, 255, 255), (0, 0, 0), self.fenetre)
