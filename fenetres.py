@@ -60,7 +60,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.bs_joueurs = [BoiteSaisie(self.bs_joueur_x, self.bs_joueur_y, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)] # Liste des boîtes de saisie
 
         # Création d'un texte au-dessus de la boîte de saisie des noms de joueurs
-        self.bt_joueur = BoiteTexte(self.bs_joueur_x + 10, self.bs_joueur_y, "Nom du joueur n°1", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_joueur = BoiteTexte(self.bs_joueur_x + 10, self.bs_joueur_y - 20, "Nom du joueur n°1", self.bt_taille_police, self.bt_couleur, False, 17, self.fenetre)
         self.bt_joueur.dessiner()
 
         # Création du bouton "Ajouter un joueur" et "Supprimer un joueur"
@@ -97,7 +97,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.bs_joueurs.append(nouvelle_bs_joueur)
 
         # Création de la nouvelle étiquette
-        nouvelle_bt_joueur = BoiteTexte(self.bs_joueur_x + 10, derniere_bs_joueur.y + 60, f"Nom du joueur n°{len(self.bs_joueurs)}", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        nouvelle_bt_joueur = BoiteTexte(self.bs_joueur_x + 10, derniere_bs_joueur.y + 40, f"Nom du joueur n°{len(self.bs_joueurs)}", self.bt_taille_police, self.bt_couleur, False, 17, self.fenetre)
         self.bt_joueurs.append(nouvelle_bt_joueur)
 
         # Faire descendre les boutons "Ajouter un joueur" et "Supprimer un joueur" de 50 pixels
@@ -146,7 +146,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
 
         # Effacer l'ancienne étiquette en dessinant un rectangle de la couleur de fond sur sa position
         bt_joueur_largeur, bt_joueur_hauteur = derniere_bt_joueur.get_taille()
-        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_bt_joueur.x, derniere_bt_joueur.y - 18, bt_joueur_largeur, bt_joueur_hauteur))
+        pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(derniere_bt_joueur.x, derniere_bt_joueur.y - 17, bt_joueur_largeur, bt_joueur_hauteur))
 
         # Effacer l'ancien bouton en dessinant un rectangle de la couleur de fond sur son ancienne position
         pygame.draw.rect(self.fenetre, (255, 255, 255), pygame.Rect(self.btn_ajouter_joueur_x, ancien_y, self.btn_joueur_l, self.btn_joueur_h))
@@ -198,7 +198,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_msg_erreur = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 20, message, 20, (200, 0, 0), True, self.fenetre)
+        bt_msg_erreur = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 30, message, 20, (200, 0, 0), True, 51, self.fenetre)
         bt_msg_erreur.dessiner()
 
     # Méthode pour afficher la fenêtre
@@ -232,7 +232,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.bs_titre.dessiner()
 
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        self.bt_titre = BoiteTexte(self.bs_titre_x + 10, self.bs_titre_y, "Titre de la tâche n°1", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_titre = BoiteTexte(self.bs_titre_x + 10, self.bs_titre_y - 20, "Titre de la tâche n°1", self.bt_taille_police, self.bt_couleur, False, 23, self.fenetre)
         self.bt_titre.dessiner()
 
         # Création de la boite de saisie de la description de la tâche
@@ -245,7 +245,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.bs_description.dessiner()
 
         # Création d'un texte au-dessus de la description de la tâche
-        self.bt_description = BoiteTexte(self.bs_description_x + 10, self.bs_description_y, "Description de la tâche n°1", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_description = BoiteTexte(self.bs_description_x + 10, self.bs_description_y - 20, "Description de la tâche n°1", self.bt_taille_police, self.bt_couleur, False, 29, self.fenetre)
         self.bt_description.dessiner()
 
         # Création du bouton "Enregistrer cette tâche"
@@ -295,13 +295,13 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour actualiser le texte de la boîte de saisie du titre
     def actualiser_bt_titre(self, nb_taches):
         self.bt_titre.reset_texte()
-        self.bt_titre = BoiteTexte(self.bs_titre_x + 10, self.bs_titre_y, f"Titre de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_titre = BoiteTexte(self.bs_titre_x + 10, self.bs_titre_y - 20, f"Titre de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, 23, self.fenetre)
         self.bt_titre.dessiner()
 
     # Méthode pour actualiser le texte de la boîte de saisie de la description
     def actualiser_bt_description(self, nb_taches):
         self.bt_description.reset_texte()
-        self.bt_description = BoiteTexte(self.bs_description_x + 10, self.bs_description_y, f"Description de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, self.fenetre)
+        self.bt_description = BoiteTexte(self.bs_description_x + 10, self.bs_description_y - 20, f"Description de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, 29, self.fenetre)
         self.bt_description.dessiner()
     
     # Méthode pour réinitialiser les boîtes de saisie
@@ -313,7 +313,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 20, message, 20, (200, 0, 0), True, self.fenetre)
+        bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 30, message, 20, (200, 0, 0), True, 60, self.fenetre)
         bt_msg_erreur.dessiner()
 
     # Méthode pour afficher la fenêtre
@@ -324,8 +324,8 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     def fermer(self):
         super().fermer()
 
-class FntJeu(Fenetre, Bouton, Cartes):
-    def __init__(self):
+class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
+    def __init__(self, tache):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
         self.ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -341,7 +341,26 @@ class FntJeu(Fenetre, Bouton, Cartes):
         self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
         self.btn_quitter.dessiner()
 
+        self.affichage_tache(tache)
         self.plateau_cartes()
+
+    def affichage_tache(self, tache):
+        # Calculer les coordonnées pour l'affichage des tâches
+        x = self.ecran_l / 3 * 2
+        y = self.ecran_h / 4
+
+        # Créer une boîte de texte pour le titre
+        bt_titre_tache = BoiteTexte(x, y, f"Titre de la tâche n°{tache.numero} : {tache.titre}", 40, (0, 0, 0), True, 46, self.ecran)
+
+        # Créer une boîte de texte pour la description
+        bt_description_tache = BoiteTexte(x, y + 50, f"Description de la tâche n°{tache.numero} : {tache.description}", 40, (0, 0, 0), True, 50, self.ecran)
+
+        # Dessiner les boîtes de texte
+        bt_titre_tache.dessiner()
+        bt_description_tache.dessiner()
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
 
     def plateau_cartes(self):
         # Définir la taille et l'espacement des cartes

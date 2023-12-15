@@ -76,7 +76,7 @@ class Bouton:
     
 class BoiteTexte:
     # Méthode pour initialiser une boîte de texte
-    def __init__(self, x, y, texte, taille_police, couleur, texte_centre, fenetre):
+    def __init__(self, x, y, texte, taille_police, couleur, texte_centre, longueur_ligne, fenetre):
         self.x = x
         self.y = y
         self.texte = texte
@@ -85,17 +85,23 @@ class BoiteTexte:
         self.texte_surface = self.police.render(texte, True, couleur)
         self.couleur = couleur
         self.texte_centre = texte_centre
+        self.longueur_ligne = longueur_ligne
         self.fenetre = fenetre
 
     # Méthode pour dessiner une boîte de texte
     def dessiner(self):
-        if self.texte_centre:
-            x_centre = self.x - self.texte_surface.get_width() / 2
-            pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y - self.texte_surface.get_height(), self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
-        else:
-            x_centre = self.x
-            pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y - self.texte_surface.get_height(), self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
-        self.fenetre.blit(self.texte_surface, (x_centre, self.y - self.texte_surface.get_height()))
+        # Dessiner le texte
+        lines = textwrap.wrap(self.texte, self.longueur_ligne)  # Découper le texte en lignes
+        for line in lines:
+            texte_surface = self.police.render(line, True, self.couleur)
+            if self.texte_centre:
+                x_centre = self.x - texte_surface.get_width() / 2
+                pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y, self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
+            else:
+                x_centre = self.x
+                pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y, self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
+            self.fenetre.blit(texte_surface, (x_centre, self.y))
+            self.y += self.police.get_height()  # Passer à la ligne suivante
 
     # Méthode pour obtenir la taille de la boîte de texte
     def get_taille(self):

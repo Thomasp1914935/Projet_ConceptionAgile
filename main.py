@@ -130,6 +130,7 @@ if __name__ == "__main__":
                             fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
                             fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
                             fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
+                            Taches.taches = [] # Réinitialisation de la liste des tâches
                             nb_taches = 0 # Nombre de tâches
                         else:
                             print("[WARNING] : Tous les joueurs doivent avoir un nom") # [DEBUG]
@@ -179,12 +180,14 @@ if __name__ == "__main__":
                     elif fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         if nb_taches == 0:
-                            fnt_config_taches.afficher_msg_erreur("       Attention : aucune tâche n'a été enregistrée !       ")
+                            fnt_config_taches.afficher_msg_erreur("             Attention : aucune tâche n'a été enregistrée !             ")
                             print("[WARNING] : Aucune tâche enregistrée") # [DEBUG]
                         else:
                             fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
                             fnt_config_taches = None # Réinitialisation de fnt_config_taches
-                            fnt_jeu = FntJeu() # Création de la fenêtre de jeu
+                            nb_taches_traitees = 0 # Nombre de tâches traitées
+                            tache_a_traiter = Taches.taches[nb_taches_traitees] # Tâche à traiter
+                            fnt_jeu = FntJeu(tache_a_traiter) # Création de la fenêtre de jeu
                             fnt_jeu.afficher() # Affichage de la fenêtre de jeu
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
