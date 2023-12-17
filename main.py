@@ -203,6 +203,7 @@ if __name__ == "__main__":
                     for carte in fnt_jeu.liste_cartes:
                         if carte.est_clique(souris_x, souris_y):
                             print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]*
+                            fnt_jeu.choisir_carte(carte)  #appel la fonction choisir carte
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]

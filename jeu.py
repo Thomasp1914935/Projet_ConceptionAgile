@@ -43,6 +43,13 @@ class Cartes:
         self.position = position
         self.fenetre = fenetre
 
+        # Attribut numero
+        self.numero = None
+
+        if nom_carte.isdigit():
+            self.numero = int(nom_carte)
+        
+
     def afficher(self):
         # Afficher l'image
         self.fenetre.blit(self.image, self.position)

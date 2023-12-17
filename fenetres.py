@@ -1,6 +1,8 @@
 import os
 import pygame
 
+from jeu import Joueurs 
+
 from interface import Fenetre, Bouton, BoiteTexte, BoiteSaisie
 from jeu import Cartes
 
@@ -321,7 +323,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour fermer la fenêtre
     def fermer(self):
         super().fermer()
-
+        
 class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
     def __init__(self, tache):
         # Paramètres de la fenêtre
@@ -330,6 +332,7 @@ class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         self.ecran_l, self.ecran_h = self.ecran.get_size() # Récupération de la taille de l'écran
         self.set_titre("Planning Poker : Plateau de jeu")
         self.set_couleur_fond((255, 255, 255))
+        
 
         # Création du bouton "Quitter la partie"
         btn_quitter_l = 200
@@ -341,6 +344,47 @@ class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
 
         self.affichage_tache(tache)
         self.plateau_cartes()
+
+         # Initialisation des joueurs
+        self.joueurs = Joueurs.joueurs  # Utilisez les joueurs de la classe Joueurs
+        self.joueur_actuel = 0  # Indice du joueur actuel
+        self.cartes_joueurs = {}  # Dictionnaire pour stocker les cartes choisies par les joueurs
+        # Affichage des noms des joueurs et des cartes choisies
+        self.afficher_noms_joueurs()
+        self.afficher_cartes_joueurs()
+
+    def afficher_noms_joueurs(self):
+        # Affichage des noms des joueurs en haut à gauche de la fenêtre
+        x = 10
+        y = 10
+        for i, joueur in enumerate(self.joueurs):
+            texte = f"{joueur}:"
+            bt_nom_joueur = BoiteTexte(x, y + (i * 30), texte, 20, (0, 0, 0), False, 60, self.fenetre)
+            bt_nom_joueur.dessiner()
+
+    def afficher_cartes_joueurs(self):
+        # Affichage des cartes choisies par les joueurs en haut à gauche de la fenêtre
+        x = 10
+        y = 40
+        for i, joueur in enumerate(self.joueurs):
+            texte = f"Carte choisie: {self.cartes_joueurs.get(joueur, 'Aucune')}"
+            bt_carte_joueur = BoiteTexte(x, y + (i * 30), texte, 20, (0, 0, 0), False, 60, self.fenetre)
+            bt_carte_joueur.dessiner()
+    
+    
+
+    def choisir_carte(self, carte):
+        # Méthode appelée lorsque le joueur choisit une carte
+        joueur = self.joueurs[self.joueur_actuel]
+        self.cartes_joueurs[joueur] = carte
+
+        # Affichage de la carte choisie par le joueur
+        self.afficher_cartes_joueurs()
+
+        # Passage au joueur suivant
+        self.joueur_actuel = (self.joueur_actuel + 1) % len(self.joueurs)
+        
+
 
     def affichage_tache(self, tache):
         # Calculer les coordonnées pour l'affichage des tâches
