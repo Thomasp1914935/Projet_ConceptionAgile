@@ -1,4 +1,6 @@
 # Ignore __pycache__ folder
 __pycache__/
+__pycache__/fenetres.cpython-311.pyc
 __pycache__/interface.cpython-311.pyc
 __pycache__/jeu.cpython-311.pyc
+__pycache__/main.cpython-311.pyc
