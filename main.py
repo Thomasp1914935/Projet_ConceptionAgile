@@ -185,9 +185,11 @@ if __name__ == "__main__":
                         else:
                             fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
                             fnt_config_taches = None # Réinitialisation de fnt_config_taches
+                            tour_joueur = 0 # Tour du joueur
                             nb_taches_traitees = 0 # Nombre de tâches traitées
                             tache_a_traiter = Taches.taches[nb_taches_traitees] # Tâche à traiter
-                            fnt_jeu = FntJeu(tache_a_traiter) # Création de la fenêtre de jeu
+                            fnt_jeu = FntJeu(tache_a_traiter, Joueurs.joueurs[tour_joueur]) # Création de la fenêtre de jeu
+                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur]) # Ajouter un log pour le tour du joueur
                             fnt_jeu.afficher() # Affichage de la fenêtre de jeu
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
@@ -202,8 +204,14 @@ if __name__ == "__main__":
                 elif fnt_jeu is not None:
                     for carte in fnt_jeu.liste_cartes:
                         if carte.est_clique(souris_x, souris_y):
-                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]*
-                            fnt_jeu.choisir_carte(carte)  #appel la fonction choisir carte
+                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                            # Ajouter un log pour le choix de la carte
+                            fnt_jeu.log_choix_carte(Joueurs.joueurs[tour_joueur])
+                            # Incrémenter le tour du joueur
+                            tour_joueur += 1
+                            # Ajouter un log pour le tour du joueur
+                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
+                            fnt_jeu.affichage_joueur(Joueurs.joueurs[tour_joueur])
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]

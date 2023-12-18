@@ -36,6 +36,25 @@ class Fenetre:
     def fermer(self):
         pygame.display.quit()
 
+class Rectangle:
+    # Méthode pour initialiser un rectangle
+    def __init__(self, x, y, largeur, hauteur, couleur_fond, couleur_bord, fenetre):
+        self.x = x
+        self.y = y
+        self.largeur = largeur
+        self.hauteur = hauteur
+        self.couleur_fond = couleur_fond
+        self.couleur_bord = couleur_bord
+        self.fenetre = fenetre
+
+    # Méthode pour dessiner le rectangle
+    def dessiner(self):
+        # Dessiner le rectangle de fond
+        pygame.draw.rect(self.fenetre, self.couleur_fond, (self.x, self.y, self.largeur, self.hauteur), border_radius=20)
+        
+        # Dessiner le rectangle de bord
+        pygame.draw.rect(self.fenetre, self.couleur_bord, (self.x, self.y, self.largeur, self.hauteur), width=2, border_radius=20)
+
 class Bouton:
     # Méthode pour initialiser un bouton
     def __init__(self, x, y, largeur, hauteur, texte, taille_police, couleur_texte, couleur_bouton, fenetre):
@@ -86,28 +105,36 @@ class BoiteTexte:
         self.couleur = couleur
         self.texte_centre = texte_centre
         self.longueur_ligne = longueur_ligne
+        self.derniere_taille = (0, 0)
         self.fenetre = fenetre
 
     # Méthode pour dessiner une boîte de texte
     def dessiner(self):
         # Dessiner le texte
-        lines = textwrap.wrap(self.texte, self.longueur_ligne)  # Découper le texte en lignes
+        lines = self.texte.split('\n')  # Découper le texte en lignes sur les sauts de ligne
         for line in lines:
-            texte_surface = self.police.render(line, True, self.couleur)
-            if self.texte_centre:
-                x_centre = self.x - texte_surface.get_width() / 2
-                pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y, self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
-            else:
-                x_centre = self.x
-                pygame.draw.rect(self.fenetre, (255, 255, 255), (x_centre, self.y, self.police.size(self.texte)[0], self.police.size(self.texte)[1]))
-            self.fenetre.blit(texte_surface, (x_centre, self.y))
-            self.y += self.police.get_height()  # Passer à la ligne suivante
+            self.wrapped_lines = textwrap.wrap(line, self.longueur_ligne)  # Découper chaque ligne en sous-lignes si elle est trop longue
+            for self.wrapped_line in self.wrapped_lines:
+                texte_surface = self.police.render(self.wrapped_line, True, self.couleur)
+                if self.texte_centre:
+                    self.x_centre = self.x - texte_surface.get_width() / 2
+                    pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x_centre, self.y, self.police.size(self.wrapped_line)[0], self.police.size(self.wrapped_line)[1]))
+                else:
+                    self.x_centre = self.x
+                    pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x_centre, self.y, self.police.size(self.wrapped_line)[0], self.police.size(self.wrapped_line)[1]))
+                self.fenetre.blit(texte_surface, (self.x_centre, self.y))
+                self.y += self.police.get_height()  # Passer à la ligne suivante
 
     # Méthode pour obtenir la taille de la boîte de texte
     def get_taille(self):
         return self.texte_surface.get_size()
+    
+    # Méthode pour définir le texte d'une boîte de texte
+    def set_texte(self, texte):
+        self.texte = texte
+        self.dessiner()
 
-    # Méthode pour réinitialiser le texte d'une boîte de saisie
+    # Méthode pour réinitialiser le texte d'une boîte de texte
     def reset_texte(self):
         self.texte = ""  # Réinitialiser le contenu
         self.dessiner()  # Redessiner la boîte de saisie

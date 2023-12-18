@@ -41,14 +41,7 @@ class Cartes:
 
         # Stocker la position et la fenêtre
         self.position = position
-        self.fenetre = fenetre
-
-        # Attribut numero
-        self.numero = None
-
-        if nom_carte.isdigit():
-            self.numero = int(nom_carte)
-        
+        self.fenetre = fenetre    
 
     def afficher(self):
         # Afficher l'image

@@ -1,9 +1,7 @@
-import os
+from datetime import datetime
 import pygame
 
-from jeu import Joueurs 
-
-from interface import Fenetre, Bouton, BoiteTexte, BoiteSaisie
+from interface import Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie
 from jeu import Cartes
 
 class FntAccueil(Fenetre, Bouton):
@@ -198,7 +196,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_msg_erreur = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 30, message, 20, (200, 0, 0), True, 51, self.fenetre)
+        bt_msg_erreur = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 25, message, 20, (200, 0, 0), True, 51, self.fenetre)
         bt_msg_erreur.dessiner()
 
     # Méthode pour afficher la fenêtre
@@ -313,7 +311,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
         # Création d'un texte au-dessus de la boîte de saisie du titre
-        bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 30, message, 20, (200, 0, 0), True, 60, self.fenetre)
+        bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 25, message, 20, (200, 0, 0), True, 60, self.fenetre)
         bt_msg_erreur.dessiner()
 
     # Méthode pour afficher la fenêtre
@@ -324,15 +322,39 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
     def fermer(self):
         super().fermer()
         
-class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
-    def __init__(self, tache):
+class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
+    def __init__(self, tache, joueur):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
         self.ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.ecran_l, self.ecran_h = self.ecran.get_size() # Récupération de la taille de l'écran
         self.set_titre("Planning Poker : Plateau de jeu")
         self.set_couleur_fond((255, 255, 255))
-        
+        self.logs = []
+
+        # Création des rectangles
+        self.rect_marge = 20
+        self.rect_l = self.ecran_l / 3 - 2 * self.rect_marge
+        self.rect_h = self.ecran_h / 2 - 1.5 * self.rect_marge
+        rect_logs = Rectangle(self.rect_marge, self.rect_marge, self.rect_l, self.rect_h, (255, 255, 255), (0, 0, 0), self.ecran)
+        rect_chat = Rectangle(self.rect_marge, self.rect_h + 2 * self.rect_marge, self.rect_l, self.rect_h, (255, 255, 255), (0, 0, 0), self.ecran)
+        rect_logs.dessiner()
+        rect_chat.dessiner()
+
+        # Création des titres des rectangles de logs et de chat
+        bt_titre_logs = BoiteTexte(self.rect_marge + self.rect_l / 2, self.rect_marge + 10, "Logs", 30, (0, 0, 0), True, 4, self.ecran)
+        bt_titre_chat = BoiteTexte(self.rect_marge + self.rect_l / 2, self.rect_h + 2 * self.rect_marge + 10, "Chat", 30, (0, 0, 0), True, 4, self.ecran)
+        bt_titre_logs.dessiner()
+        bt_titre_chat.dessiner()
+
+        # Création de la boîte de texte des logs
+        self.bt_texte_logs = BoiteTexte(self.rect_marge + 10, self.rect_marge + 40, "", 30, (0, 0, 0), False, 100, self.ecran)
+
+        # Afffichage des éléments de la fenêtre de jeu
+        self.affichage_tache(tache)
+        self.affichage_joueur(joueur)
+        self.plateau_cartes()
+        self.log_debut_partie()
 
         # Création du bouton "Quitter la partie"
         btn_quitter_l = 200
@@ -341,55 +363,47 @@ class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         btn_quitter_y = 10
         self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
         self.btn_quitter.dessiner()
-
-        self.affichage_tache(tache)
-        self.plateau_cartes()
-
-         # Initialisation des joueurs
-        self.joueurs = Joueurs.joueurs  # Utilisez les joueurs de la classe Joueurs
-        self.joueur_actuel = 0  # Indice du joueur actuel
-        self.cartes_joueurs = {}  # Dictionnaire pour stocker les cartes choisies par les joueurs
-        # Affichage des noms des joueurs et des cartes choisies
-        self.afficher_noms_joueurs()
-        self.afficher_cartes_joueurs()
-
-    def afficher_noms_joueurs(self):
-        # Affichage des noms des joueurs en haut à gauche de la fenêtre
-        x = 10
-        y = 10
-        for i, joueur in enumerate(self.joueurs):
-            texte = f"{joueur}:"
-            bt_nom_joueur = BoiteTexte(x, y + (i * 30), texte, 20, (0, 0, 0), False, 60, self.fenetre)
-            bt_nom_joueur.dessiner()
-
-    def afficher_cartes_joueurs(self):
-        # Affichage des cartes choisies par les joueurs en haut à gauche de la fenêtre
-        x = 10
-        y = 40
-        for i, joueur in enumerate(self.joueurs):
-            texte = f"Carte choisie: {self.cartes_joueurs.get(joueur, 'Aucune')}"
-            bt_carte_joueur = BoiteTexte(x, y + (i * 30), texte, 20, (0, 0, 0), False, 60, self.fenetre)
-            bt_carte_joueur.dessiner()
     
+    # Méthode de log pour le début de la partie
+    def log_debut_partie(self):
+        self.ajouter_log("Début de la partie")
+
+    # Méthode de log pour la fin de la partie
+    def log_fin_partie(self):
+        self.ajouter_log("Fin de la partie")
     
+    # Méthode de log pour annoncer le tour d'un joueur
+    def log_tour_joueur(self, joueur):
+        self.ajouter_log(f"C'est au tour du joueur n°{joueur.numero} de jouer")
 
-    def choisir_carte(self, carte):
-        # Méthode appelée lorsque le joueur choisit une carte
-        joueur = self.joueurs[self.joueur_actuel]
-        self.cartes_joueurs[joueur] = carte
+    # Méthode de log pour le choix d'une carte par un joueur
+    def log_choix_carte(self, joueur):
+        self.ajouter_log(f"Le joueur n°{joueur.numero} a choisi une carte")
 
-        # Affichage de la carte choisie par le joueur
-        self.afficher_cartes_joueurs()
+    # Méthode de log pour le résulat d'un tour
+    def log_cartes_choisies(self, joueur, carte):
+        self.ajouter_log(f"Le joueur n°{joueur.numero} a choisi la carte {carte}")
 
-        # Passage au joueur suivant
-        self.joueur_actuel = (self.joueur_actuel + 1) % len(self.joueurs)
+    # Méthode pour ajouter un log
+    def ajouter_log(self, texte):
+        # Obtenir l'heure actuelle
+        heure = datetime.now().strftime('%H:%M:%S')
+        # Ajouter le texte au début du log existant
+        self.logs.insert(0, f"[{heure}] : {texte}")
+        # Si la liste des logs dépasse 15, supprimer le log le plus ancien
+        if len(self.logs) > 15:
+            self.logs.pop()
         
-
+        # Effacer l'ancienne zone de texte
+        self.bt_texte_logs.reset_texte()
+        self.bt_texte_logs.set_texte("\n".join(self.logs))
+        print(self.logs)
+        self.bt_texte_logs.dessiner()
 
     def affichage_tache(self, tache):
         # Calculer les coordonnées pour l'affichage des tâches
         x = self.ecran_l / 3 * 2
-        y = self.ecran_h / 4
+        y = self.ecran_h / 5
 
         # Créer une boîte de texte pour le titre
         bt_titre_tache = BoiteTexte(x, y, f"Titre de la tâche n°{tache.numero} : {tache.titre}", 40, (0, 0, 0), True, 46, self.ecran)
@@ -400,6 +414,20 @@ class FntJeu(Fenetre, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Dessiner les boîtes de texte
         bt_titre_tache.dessiner()
         bt_description_tache.dessiner()
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
+
+    def affichage_joueur(self, joueur):
+        # Calculer les coordonnées pour l'affichage du joueur
+        x = self.ecran_l / 3 * 2
+        y = self.ecran_h / 2
+
+        # Créer une boîte de texte pour le nom du joueur
+        bt_nom_joueur = BoiteTexte(x, y, f"C'est au tour de {joueur.nom} de jouer", 40, (0, 0, 0), True, 46, self.ecran)
+
+        # Dessiner la boîte de texte
+        bt_nom_joueur.dessiner()
 
         # Mettre à jour l'affichage
         pygame.display.flip()
