@@ -5,7 +5,6 @@ from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
 from jeu import Joueurs, Taches
 
 if __name__ == "__main__":
-
     # Initialisation de l'horloge
     horloge = pygame.time.Clock()
 
@@ -71,11 +70,11 @@ if __name__ == "__main__":
                 if fnt_accueil is not None:
                     if fnt_accueil.get_btn_lancer().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Lancer une partie' cliqué") # [DEBUG]
-                        fnt_accueil.fermer() # Fermeture de la fenêtre d'accueil
-                        fnt_accueil = None # Réinitialisation de fnt_accueil
-                        fnt_config_joueurs = FntConfigJoueurs() # Création de la fenêtre de configuration des joueurs
-                        fnt_config_joueurs.afficher() # Affichage de la fenêtre de configuration des joueurs
-                        nb_joueurs = 2 # Nombre de joueurs
+                        fnt_accueil.fermer()
+                        fnt_accueil = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        nb_joueurs = 2
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                 
                 elif fnt_config_joueurs is not None:
@@ -84,12 +83,12 @@ if __name__ == "__main__":
                         if nb_joueurs < 4:
                             nb_joueurs += 1
                             print("[UPDATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.ajouter_bs_joueur() # Ajout d'une boîte de saisie
+                            fnt_config_joueurs.ajouter_bs_joueur()
                         elif nb_joueurs == 4:
                             nb_joueurs += 1
                             print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.ajouter_bs_joueur() # Ajout d'une boîte de saisie
-                            fnt_config_joueurs.desactiver_btn_ajouter_joueur()  # Désactiver le bouton "Supprimer un joueur"
+                            fnt_config_joueurs.ajouter_bs_joueur()
+                            fnt_config_joueurs.desactiver_btn_ajouter_joueur()
                         else:
                             print("[WARNING] : Nombre de joueurs maximum atteint") # [DEBUG]
                     
@@ -98,12 +97,12 @@ if __name__ == "__main__":
                         if nb_joueurs > 3:
                             nb_joueurs -= 1
                             print("[UPDATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.supprimer_bs_joueur() # Suppresion d'une boîte de saisie
+                            fnt_config_joueurs.supprimer_bs_joueur()
                         elif nb_joueurs == 3:
                             nb_joueurs -= 1
                             print("[UDPATE] : Nombre de joueurs : " + str(nb_joueurs)) # [DEBUG]
-                            fnt_config_joueurs.supprimer_bs_joueur() # Suppression d'une boîte de saisie
-                            fnt_config_joueurs.desactiver_btn_supprimer_joueur()  # Désactiver le bouton "Supprimer un joueur"
+                            fnt_config_joueurs.supprimer_bs_joueur()
+                            fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                         else:
                             print("[WARNING] : Nombre de joueurs minimum atteint") # [DEBUG]
                 
@@ -126,22 +125,22 @@ if __name__ == "__main__":
 
                         # Vérifier si tous les joueurs ont un nom non vide
                         if all(joueur.nom for joueur in Joueurs.joueurs):
-                            fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
-                            fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
-                            fnt_config_taches = FntConfigTaches() # Création de la fenêtre de configuration des tâches
-                            fnt_config_taches.afficher() # Affichage de la fenêtre de configuration des tâches
-                            Taches.taches = [] # Réinitialisation de la liste des tâches
-                            nb_taches = 0 # Nombre de tâches
+                            fnt_config_joueurs.fermer()
+                            fnt_config_joueurs = None
+                            fnt_config_taches = FntConfigTaches()
+                            fnt_config_taches.afficher()
+                            Taches.taches = []
+                            nb_taches = 0
                         else:
                             print("[WARNING] : Tous les joueurs doivent avoir un nom") # [DEBUG]
                             fnt_config_joueurs.afficher_msg_erreur("Attention : tous les joueurs doivent avoir un nom !")
                 
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
-                        fnt_config_joueurs.fermer() # Fermeture de la fenêtre de configuration des joueurs
-                        fnt_config_joueurs = None # Réinitialisation de fnt_config_joueurs
-                        fnt_accueil = FntAccueil() # Réinitialisation de fnt_accueil
-                        fnt_accueil.afficher() # Réaffichage de la fenêtre d'accueil
+                        fnt_config_joueurs.fermer()
+                        fnt_config_joueurs = None
+                        fnt_accueil = FntAccueil()
+                        fnt_accueil.afficher()
 
                 elif fnt_config_taches is not None:
                     if fnt_config_taches.get_btn_enregistrer().est_clique(souris_x, souris_y):
@@ -155,8 +154,8 @@ if __name__ == "__main__":
                                 description = "Aucune description"  # Définir la description par défaut
 
                             # Enregistrer la tâche
-                            numero = len(Taches.taches) + 1  # Numéro de la tâche
-                            difficulte = None  # Difficulté de la tâche (à modifier selon vos besoins)
+                            numero = len(Taches.taches) + 1
+                            difficulte = None
                             tache = Taches(numero, titre, description, difficulte)
                             Taches.taches.append(tache)
 
@@ -183,22 +182,22 @@ if __name__ == "__main__":
                             fnt_config_taches.afficher_msg_erreur("             Attention : aucune tâche n'a été enregistrée !             ")
                             print("[WARNING] : Aucune tâche enregistrée") # [DEBUG]
                         else:
-                            fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
-                            fnt_config_taches = None # Réinitialisation de fnt_config_taches
-                            tour_joueur = 0 # Tour du joueur
-                            nb_taches_traitees = 0 # Nombre de tâches traitées
-                            tache_a_traiter = Taches.taches[nb_taches_traitees] # Tâche à traiter
-                            fnt_jeu = FntJeu(tache_a_traiter, Joueurs.joueurs[tour_joueur]) # Création de la fenêtre de jeu
-                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur]) # Ajouter un log pour le tour du joueur
-                            fnt_jeu.afficher() # Affichage de la fenêtre de jeu
+                            fnt_config_taches.fermer()
+                            fnt_config_taches = None
+                            tour_joueur = 0
+                            nb_taches_traitees = 0
+                            tache_a_traiter = Taches.taches[nb_taches_traitees]
+                            fnt_jeu = FntJeu(tache_a_traiter, Joueurs.joueurs[tour_joueur])
+                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
+                            fnt_jeu.afficher()
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
-                        fnt_config_taches.fermer() # Fermeture de la fenêtre de configuration des tâches
-                        fnt_config_taches = None # Réinitialisation de fnt_config_taches
-                        fnt_config_joueurs = FntConfigJoueurs() # Création de la fenêtre de configuration des joueurs
-                        fnt_config_joueurs.afficher() # Affichage de la fenêtre de configuration des joueurs
-                        nb_joueurs = 2 # Nombre de joueurs
+                        fnt_config_taches.fermer()
+                        fnt_config_taches = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        nb_joueurs = 2
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
@@ -215,10 +214,10 @@ if __name__ == "__main__":
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
-                        fnt_jeu.fermer() # Fermeture de la fenêtre de jeu
-                        fnt_jeu = None # Réinitialisation de fnt_jeu
-                        fnt_accueil = FntAccueil() # Réinitialisation de fnt_accueil
-                        fnt_accueil.afficher() # Réaffichage de la fenêtre d'accueil
+                        fnt_jeu.fermer()
+                        fnt_jeu = None
+                        fnt_accueil = FntAccueil()
+                        fnt_accueil.afficher()
             
             # Evénements si une touche du clavier est pressée
             elif event.type == pygame.KEYDOWN:
@@ -239,6 +238,5 @@ if __name__ == "__main__":
                         fnt_config_taches.get_bs_description().evenement(event)
                         print("[UPDATE] Boite de saisie 'Description' : " + fnt_config_taches.get_bs_description().get_texte()) # [DEBUG]
 
-        # Mettre à jour l'affichage
         pygame.display.flip()
     pygame.quit()

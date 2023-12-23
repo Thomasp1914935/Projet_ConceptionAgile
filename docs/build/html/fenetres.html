@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module Fenetres &#8212; Documentation Planning Poker 0.5</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=53f40b44"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=d99ca74e"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Module Interface" href="interface.html" />
+    <link rel="prev" title="Welcome to Planning Poker’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-0">
+<span id="module-fenetres"></span><h1>Module Fenetres<a class="headerlink" href="#module-0" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="fenetres.FntAccueil">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntAccueil</span></span><a class="headerlink" href="#fenetres.FntAccueil" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant la fenêtre d’accueil du jeu Planning Poker.</p>
+<p>Cette fenêtre affiche un bouton permettant de lancer une partie.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.afficher">
+<span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.afficher" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche la fenêtre d’accueil.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.fermer">
+<span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.fermer" title="Link to this definition">¶</a></dt>
+<dd><p>Ferme la fenêtre d’accueil.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_lancer">
+<span class="sig-name descname"><span class="pre">get_btn_lancer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_lancer" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Lancer une partie » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Lancer une partie ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntConfigJoueurs</span></span><a class="headerlink" href="#fenetres.FntConfigJoueurs" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant la fenêtre de configuration des joueurs.</p>
+<p>Cette classe hérite des classes Fenetre, Bouton, BoiteTexte et BoiteSaisie.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>fnt_config_joueurs_l (int): Largeur de la fenêtre.
+fnt_config_joueurs_h (int): Hauteur de la fenêtre.
+bs_joueurs (list): Liste des boîtes de saisie des noms de joueurs.
+bt_joueurs (list): Liste des étiquettes des noms de joueurs.
+bt_couleur (tuple): Couleur du texte des étiquettes.
+bs_couleur (tuple): Couleur du texte des boîtes de saisie.
+bt_taille_police (int): Taille de la police des étiquettes.
+bs_taille_police (int): Taille de la police des boîtes de saisie.
+bs_joueur_l (int): Largeur des boîtes de saisie des noms de joueurs.
+bs_joueur_h (int): Hauteur des boîtes de saisie des noms de joueurs.
+bs_joueur_x (float): Position en x des boîtes de saisie des noms de joueurs.
+bs_joueur_y (int): Position en y des boîtes de saisie des noms de joueurs.
+bs_joueur_max_caracteres (int): Nombre maximum de caractères dans les boîtes de saisie des noms de joueurs.
+btn_joueur_l (int): Largeur des boutons « Ajouter un joueur » et « Supprimer un joueur ».
+btn_joueur_h (int): Hauteur des boutons « Ajouter un joueur » et « Supprimer un joueur ».
+btn_ajouter_joueur_x (float): Position en x du bouton « Ajouter un joueur ».
+btn_supprimer_joueur_x (float): Position en x du bouton « Supprimer un joueur ».
+btn_joueur_y (int): Position en y des boutons « Ajouter un joueur » et « Supprimer un joueur ».
+btn_valider (Bouton): Bouton « Valider ».
+btn_retour (Bouton): Bouton « Retour ».</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.afficher">
+<span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.afficher" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche la fenêtre.</p>
+<p>Cette méthode affiche la fenêtre avec tous ses éléments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.afficher_msg_erreur">
+<span class="sig-name descname"><span class="pre">afficher_msg_erreur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.afficher_msg_erreur" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche un message d’erreur.</p>
+<p>Cette méthode affiche un message d’erreur au-dessus du bouton « Valider ».</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>message (str): Message d’erreur à afficher.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.ajouter_bs_joueur">
+<span class="sig-name descname"><span class="pre">ajouter_bs_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.ajouter_bs_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute une boîte de saisie pour un nouveau joueur.</p>
+<p>Cette méthode crée une nouvelle boîte de saisie en dessous de la dernière,
+ainsi qu’une nouvelle étiquette correspondante.
+Elle met également à jour la position des boutons « Ajouter un joueur » et « Supprimer un joueur ».</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.desactiver_btn_ajouter_joueur">
+<span class="sig-name descname"><span class="pre">desactiver_btn_ajouter_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.desactiver_btn_ajouter_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Désactive le bouton « Ajouter un joueur ».</p>
+<p>Cette méthode change l’apparence du bouton pour le rendre inactif.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.desactiver_btn_supprimer_joueur">
+<span class="sig-name descname"><span class="pre">desactiver_btn_supprimer_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.desactiver_btn_supprimer_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Désactive le bouton « Supprimer un joueur ».</p>
+<p>Cette méthode change l’apparence du bouton pour le rendre inactif.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.fermer">
+<span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.fermer" title="Link to this definition">¶</a></dt>
+<dd><p>Ferme la fenêtre.</p>
+<p>Cette méthode ferme la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.get_bs_joueurs">
+<span class="sig-name descname"><span class="pre">get_bs_joueurs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.get_bs_joueurs" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie la liste des boîtes de saisie des noms de joueurs.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>list: Liste des boîtes de saisie des noms de joueurs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.get_btn_ajouter_joueur">
+<span class="sig-name descname"><span class="pre">get_btn_ajouter_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.get_btn_ajouter_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Ajouter un joueur ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Bouton « Ajouter un joueur ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.get_btn_retour">
+<span class="sig-name descname"><span class="pre">get_btn_retour</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.get_btn_retour" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Retour ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Bouton « Retour ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.get_btn_supprimer_joueur">
+<span class="sig-name descname"><span class="pre">get_btn_supprimer_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.get_btn_supprimer_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Supprimer un joueur ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Bouton « Supprimer un joueur ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.get_btn_valider">
+<span class="sig-name descname"><span class="pre">get_btn_valider</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.get_btn_valider" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Valider ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Bouton « Valider ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.supprimer_bs_joueur">
+<span class="sig-name descname"><span class="pre">supprimer_bs_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.supprimer_bs_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Supprime la dernière boîte de saisie et son étiquette correspondante.</p>
+<p>Cette méthode supprime la dernière boîte de saisie de la liste,
+ainsi que son étiquette correspondante.
+Elle met également à jour la position des boutons « Ajouter un joueur » et « Supprimer un joueur ».</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntConfigTaches</span></span><a class="headerlink" href="#fenetres.FntConfigTaches" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant la fenêtre de configuration des tâches.</p>
+<p>Cette fenêtre permet de configurer les différentes tâches du planning poker.
+Elle contient des boîtes de saisie pour le titre et la description de chaque tâche,
+ainsi que des boutons pour enregistrer, valider et retourner à la fenêtre précédente.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.actualiser_bt_description">
+<span class="sig-name descname"><span class="pre">actualiser_bt_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_taches</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.actualiser_bt_description" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour actualiser le texte de la boîte de saisie de la description.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>nb_taches (int): Le numéro de la tâche.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.actualiser_bt_titre">
+<span class="sig-name descname"><span class="pre">actualiser_bt_titre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_taches</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.actualiser_bt_titre" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour actualiser le texte de la boîte de saisie du titre.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>nb_taches (int): Le numéro de la tâche.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.afficher">
+<span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.afficher" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour afficher la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.afficher_msg_erreur">
+<span class="sig-name descname"><span class="pre">afficher_msg_erreur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.afficher_msg_erreur" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour afficher un message d’erreur.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>message (str): Le message d’erreur à afficher.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.fermer">
+<span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.fermer" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour fermer la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.get_bs_description">
+<span class="sig-name descname"><span class="pre">get_bs_description</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.get_bs_description" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour récupérer la boîte de saisie de la description de la tâche.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>BoiteSaisie: La boîte de saisie de la description de la tâche.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.get_bs_titre">
+<span class="sig-name descname"><span class="pre">get_bs_titre</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.get_bs_titre" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour récupérer la boîte de saisie du titre de la tâche.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>BoiteSaisie: La boîte de saisie du titre de la tâche.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.get_btn_enregistrer">
+<span class="sig-name descname"><span class="pre">get_btn_enregistrer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.get_btn_enregistrer" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour récupérer le bouton « Enregistrer cette tâche ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Enregistrer cette tâche ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.get_btn_retour">
+<span class="sig-name descname"><span class="pre">get_btn_retour</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.get_btn_retour" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour récupérer le bouton « Retour ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Retour ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.get_btn_valider">
+<span class="sig-name descname"><span class="pre">get_btn_valider</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.get_btn_valider" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour récupérer le bouton « Valider ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Valider ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntConfigTaches.reset_bs">
+<span class="sig-name descname"><span class="pre">reset_bs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.reset_bs" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour réinitialiser les boîtes de saisie.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="fenetres.FntJeu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntJeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant la fenêtre de jeu.</p>
+<p>Cette fenêtre affiche les différentes cartes du planning poker, ainsi que les logs et le chat.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>ecran (pygame.Surface): L’écran sur lequel s’affiche la fenêtre.
+ecran_l (int): Largeur de l’écran.
+ecran_h (int): Hauteur de l’écran.
+rect_marge (int): Marge entre les rectangles.
+rect_l (int): Largeur des rectangles.
+rect_h (int): Hauteur des rectangles.
+logs (list): Liste des logs.
+bt_texte_logs (BoiteTexte): Boîte de texte pour les logs.
+noms_cartes (list): Liste des noms des cartes.
+liste_cartes (list): Liste des cartes.
+btn_quitter (Bouton): Bouton pour quitter la partie.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.affichage_joueur">
+<span class="sig-name descname"><span class="pre">affichage_joueur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.affichage_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche le joueur en cours.</p>
+<p>Cette méthode affiche le joueur en cours dans la boîte de texte des logs.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>joueur (Joueur): Le joueur en cours.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>Joueur: Le joueur en cours.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.affichage_tache">
+<span class="sig-name descname"><span class="pre">affichage_tache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tache</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.affichage_tache" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche la tâche en cours.</p>
+<p>Cette méthode affiche la tâche en cours dans la boîte de texte des logs.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>tache (Tache): La tâche en cours.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>Tache: La tâche en cours.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.afficher">
+<span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.afficher" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.ajouter_log">
+<span class="sig-name descname"><span class="pre">ajouter_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.ajouter_log" title="Link to this definition">¶</a></dt>
+<dd><p>Ajoute un log.</p>
+<p>Cette méthode ajoute un log à la liste des logs, et met à jour la boîte de texte des logs.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>texte (str): Le texte à ajouter au log.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>list: Liste des logs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.fermer">
+<span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.fermer" title="Link to this definition">¶</a></dt>
+<dd><p>Ferme la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.get_btn_quitter">
+<span class="sig-name descname"><span class="pre">get_btn_quitter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.get_btn_quitter" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Quitter la partie ».</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Quitter la partie ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.get_cartes">
+<span class="sig-name descname"><span class="pre">get_cartes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.get_cartes" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie la liste des cartes.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>list: Liste des cartes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.log_cartes_choisies">
+<span class="sig-name descname"><span class="pre">log_cartes_choisies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">carte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.log_cartes_choisies" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode de log pour le résultat d’un tour.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.log_choix_carte">
+<span class="sig-name descname"><span class="pre">log_choix_carte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.log_choix_carte" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode de log pour le choix d’une carte par un joueur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.log_debut_partie">
+<span class="sig-name descname"><span class="pre">log_debut_partie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.log_debut_partie" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode de log pour le début de la partie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.log_fin_partie">
+<span class="sig-name descname"><span class="pre">log_fin_partie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.log_fin_partie" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode de log pour la fin de la partie.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.log_tour_joueur">
+<span class="sig-name descname"><span class="pre">log_tour_joueur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.log_tour_joueur" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode de log pour annoncer le tour d’un joueur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.plateau_cartes">
+<span class="sig-name descname"><span class="pre">plateau_cartes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.plateau_cartes" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche le plateau de cartes.</p>
+<p>Cette méthode affiche le plateau de cartes dans la fenêtre.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>list: Liste des cartes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Planning Poker</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module Fenetres</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fenetres.FntAccueil"><code class="docutils literal notranslate"><span class="pre">FntAccueil</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fenetres.FntConfigJoueurs"><code class="docutils literal notranslate"><span class="pre">FntConfigJoueurs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fenetres.FntConfigTaches"><code class="docutils literal notranslate"><span class="pre">FntConfigTaches</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fenetres.FntJeu"><code class="docutils literal notranslate"><span class="pre">FntJeu</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interface.html">Module Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jeu.html">Module Jeu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Module Main</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="Chapitre précédent">Welcome to Planning Poker’s documentation!</a></li>
+      <li>Next: <a href="interface.html" title="Chapitre suivant">Module Interface</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, COLLIN Hugo & BELIN Thomas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/fenetres.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

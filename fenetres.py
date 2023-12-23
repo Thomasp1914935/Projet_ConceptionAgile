@@ -5,6 +5,12 @@ from interface import Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie
 from jeu import Cartes
 
 class FntAccueil(Fenetre, Bouton):
+    """
+    Classe représentant la fenêtre d'accueil du jeu Planning Poker.
+
+    Cette fenêtre affiche un bouton permettant de lancer une partie.
+    """
+
     def __init__(self):
         # Paramètres de la fenêtre
         fnt_accueil_l = 400
@@ -24,19 +30,56 @@ class FntAccueil(Fenetre, Bouton):
         self.btn_lancer = Bouton(btn_lancer_x, btn_lancer_y, btn_lancer_l, btn_lancer_h,  "Lancer une partie", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_lancer.dessiner()
 
-    # Méthode pour récupérer le bouton "Lancer une partie"
     def get_btn_lancer(self):
+        """
+        Renvoie le bouton "Lancer une partie" de la fenêtre d'accueil.
+
+        Renvoie:
+            Bouton: Le bouton "Lancer une partie".
+        """
         return self.btn_lancer
     
-    # Méthode pour afficher la fenêtre
     def afficher(self):
+        """
+        Affiche la fenêtre d'accueil.
+        """
         super().afficher()
     
-    # Méthode pour fermer la fenêtre
     def fermer(self):
+        """
+        Ferme la fenêtre d'accueil.
+        """
         super().fermer()
 
 class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
+    """
+    Classe représentant la fenêtre de configuration des joueurs.
+
+    Cette classe hérite des classes Fenetre, Bouton, BoiteTexte et BoiteSaisie.
+
+    Attributs:
+        fnt_config_joueurs_l (int): Largeur de la fenêtre.
+        fnt_config_joueurs_h (int): Hauteur de la fenêtre.
+        bs_joueurs (list): Liste des boîtes de saisie des noms de joueurs.
+        bt_joueurs (list): Liste des étiquettes des noms de joueurs.
+        bt_couleur (tuple): Couleur du texte des étiquettes.
+        bs_couleur (tuple): Couleur du texte des boîtes de saisie.
+        bt_taille_police (int): Taille de la police des étiquettes.
+        bs_taille_police (int): Taille de la police des boîtes de saisie.
+        bs_joueur_l (int): Largeur des boîtes de saisie des noms de joueurs.
+        bs_joueur_h (int): Hauteur des boîtes de saisie des noms de joueurs.
+        bs_joueur_x (float): Position en x des boîtes de saisie des noms de joueurs.
+        bs_joueur_y (int): Position en y des boîtes de saisie des noms de joueurs.
+        bs_joueur_max_caracteres (int): Nombre maximum de caractères dans les boîtes de saisie des noms de joueurs.
+        btn_joueur_l (int): Largeur des boutons "Ajouter un joueur" et "Supprimer un joueur".
+        btn_joueur_h (int): Hauteur des boutons "Ajouter un joueur" et "Supprimer un joueur".
+        btn_ajouter_joueur_x (float): Position en x du bouton "Ajouter un joueur".
+        btn_supprimer_joueur_x (float): Position en x du bouton "Supprimer un joueur".
+        btn_joueur_y (int): Position en y des boutons "Ajouter un joueur" et "Supprimer un joueur".
+        btn_valider (Bouton): Bouton "Valider".
+        btn_retour (Bouton): Bouton "Retour".
+    """
+
     def __init__(self):
         # Paramètres de la fenêtre
         self.fnt_config_joueurs_l = 450
@@ -57,7 +100,7 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.bs_joueur_x = (self.fnt_config_joueurs_l - self.bs_joueur_l) / 2
         self.bs_joueur_y = 100
         self.bs_joueur_max_caracteres = 15
-        self.bs_joueurs = [BoiteSaisie(self.bs_joueur_x, self.bs_joueur_y, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)] # Liste des boîtes de saisie
+        self.bs_joueurs = [BoiteSaisie(self.bs_joueur_x, self.bs_joueur_y, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)]
 
         # Création d'un texte au-dessus de la boîte de saisie des noms de joueurs
         self.bt_joueur = BoiteTexte(self.bs_joueur_x + 10, self.bs_joueur_y - 20, "Nom du joueur n°1", self.bt_taille_police, self.bt_couleur, False, 17, self.fenetre)
@@ -89,8 +132,14 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         # Création de la boîte de saisie 2
         self.ajouter_bs_joueur()
     
-    # Méthode pour ajouter une boîte de saisie
     def ajouter_bs_joueur(self):
+        """
+        Ajoute une boîte de saisie pour un nouveau joueur.
+
+        Cette méthode crée une nouvelle boîte de saisie en dessous de la dernière,
+        ainsi qu'une nouvelle étiquette correspondante.
+        Elle met également à jour la position des boutons "Ajouter un joueur" et "Supprimer un joueur".
+        """
         # Créer une nouvelle boîte de saisie en dessous de la dernière
         derniere_bs_joueur = self.bs_joueurs[-1]
         nouvelle_bs_joueur = BoiteSaisie(derniere_bs_joueur.x, derniere_bs_joueur.y + 60, self.bs_joueur_l, self.bs_joueur_h, self.bs_taille_police, self.bs_couleur, self.bs_joueur_max_caracteres, 15, self.fenetre)
@@ -127,8 +176,14 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         # Mettre à jour l'affichage
         pygame.display.flip()
 
-    # Méthode pour supprimer une boîte de saisie
     def supprimer_bs_joueur(self):
+        """
+        Supprime la dernière boîte de saisie et son étiquette correspondante.
+
+        Cette méthode supprime la dernière boîte de saisie de la liste,
+        ainsi que son étiquette correspondante.
+        Elle met également à jour la position des boutons "Ajouter un joueur" et "Supprimer un joueur".
+        """
         # Supprimer la dernière boîte de saisie
         derniere_bs_joueur = self.bs_joueurs.pop()
 
@@ -163,51 +218,106 @@ class FntConfigJoueurs(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         # Mettre à jour l'affichage
         pygame.display.flip()
 
-    # Méthode pour récupérer les boîtes de saisie
     def get_bs_joueurs(self):
+        """
+        Renvoie la liste des boîtes de saisie des noms de joueurs.
+
+        Renvoie:
+            list: Liste des boîtes de saisie des noms de joueurs.
+        """
         return self.bs_joueurs
     
-    # Méthode pour récupérer le bouton "Ajouter un joueur"
     def get_btn_ajouter_joueur(self):
+        """
+        Renvoie le bouton "Ajouter un joueur".
+
+        Renvoie:
+            Bouton: Bouton "Ajouter un joueur".
+        """
         return self.btn_ajouter_joueur
     
-    # Méthode pour récupérer le bouton "Supprimer un joueur"
     def get_btn_supprimer_joueur(self):
+        """
+        Renvoie le bouton "Supprimer un joueur".
+
+        Renvoie:
+            Bouton: Bouton "Supprimer un joueur".
+        """
         return self.btn_supprimer_joueur
     
-    # Méthode pour désactiver le bouton "Ajouter un joueur"
     def desactiver_btn_ajouter_joueur(self):
+        """
+        Désactive le bouton "Ajouter un joueur".
+
+        Cette méthode change l'apparence du bouton pour le rendre inactif.
+        """
         self.btn_ajouter_joueur = Bouton(self.btn_ajouter_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Ajouter un joueur", 20, (255, 255, 255), (125, 125, 125), self.fenetre)
         self.btn_ajouter_joueur.dessiner()
 
-    # Méthode pour désactiver le bouton "Supprimer un joueur"
     def desactiver_btn_supprimer_joueur(self):
+        """
+        Désactive le bouton "Supprimer un joueur".
+
+        Cette méthode change l'apparence du bouton pour le rendre inactif.
+        """
         self.btn_supprimer_joueur = Bouton(self.btn_supprimer_joueur_x, self.btn_joueur_y, self.btn_joueur_l, self.btn_joueur_h, "Supprimer un joueur", 20, (255, 255, 255), (125, 125, 125), self.fenetre)
         self.btn_supprimer_joueur.dessiner()
 
-    # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):
+        """
+        Renvoie le bouton "Valider".
+
+        Renvoie:
+            Bouton: Bouton "Valider".
+        """
         return self.btn_valider
     
-    # Méthode pour récupérer le bouton "Retour"
     def get_btn_retour(self):
+        """
+        Renvoie le bouton "Retour".
+
+        Renvoie:
+            Bouton: Bouton "Retour".
+        """
         return self.btn_retour
     
-    # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
-        # Création d'un texte au-dessus de la boîte de saisie du titre
+        """
+        Affiche un message d'erreur.
+
+        Cette méthode affiche un message d'erreur au-dessus du bouton "Valider".
+
+        Arguments:
+            message (str): Message d'erreur à afficher.
+        """
         bt_msg_erreur = BoiteTexte(self.fnt_config_joueurs_l / 2, self.get_btn_valider().y - 25, message, 20, (200, 0, 0), True, 51, self.fenetre)
         bt_msg_erreur.dessiner()
 
-    # Méthode pour afficher la fenêtre
     def afficher(self):
+        """
+        Affiche la fenêtre.
+
+        Cette méthode affiche la fenêtre avec tous ses éléments.
+        """
         super().afficher()
 
-    # Méthode pour fermer la fenêtre
     def fermer(self):
+        """
+        Ferme la fenêtre.
+
+        Cette méthode ferme la fenêtre.
+        """
         super().fermer()
 
 class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
+    """
+    Classe représentant la fenêtre de configuration des tâches.
+
+    Cette fenêtre permet de configurer les différentes tâches du planning poker.
+    Elle contient des boîtes de saisie pour le titre et la description de chaque tâche,
+    ainsi que des boutons pour enregistrer, valider et retourner à la fenêtre précédente.
+    """
+
     def __init__(self):
         # Paramètres généraux de la fenêtre
         self.fnt_config_taches_l = 450
@@ -270,64 +380,127 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         self.btn_retour = Bouton(btn_retour_x, btn_retour_y, btn_retour_l, btn_retour_h, "<", 30, (255, 255, 255), (0, 0, 0), self.fenetre)
         self.btn_retour.dessiner()
 
-    # Méthode pour récupérer la boîte de saisie du titre de la tâche
     def get_bs_titre(self):
+        """
+        Méthode pour récupérer la boîte de saisie du titre de la tâche.
+
+        Renvoie:
+            BoiteSaisie: La boîte de saisie du titre de la tâche.
+        """
         return self.bs_titre
     
-    # Méthode pour récupérer la boîte de saisie de la description de la tâche
     def get_bs_description(self):
+        """
+        Méthode pour récupérer la boîte de saisie de la description de la tâche.
+
+        Renvoie:
+            BoiteSaisie: La boîte de saisie de la description de la tâche.
+        """
         return self.bs_description
 
-    # Méthode pour récupérer le bouton "Enregistrer cette tâche"
     def get_btn_enregistrer(self):
+        """
+        Méthode pour récupérer le bouton "Enregistrer cette tâche".
+
+        Renvoie:
+            Bouton: Le bouton "Enregistrer cette tâche".
+        """
         return self.btn_enregistrer
 
-    # Méthode pour récupérer le bouton "Valider"
     def get_btn_valider(self):
+        """
+        Méthode pour récupérer le bouton "Valider".
+
+        Renvoie:
+            Bouton: Le bouton "Valider".
+        """
         return self.btn_valider
     
-    # Méthode pour récupérer le bouton "Retour"
     def get_btn_retour(self):
+        """
+        Méthode pour récupérer le bouton "Retour".
+
+        Renvoie:
+            Bouton: Le bouton "Retour".
+        """
         return self.btn_retour
     
-    # Méthode pour actualiser le texte de la boîte de saisie du titre
     def actualiser_bt_titre(self, nb_taches):
+        """
+        Méthode pour actualiser le texte de la boîte de saisie du titre.
+
+        Arguments:
+            nb_taches (int): Le numéro de la tâche.
+        """
         self.bt_titre.reset_texte()
         self.bt_titre = BoiteTexte(self.bs_titre_x + 10, self.bs_titre_y - 20, f"Titre de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, 23, self.fenetre)
         self.bt_titre.dessiner()
 
-    # Méthode pour actualiser le texte de la boîte de saisie de la description
     def actualiser_bt_description(self, nb_taches):
+        """
+        Méthode pour actualiser le texte de la boîte de saisie de la description.
+
+        Arguments:
+            nb_taches (int): Le numéro de la tâche.
+        """
         self.bt_description.reset_texte()
         self.bt_description = BoiteTexte(self.bs_description_x + 10, self.bs_description_y - 20, f"Description de la tâche n°{nb_taches}", self.bt_taille_police, self.bt_couleur, False, 29, self.fenetre)
         self.bt_description.dessiner()
     
-    # Méthode pour réinitialiser les boîtes de saisie
     def reset_bs(self):
+        """
+        Méthode pour réinitialiser les boîtes de saisie.
+        """
         self.bs_titre.reset_texte()
         self.bs_description.reset_texte()
         pygame.display.flip()
 
-    # Méthode pour afficher un message d'erreur
     def afficher_msg_erreur(self, message):
-        # Création d'un texte au-dessus de la boîte de saisie du titre
+        """
+        Méthode pour afficher un message d'erreur.
+
+        Arguments:
+            message (str): Le message d'erreur à afficher.
+        """
         bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 25, message, 20, (200, 0, 0), True, 60, self.fenetre)
         bt_msg_erreur.dessiner()
 
-    # Méthode pour afficher la fenêtre
     def afficher(self):
+        """
+        Méthode pour afficher la fenêtre.
+        """
         super().afficher()
 
-    # Méthode pour fermer la fenêtre
     def fermer(self):
+        """
+        Méthode pour fermer la fenêtre.
+        """
         super().fermer()
         
 class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
+    """
+    Classe représentant la fenêtre de jeu.
+    
+    Cette fenêtre affiche les différentes cartes du planning poker, ainsi que les logs et le chat.
+    
+    Attributs:
+        ecran (pygame.Surface): L'écran sur lequel s'affiche la fenêtre.
+        ecran_l (int): Largeur de l'écran.
+        ecran_h (int): Hauteur de l'écran.
+        rect_marge (int): Marge entre les rectangles.
+        rect_l (int): Largeur des rectangles.
+        rect_h (int): Hauteur des rectangles.
+        logs (list): Liste des logs.
+        bt_texte_logs (BoiteTexte): Boîte de texte pour les logs.
+        noms_cartes (list): Liste des noms des cartes.
+        liste_cartes (list): Liste des cartes.
+        btn_quitter (Bouton): Bouton pour quitter la partie.
+    """
     def __init__(self, tache, joueur):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
         self.ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.ecran_l, self.ecran_h = self.ecran.get_size() # Récupération de la taille de l'écran
+        self.ecran_l, self.ecran_h = self.ecran.get_size()
         self.set_titre("Planning Poker : Plateau de jeu")
         self.set_couleur_fond((255, 255, 255))
         self.logs = []
@@ -359,33 +532,53 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Création du bouton "Quitter la partie"
         btn_quitter_l = 200
         btn_quitter_h = 40
-        btn_quitter_x = (self.ecran_l - btn_quitter_l) - 10 # Calcul de la coordonnée x du bouton
+        btn_quitter_x = (self.ecran_l - btn_quitter_l) - 10
         btn_quitter_y = 10
         self.btn_quitter = Bouton(btn_quitter_x, btn_quitter_y, btn_quitter_l, btn_quitter_h, "Quitter la partie", 30, (255, 255, 255), (200, 0, 0), self.fenetre)
         self.btn_quitter.dessiner()
     
-    # Méthode de log pour le début de la partie
     def log_debut_partie(self):
+        """
+        Méthode de log pour le début de la partie.
+        """
         self.ajouter_log("Début de la partie")
 
-    # Méthode de log pour la fin de la partie
     def log_fin_partie(self):
+        """
+        Méthode de log pour la fin de la partie.
+        """
         self.ajouter_log("Fin de la partie")
     
-    # Méthode de log pour annoncer le tour d'un joueur
     def log_tour_joueur(self, joueur):
+        """
+        Méthode de log pour annoncer le tour d'un joueur.
+        """
         self.ajouter_log(f"C'est au tour du joueur n°{joueur.numero} de jouer")
 
-    # Méthode de log pour le choix d'une carte par un joueur
     def log_choix_carte(self, joueur):
+        """
+        Méthode de log pour le choix d'une carte par un joueur.
+        """
         self.ajouter_log(f"Le joueur n°{joueur.numero} a choisi une carte")
 
-    # Méthode de log pour le résulat d'un tour
     def log_cartes_choisies(self, joueur, carte):
+        """
+        Méthode de log pour le résultat d'un tour.
+        """
         self.ajouter_log(f"Le joueur n°{joueur.numero} a choisi la carte {carte}")
 
-    # Méthode pour ajouter un log
     def ajouter_log(self, texte):
+        """
+        Ajoute un log.
+        
+        Cette méthode ajoute un log à la liste des logs, et met à jour la boîte de texte des logs.
+        
+        Arguments:
+            texte (str): Le texte à ajouter au log.
+            
+        Renvoie:
+            list: Liste des logs.
+        """
         # Obtenir l'heure actuelle
         heure = datetime.now().strftime('%H:%M:%S')
         # Ajouter le texte au début du log existant
@@ -401,6 +594,17 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         self.bt_texte_logs.dessiner()
 
     def affichage_tache(self, tache):
+        """
+        Affiche la tâche en cours.
+        
+        Cette méthode affiche la tâche en cours dans la boîte de texte des logs.
+        
+        Arguments:
+            tache (Tache): La tâche en cours.
+            
+        Renvoie:
+            Tache: La tâche en cours.
+        """
         # Calculer les coordonnées pour l'affichage des tâches
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 5
@@ -419,6 +623,17 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         pygame.display.flip()
 
     def affichage_joueur(self, joueur):
+        """
+        Affiche le joueur en cours.
+        
+        Cette méthode affiche le joueur en cours dans la boîte de texte des logs.
+        
+        Arguments:
+            joueur (Joueur): Le joueur en cours.
+            
+        Renvoie:
+            Joueur: Le joueur en cours.
+        """
         # Calculer les coordonnées pour l'affichage du joueur
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 2
@@ -433,10 +648,18 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         pygame.display.flip()
 
     def plateau_cartes(self):
+        """
+        Affiche le plateau de cartes.
+        
+        Cette méthode affiche le plateau de cartes dans la fenêtre.
+        
+        Renvoie:
+            list: Liste des cartes.
+        """
         # Définir la taille et l'espacement des cartes
         taille_carte = (self.ecran_l // 11, self.ecran_h // 5)
         espacement = 20
-        marge = 20  # Ajouter une marge de 20 pixels
+        marge = 20
 
         # Calculer la position de départ du plateau de cartes
         x_debut = self.ecran_l - (6 * taille_carte[0] + 5 * espacement) - marge
@@ -458,18 +681,32 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Mettre à jour l'affichage
         pygame.display.flip()
 
-    # Méthode pour récupérer la liste des cartes
     def get_cartes(self):
+        """
+        Renvoie la liste des cartes.
+
+        Renvoie:
+            list: Liste des cartes.
+        """
         return self.liste_cartes
     
-    # Méthode pour récupérer le bouton "Quitter la partie"
     def get_btn_quitter(self):
+        """
+        Renvoie le bouton "Quitter la partie".
+        
+        Renvoie:
+            Bouton: Le bouton "Quitter la partie".
+        """
         return self.btn_quitter
 
-    # Méthode pour afficher la fenêtre
     def afficher(self):
+        """
+        Affiche la fenêtre.
+        """
         super().afficher()
 
-    # Méthode pour fermer la fenêtre
     def fermer(self):
+        """
+        Ferme la fenêtre.
+        """
         super().fermer()

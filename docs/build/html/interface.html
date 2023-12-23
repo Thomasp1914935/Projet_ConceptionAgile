@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="fr" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module Interface &#8212; Documentation Planning Poker 0.5</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=53f40b44"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=d99ca74e"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Module Jeu" href="jeu.html" />
+    <link rel="prev" title="Module Fenetres" href="fenetres.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-0">
+<span id="module-interface"></span><h1>Module Interface<a class="headerlink" href="#module-0" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.BoiteSaisie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">BoiteSaisie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_caracteres</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_ligne</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant une boîte de saisie.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>x (int): La coordonnée x de la boîte de saisie.
+y (int): La coordonnée y de la boîte de saisie.
+largeur (int): La largeur de la boîte de saisie.
+hauteur (int): La hauteur de la boîte de saisie.
+taille_police (int): La taille de la police du texte.
+couleur (tuple): La couleur de la boîte de saisie au format RGB.
+max_caracteres (int): Le nombre maximum de caractères autorisés dans la boîte de saisie.
+longueur_ligne (int): La longueur maximale d’une ligne de texte dans la boîte de saisie.
+fenetre (pygame.Surface): La surface de la fenêtre sur laquelle la boîte de saisie est dessinée.
+texte (str): Le texte saisi dans la boîte de saisie.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.dessiner">
+<span class="sig-name descname"><span class="pre">dessiner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.dessiner" title="Link to this definition">¶</a></dt>
+<dd><p>Dessine la boîte de saisie sur la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.est_clique">
+<span class="sig-name descname"><span class="pre">est_clique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.est_clique" title="Link to this definition">¶</a></dt>
+<dd><p>Vérifie si la boîte de saisie est cliquée.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>x (int): La coordonnée x du clic.
+y (int): La coordonnée y du clic.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>bool: True si la boîte de saisie est cliquée, False sinon.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.est_survole">
+<span class="sig-name descname"><span class="pre">est_survole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">souris_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">souris_y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.est_survole" title="Link to this definition">¶</a></dt>
+<dd><p>Vérifie si la boîte de saisie est survolée par la souris.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>souris_x (int): La coordonnée x de la souris.
+souris_y (int): La coordonnée y de la souris.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>bool: True si la boîte de saisie est survolée, False sinon.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.evenement">
+<span class="sig-name descname"><span class="pre">evenement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.evenement" title="Link to this definition">¶</a></dt>
+<dd><p>Gère les événements liés à la boîte de saisie.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>event (pygame.event.Event): L’événement à gérer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.get_texte">
+<span class="sig-name descname"><span class="pre">get_texte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.get_texte" title="Link to this definition">¶</a></dt>
+<dd><p>Récupère le texte saisi dans la boîte de saisie.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>str: Le texte saisi dans la boîte de saisie.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteSaisie.reset_texte">
+<span class="sig-name descname"><span class="pre">reset_texte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie.reset_texte" title="Link to this definition">¶</a></dt>
+<dd><p>Réinitialise le texte de la boîte de saisie.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.BoiteTexte">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">BoiteTexte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte_centre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_ligne</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant une boîte de texte.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>x (int): La position horizontale de la boîte de texte.
+y (int): La position verticale de la boîte de texte.
+texte (str): Le texte contenu dans la boîte de texte.
+taille_police (int): La taille de la police du texte.
+couleur (tuple): La couleur du texte.
+texte_centre (bool): Indique si le texte est centré horizontalement.
+longueur_ligne (int): La longueur maximale d’une ligne de texte.
+fenetre (pygame.Surface): La surface de la fenêtre où la boîte de texte est affichée.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteTexte.dessiner">
+<span class="sig-name descname"><span class="pre">dessiner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte.dessiner" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour dessiner une boîte de texte.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteTexte.get_taille">
+<span class="sig-name descname"><span class="pre">get_taille</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte.get_taille" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour obtenir la taille de la boîte de texte.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>tuple: La taille de la boîte de texte (largeur, hauteur).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteTexte.reset_texte">
+<span class="sig-name descname"><span class="pre">reset_texte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte.reset_texte" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour réinitialiser le texte d’une boîte de texte.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.BoiteTexte.set_texte">
+<span class="sig-name descname"><span class="pre">set_texte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte.set_texte" title="Link to this definition">¶</a></dt>
+<dd><p>Méthode pour définir le texte d’une boîte de texte.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>texte (str): Le nouveau texte à définir.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.Bouton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Bouton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_bouton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Bouton" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant un bouton dans une interface graphique.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>x (int): La coordonnée x du coin supérieur gauche du bouton.
+y (int): La coordonnée y du coin supérieur gauche du bouton.
+largeur (int): La largeur du bouton.
+hauteur (int): La hauteur du bouton.
+texte (str): Le texte affiché sur le bouton.
+taille_police (int): La taille de la police du texte.
+couleur_texte (tuple): La couleur du texte (format RGB).
+couleur_bouton (tuple): La couleur du bouton (format RGB).
+fenetre (pygame.Surface): La surface de la fenêtre sur laquelle le bouton est dessiné.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Bouton.dessiner">
+<span class="sig-name descname"><span class="pre">dessiner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.Bouton.dessiner" title="Link to this definition">¶</a></dt>
+<dd><p>Dessine le bouton sur la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Bouton.est_clique">
+<span class="sig-name descname"><span class="pre">est_clique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Bouton.est_clique" title="Link to this definition">¶</a></dt>
+<dd><p>Vérifie si le bouton est cliqué.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>x (int): La coordonnée x du clic.
+y (int): La coordonnée y du clic.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>bool: True si le bouton est cliqué, False sinon.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Bouton.est_survole">
+<span class="sig-name descname"><span class="pre">est_survole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">souris_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">souris_y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Bouton.est_survole" title="Link to this definition">¶</a></dt>
+<dd><p>Vérifie si le bouton est survolé par la souris.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>souris_x (int): La coordonnée x de la position de la souris.
+souris_y (int): La coordonnée y de la position de la souris.</p>
+</dd>
+<dt>Renvoie:</dt><dd><p>bool: True si le bouton est survolé, False sinon.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.Fenetre">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Fenetre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant une fenêtre graphique.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>largeur (int): La largeur de la fenêtre.
+hauteur (int): La hauteur de la fenêtre.
+fenetre (pygame.Surface): La surface de la fenêtre.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Fenetre.afficher">
+<span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre.afficher" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche/met à jour la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Fenetre.fermer">
+<span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre.fermer" title="Link to this definition">¶</a></dt>
+<dd><p>Ferme la fenêtre.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Fenetre.set_couleur_fond">
+<span class="sig-name descname"><span class="pre">set_couleur_fond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">couleur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre.set_couleur_fond" title="Link to this definition">¶</a></dt>
+<dd><p>Définit la couleur de fond de la fenêtre.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>couleur (tuple): Un tuple représentant la couleur au format RGB.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Fenetre.set_titre">
+<span class="sig-name descname"><span class="pre">set_titre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">titre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre.set_titre" title="Link to this definition">¶</a></dt>
+<dd><p>Définit le titre de la fenêtre.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>titre (str): Le titre de la fenêtre.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="interface.Rectangle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Rectangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_fond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_bord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Rectangle" title="Link to this definition">¶</a></dt>
+<dd><p>Classe représentant un rectangle.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>x (int): La coordonnée x du coin supérieur gauche du rectangle.
+y (int): La coordonnée y du coin supérieur gauche du rectangle.
+largeur (int): La largeur du rectangle.
+hauteur (int): La hauteur du rectangle.
+couleur_fond (tuple): La couleur de fond du rectangle au format RGB.
+couleur_bord (tuple): La couleur du bord du rectangle au format RGB.
+fenetre (pygame.Surface): La surface sur laquelle le rectangle sera dessiné.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface.Rectangle.dessiner">
+<span class="sig-name descname"><span class="pre">dessiner</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.Rectangle.dessiner" title="Link to this definition">¶</a></dt>
+<dd><p>Dessine le rectangle sur la surface spécifiée.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Planning Poker</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="fenetres.html">Module Fenetres</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interface.BoiteSaisie"><code class="docutils literal notranslate"><span class="pre">BoiteSaisie</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface.BoiteTexte"><code class="docutils literal notranslate"><span class="pre">BoiteTexte</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface.Bouton"><code class="docutils literal notranslate"><span class="pre">Bouton</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface.Fenetre"><code class="docutils literal notranslate"><span class="pre">Fenetre</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface.Rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jeu.html">Module Jeu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Module Main</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="fenetres.html" title="Chapitre précédent">Module Fenetres</a></li>
+      <li>Next: <a href="jeu.html" title="Chapitre suivant">Module Jeu</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, COLLIN Hugo & BELIN Thomas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/interface.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
