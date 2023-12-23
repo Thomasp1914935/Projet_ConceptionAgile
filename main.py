@@ -2,7 +2,7 @@ import pygame
 
 from interface import BoiteSaisie
 from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
-from jeu import Joueurs, Taches, Partie
+from jeu import Joueurs, Taches
 
 if __name__ == "__main__":
     # Initialisation de l'horloge
@@ -184,12 +184,12 @@ if __name__ == "__main__":
                         else:
                             fnt_config_taches.fermer()
                             fnt_config_taches = None
-                            tour_joueur = 0
+                            joueur_actuel = 0
                             nb_taches_traitees = 0
-                            tache_a_traiter = Taches.taches[nb_taches_traitees]
-                            #partie = Partie(Joueurs.joueurs, Taches.taches, "strict") # STRICT à modifier en variable
-                            fnt_jeu = FntJeu(tache_a_traiter, Joueurs.joueurs[tour_joueur])
-                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
+                            tache_actuelle = Taches.taches[nb_taches_traitees]
+                            cartes_choisies = []
+                            fnt_jeu = FntJeu(tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
                             fnt_jeu.afficher()
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
@@ -202,20 +202,34 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
-                    while not partie.est_terminee():
-                        for carte in fnt_jeu.liste_cartes:
-                            if carte.est_clique(souris_x, souris_y):
-
-
-
-                                print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                                # Ajouter un log pour le choix de la carte
-                                fnt_jeu.log_choix_carte(Joueurs.joueurs[tour_joueur])
-                                # Incrémenter le tour du joueur
-                                tour_joueur += 1
-                                # Ajouter un log pour le tour du joueur
-                                fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
-                                fnt_jeu.affichage_joueur(Joueurs.joueurs[tour_joueur])
+                    for carte in fnt_jeu.liste_cartes:
+                        if carte.est_clique(souris_x, souris_y):
+                            # Si toutes les tâches n'ont pas été traitées
+                            if nb_taches_traitees <= len(Taches.taches):
+                                # Si tout les joueurs n'ont pas joué
+                                if joueur_actuel < len(Joueurs.joueurs) - 1:
+                                    print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                                    cartes_choisies.append(carte)
+                                    # Ajouter un log pour le choix de la carte
+                                    fnt_jeu.log_choix_carte(Joueurs.joueurs[joueur_actuel])
+                                    # Incrémenter le tour du joueur
+                                    joueur_actuel += 1
+                                    # Ajouter un log pour le tour du joueur
+                                    fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
+                                    fnt_jeu.affichage_joueur(Joueurs.joueurs[joueur_actuel])
+                                elif joueur_actuel < len(Joueurs.joueurs):
+                                    print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                                    cartes_choisies.append(carte)
+                                    # Ajouter un log pour le choix de la carte
+                                    fnt_jeu.log_choix_carte(Joueurs.joueurs[joueur_actuel])
+                                    # Incrémenter le tour du joueur
+                                    joueur_actuel += 1
+                                    if len(set(cartes_choisies)) > 1:
+                                        print("Toutes les cartes choisies ne sont pas identiques!")
+                                    else:
+                                        print("Toutes les cartes choisies sont identiques!")
+                                    ### ATTENTION LE TRAITEMENT DE LA PARTIE DOIT ETRE MIT DANS UNE CLASSE PARTIE DANS LE FICHIER JEU.PY
+                                    ### CE TRAITEMENT ETAIT UN TEST
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]

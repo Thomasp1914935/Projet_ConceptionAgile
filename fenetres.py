@@ -591,7 +591,6 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Effacer l'ancienne zone de texte
         self.bt_texte_logs.reset_texte()
         self.bt_texte_logs.set_texte("\n".join(self.logs))
-        print(self.logs)
         self.bt_texte_logs.dessiner()
 
     def affichage_tache(self, tache):

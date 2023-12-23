@@ -43,56 +43,6 @@ class Taches:
     def __repr__(self):
         return f"Tâche {self.numero} :\n   Titre : {self.titre}\n   Description : {self.description}\n   Difficulté : {self.difficulte}"
 
-class Partie:
-    """
-    Classe représentant une partie du jeu.
-
-    Attributs:
-        joueurs (list): Liste des joueurs de la partie.
-        taches (list): Liste des tâches de la partie.
-        mode_jeu (str): Le mode de jeu choisi.
-        tour (int): Le tour actuel.
-    """
-
-    def __init__(self, joueurs, taches, mode_jeu):
-        self.joueurs = joueurs
-        self.taches = taches
-        self.mode_jeu = mode_jeu
-        self.tour = 0
-
-    def joueur_actuel(self):
-        """
-        Méthode pour obtenir le joueur actuel.
-
-        Renvvoie:
-            Le joueur actuel.
-        """
-        return self.joueurs[self.tour % len(self.joueurs)]
-
-    def tache_actuelle(self):
-        """
-        Méthode pour obtenir la tâche actuelle.
-
-        Renvoie:
-            La tâche actuelle.
-        """
-        return self.taches[self.tour // len(self.joueurs)]
-
-    def passer_au_tour_suivant(self):
-        """
-        Méthode pour passer au tour suivant.
-        """
-        self.tour += 1
-
-    def est_terminee(self):
-        """
-        Méthode pour vérifier si la partie est terminée.
-
-        Renvoie:
-            True si la partie est terminée, False sinon.
-        """
-        return self.tour >= len(self.joueurs) * len(self.taches)
-
 class Cartes:
     """
     Classe représentant une carte du jeu.
