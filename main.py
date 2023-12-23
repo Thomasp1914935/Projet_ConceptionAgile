@@ -2,7 +2,7 @@ import pygame
 
 from interface import BoiteSaisie
 from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
-from jeu import Joueurs, Taches
+from jeu import Joueurs, Taches, Partie
 
 if __name__ == "__main__":
     # Initialisation de l'horloge
@@ -118,13 +118,14 @@ if __name__ == "__main__":
 
                             # Ajouter le joueur à la liste des joueurs
                             Joueurs.joueurs.append(joueur)
-                        # Afficher la liste des joueurs [DEBUG]
-                        print("Liste des joueurs :")
-                        for joueur in Joueurs.joueurs:
-                            print(joueur)
 
                         # Vérifier si tous les joueurs ont un nom non vide
                         if all(joueur.nom for joueur in Joueurs.joueurs):
+                            # Afficher la liste des joueurs [DEBUG]
+                            print("Liste des joueurs :")
+                            for joueur in Joueurs.joueurs:
+                                print(joueur)
+                            
                             fnt_config_joueurs.fermer()
                             fnt_config_joueurs = None
                             fnt_config_taches = FntConfigTaches()
@@ -167,19 +168,18 @@ if __name__ == "__main__":
                             fnt_config_taches.actualiser_bt_description(nb_taches+1)
                             fnt_config_taches.reset_bs()
                             print(f"[INFO] : La tâche '{titre}' enregistrée avec succès") # [DEBUG]
+                            # Afficher la liste des tâches [DEBUG]
+                            print("Liste des tâches :")
+                            for tache in Taches.taches:
+                                print(tache)
                         else:
                             print("[WARNING] : Le titre de la tâche ne peut pas être vide") # [DEBUG]
                             fnt_config_taches.afficher_msg_erreur("Attention : le titre de la tâche ne peut pas être vide !")
 
-                        # Afficher la liste des tâches [DEBUG]
-                        print("Liste des tâches :")
-                        for tache in Taches.taches:
-                            print(tache)
-
                     elif fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         if nb_taches == 0:
-                            fnt_config_taches.afficher_msg_erreur("             Attention : aucune tâche n'a été enregistrée !             ")
+                            fnt_config_taches.afficher_msg_erreur("Attention : aucune tâche n'a été enregistrée !")
                             print("[WARNING] : Aucune tâche enregistrée") # [DEBUG]
                         else:
                             fnt_config_taches.fermer()
@@ -187,6 +187,7 @@ if __name__ == "__main__":
                             tour_joueur = 0
                             nb_taches_traitees = 0
                             tache_a_traiter = Taches.taches[nb_taches_traitees]
+                            #partie = Partie(Joueurs.joueurs, Taches.taches, "strict") # STRICT à modifier en variable
                             fnt_jeu = FntJeu(tache_a_traiter, Joueurs.joueurs[tour_joueur])
                             fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
                             fnt_jeu.afficher()
@@ -201,16 +202,20 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
-                    for carte in fnt_jeu.liste_cartes:
-                        if carte.est_clique(souris_x, souris_y):
-                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                            # Ajouter un log pour le choix de la carte
-                            fnt_jeu.log_choix_carte(Joueurs.joueurs[tour_joueur])
-                            # Incrémenter le tour du joueur
-                            tour_joueur += 1
-                            # Ajouter un log pour le tour du joueur
-                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
-                            fnt_jeu.affichage_joueur(Joueurs.joueurs[tour_joueur])
+                    while not partie.est_terminee():
+                        for carte in fnt_jeu.liste_cartes:
+                            if carte.est_clique(souris_x, souris_y):
+
+
+
+                                print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                                # Ajouter un log pour le choix de la carte
+                                fnt_jeu.log_choix_carte(Joueurs.joueurs[tour_joueur])
+                                # Incrémenter le tour du joueur
+                                tour_joueur += 1
+                                # Ajouter un log pour le tour du joueur
+                                fnt_jeu.log_tour_joueur(Joueurs.joueurs[tour_joueur])
+                                fnt_jeu.affichage_joueur(Joueurs.joueurs[tour_joueur])
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]

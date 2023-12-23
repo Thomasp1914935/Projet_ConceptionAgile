@@ -190,6 +190,10 @@ class BoiteTexte:
         """
         Méthode pour dessiner une boîte de texte.
         """
+        # Dessiner un rectangle blanc sur l'ancienne boîte de texte
+        if self.derniere_taille != (0, 0):
+            pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x, self.y, self.derniere_taille[0], self.derniere_taille[1]))
+
         lines = self.texte.split('\n')
         for line in lines:
             self.wrapped_lines = textwrap.wrap(line, self.longueur_ligne)
@@ -197,12 +201,14 @@ class BoiteTexte:
                 texte_surface = self.police.render(self.wrapped_line, True, self.couleur)
                 if self.texte_centre:
                     self.x_centre = self.x - texte_surface.get_width() / 2
-                    pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x_centre, self.y, self.police.size(self.wrapped_line)[0], self.police.size(self.wrapped_line)[1]))
                 else:
                     self.x_centre = self.x
-                    pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x_centre, self.y, self.police.size(self.wrapped_line)[0], self.police.size(self.wrapped_line)[1]))
+                pygame.draw.rect(self.fenetre, (255, 255, 255), (self.x_centre, self.y, self.police.size(self.wrapped_line)[0], self.police.size(self.wrapped_line)[1]))
                 self.fenetre.blit(texte_surface, (self.x_centre, self.y))
                 self.y += self.police.get_height()
+
+        # Mémoriser la taille et la position de la boîte de texte
+        self.derniere_taille = self.get_taille()
 
     def get_taille(self):
         """

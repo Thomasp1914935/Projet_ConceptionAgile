@@ -462,6 +462,7 @@ class FntConfigTaches(Fenetre, Bouton, BoiteTexte, BoiteSaisie):
         Arguments:
             message (str): Le message d'erreur à afficher.
         """
+        Rectangle(30, self.get_btn_valider().y - 30, 400, 25, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
         bt_msg_erreur = BoiteTexte(self.fnt_config_taches_l / 2, self.get_btn_valider().y - 25, message, 20, (200, 0, 0), True, 60, self.fenetre)
         bt_msg_erreur.dessiner()
 
@@ -609,11 +610,13 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 5
 
+        Rectangle(self.ecran_l / 5 * 1.95, y - 10, 800, 260, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+
         # Créer une boîte de texte pour le titre
         bt_titre_tache = BoiteTexte(x, y, f"Titre de la tâche n°{tache.numero} : {tache.titre}", 40, (0, 0, 0), True, 46, self.ecran)
 
         # Créer une boîte de texte pour la description
-        bt_description_tache = BoiteTexte(x, y + 50, f"Description de la tâche n°{tache.numero} : {tache.description}", 40, (0, 0, 0), True, 50, self.ecran)
+        bt_description_tache = BoiteTexte(x, y + 50, f"Description de la tâche n°{tache.numero} : {tache.description}", 40, (0, 0, 0), True, 30, self.ecran)
 
         # Dessiner les boîtes de texte
         bt_titre_tache.dessiner()
@@ -637,6 +640,8 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Calculer les coordonnées pour l'affichage du joueur
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 2
+
+        Rectangle(self.ecran_l / 5 * 1.95, y - 10, 800, 45, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
 
         # Créer une boîte de texte pour le nom du joueur
         bt_nom_joueur = BoiteTexte(x, y, f"C'est au tour de {joueur.nom} de jouer", 40, (0, 0, 0), True, 46, self.ecran)
