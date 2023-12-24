@@ -2,7 +2,7 @@ import pygame
 
 from interface import BoiteSaisie
 from fenetres import FntAccueil, FntConfigJoueurs, FntConfigTaches, FntJeu
-from jeu import Joueurs, Taches
+from jeu import Joueurs, Taches, Partie
 
 if __name__ == "__main__":
     # Initialisation de l'horloge
@@ -16,6 +16,9 @@ if __name__ == "__main__":
     fnt_config_joueurs = None
     fnt_config_taches = None
     fnt_jeu = None
+
+    # Créez une instance de Partie avec le mode 'strict'
+    partie = Partie('strict') 
 
     # Boucle d'événements de l'application
     running = True
@@ -202,32 +205,7 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
-                    for carte in fnt_jeu.liste_cartes:
-                        if carte.est_clique(souris_x, souris_y):
-                            # Si toutes les tâches n'ont pas été traitées
-                            if nb_taches_traitees <= len(Taches.taches):
-                                # Si tout les joueurs n'ont pas joué
-                                if joueur_actuel < len(Joueurs.joueurs) - 1:
-                                    print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                                    cartes_choisies.append(carte)
-                                    # Ajouter un log pour le choix de la carte
-                                    fnt_jeu.log_choix_carte(Joueurs.joueurs[joueur_actuel])
-                                    # Incrémenter le tour du joueur
-                                    joueur_actuel += 1
-                                    # Ajouter un log pour le tour du joueur
-                                    fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
-                                    fnt_jeu.affichage_joueur(Joueurs.joueurs[joueur_actuel])
-                                elif joueur_actuel < len(Joueurs.joueurs):
-                                    print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                                    cartes_choisies.append(carte)
-                                    # Ajouter un log pour le choix de la carte
-                                    fnt_jeu.log_choix_carte(Joueurs.joueurs[joueur_actuel])
-                                    # Incrémenter le tour du joueur
-                                    joueur_actuel += 1
-                                    if len(set(cartes_choisies)) > 1:
-                                        print("Toutes les cartes choisies ne sont pas identiques!")
-                                    else:
-                                        print("Toutes les cartes choisies sont identiques!")
+                    partie.jouer(fnt_jeu, souris_x, souris_y)  # Appelez la méthode jouer de Partie
                                     ### ATTENTION LE TRAITEMENT DE LA PARTIE DOIT ETRE MIT DANS UNE CLASSE PARTIE DANS LE FICHIER JEU.PY
                                     ### CE TRAITEMENT ETAIT UN TEST
 

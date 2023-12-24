@@ -101,3 +101,52 @@ class Cartes:
         """
         largeur, hauteur = self.image.get_size()
         return self.position[0] <= x <= self.position[0] + largeur and self.position[1] <= y <= self.position[1] + hauteur
+    
+class Partie:
+    """
+    Classe représentant la partie, le mode de jeu.
+
+    Attributs:
+        self.mode: Le mode de jeu.
+        joueur_actuel: Le nb joueur en tain de jouer.
+        les cartes choisies dans un tableau.
+        le nombre de taches.
+    """
+    def __init__(self, mode):
+        self.mode = mode
+        self.joueur_actuel = 0
+        self.cartes_choisies = []
+        self.nb_taches_traitees = 0
+
+    def jouer(self, fnt_jeu, souris_x, souris_y):
+            for carte in fnt_jeu.liste_cartes:
+                if carte.est_clique(souris_x, souris_y):
+                    # Si toutes les tâches n'ont pas été traitées
+                    if self.nb_taches_traitees <= len(Taches.taches):
+                        # Si tout les joueurs n'ont pas joué
+                        if self.joueur_actuel < len(Joueurs.joueurs) - 1:
+                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                            self.cartes_choisies.append(carte)
+                            # Ajouter un log pour le choix de la carte
+                            fnt_jeu.log_choix_carte(Joueurs.joueurs[self.joueur_actuel])
+                            # Incrémenter le tour du joueur
+                            self.joueur_actuel += 1
+                            # Ajouter un log pour le tour du joueur
+                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[self.joueur_actuel])
+                            fnt_jeu.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+                        elif self.joueur_actuel < len(Joueurs.joueurs):
+                            print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
+                            self.cartes_choisies.append(carte)
+                            # Ajouter un log pour le choix de la carte
+                            fnt_jeu.log_choix_carte(Joueurs.joueurs[self.joueur_actuel])
+                            # Incrémenter le tour du joueur
+                            self.joueur_actuel += 1
+                            if not self.verifier_cartes():
+                                print("Toutes les cartes choisies ne sont pas identiques!")
+                                self.joueur_actuel = 0
+                                self.cartes_choisies = []
+                            else:
+                                print("Toutes les cartes choisies sont identiques!")
+
+    def verifier_cartes(self):
+        return len(set(self.cartes_choisies)) <= 1
