@@ -17,9 +17,6 @@ if __name__ == "__main__":
     fnt_config_taches = None
     fnt_jeu = None
 
-    # Créez une instance de Partie avec le mode 'strict'
-    partie = Partie('strict') 
-
     # Boucle d'événements de l'application
     running = True
     while running:
@@ -190,8 +187,8 @@ if __name__ == "__main__":
                             joueur_actuel = 0
                             nb_taches_traitees = 0
                             tache_actuelle = Taches.taches[nb_taches_traitees]
-                            cartes_choisies = []
                             fnt_jeu = FntJeu(tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                            partie = Partie('strict', fnt_jeu) # a modifier par une variable globale
                             fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
                             fnt_jeu.afficher()
                 
@@ -205,9 +202,9 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
-                    partie.jouer(fnt_jeu, souris_x, souris_y)  # Appelez la méthode jouer de Partie
-                                    ### ATTENTION LE TRAITEMENT DE LA PARTIE DOIT ETRE MIT DANS UNE CLASSE PARTIE DANS LE FICHIER JEU.PY
-                                    ### CE TRAITEMENT ETAIT UN TEST
+                    for carte in fnt_jeu.liste_cartes:
+                        if carte.est_clique(souris_x, souris_y):
+                            partie.jouer(carte)
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
