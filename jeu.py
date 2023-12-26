@@ -161,12 +161,12 @@ class Partie:
             print(f"[INFO] : La moyenne de difficulté est de {moyenne}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = moyenne
             self.tache_suivante()
-        elif self.mode == "mediane":
+        elif self.mode == "médiane":
             mediane = median([int(carte.nom_carte) for carte in self.cartes_choisies])
             print(f"[INFO] : La médiane de difficulté est de {mediane}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = mediane
             self.tache_suivante()
-        elif self.mode == "majabs":
+        elif self.mode == "majorité absolue":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
             compteur = Counter(valeurs_cartes)
             valeur, nombre = compteur.most_common(1)[0]
@@ -177,7 +177,7 @@ class Partie:
             else:
                 print("[INFO] : Aucune difficulté n'a la majorité absolue !")  # [DEBUG]
                 self.rejouer_tour()
-        elif self.mode == "majrel":
+        elif self.mode == "majorité relative":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
             compteur = Counter(valeurs_cartes)
             valeur, nombre = compteur.most_common(1)[0]

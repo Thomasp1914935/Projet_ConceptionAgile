@@ -99,7 +99,7 @@ if __name__ == "__main__":
                         fnt_config_joueurs = FntConfigJoueurs()
                         fnt_config_joueurs.afficher()
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
-                        mode_jeu = "mediane"
+                        mode_jeu = "médiane"
                         nb_joueurs = 2
                     
                     elif fnt_accueil.get_btn_majabs().est_clique(souris_x, souris_y):
@@ -109,7 +109,7 @@ if __name__ == "__main__":
                         fnt_config_joueurs = FntConfigJoueurs()
                         fnt_config_joueurs.afficher()
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
-                        mode_jeu = "majabs"
+                        mode_jeu = "majorité absolue"
                         nb_joueurs = 2
                     
                     elif fnt_accueil.get_btn_majrel().est_clique(souris_x, souris_y):
@@ -119,7 +119,7 @@ if __name__ == "__main__":
                         fnt_config_joueurs = FntConfigJoueurs()
                         fnt_config_joueurs.afficher()
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
-                        mode_jeu = "majrel"
+                        mode_jeu = "majorité relative"
                         nb_joueurs = 2
                 
                 elif fnt_config_joueurs is not None:
@@ -232,7 +232,7 @@ if __name__ == "__main__":
                             joueur_actuel = 0
                             nb_taches_traitees = 0
                             tache_actuelle = Taches.taches[nb_taches_traitees]
-                            fnt_jeu = FntJeu(tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                            fnt_jeu = FntJeu(mode_jeu, tache_actuelle, Joueurs.joueurs[joueur_actuel])
                             partie = Partie(mode_jeu, fnt_jeu)
                             fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
                             fnt_jeu.afficher()

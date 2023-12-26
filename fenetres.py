@@ -55,19 +55,19 @@ class FntAccueil(Fenetre, Bouton):
         self.btn_moyenne = Bouton(btn_x, btn_moyenne_y, btn_l, btn_h,  "Mode moyenne", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_moyenne.dessiner()
 
-        # Création du bouton "Mode mediane"
+        # Création du bouton "Mode médiane"
         btn_mediane_y = btn_moyenne_y + btn_espacement
-        self.btn_mediane = Bouton(btn_x, btn_mediane_y, btn_l, btn_h,  "Mode mediane", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_mediane = Bouton(btn_x, btn_mediane_y, btn_l, btn_h,  "Mode médiane", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_mediane.dessiner()
 
-        # Création du bouton "Mode majorite absolue"
+        # Création du bouton "Mode majorité absolue"
         btn_majabs_y = btn_mediane_y + btn_espacement
-        self.btn_majabs = Bouton(btn_x, btn_majabs_y, btn_l, btn_h,  "Mode majorite absolue", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majabs = Bouton(btn_x, btn_majabs_y, btn_l, btn_h,  "Mode majorité absolue", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_majabs.dessiner()
 
-        # Création du bouton "Mode majorite relative"
+        # Création du bouton "Mode majorité relative"
         btn_majrel_y = btn_majabs_y + btn_espacement
-        self.btn_majrel = Bouton(btn_x, btn_majrel_y, btn_l, btn_h,  "Mode majorite relative", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majrel = Bouton(btn_x, btn_majrel_y, btn_l, btn_h,  "Mode majorité relative", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_majrel.dessiner()
 
     def get_btn_strict(self):
@@ -573,16 +573,21 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         liste_cartes (list): Liste des cartes.
         btn_quitter (Bouton): Bouton pour quitter la partie.
     """
-    def __init__(self, tache, joueur):
+    def __init__(self, mode_jeu, tache, joueur):
         # Paramètres de la fenêtre
         super().__init__(0, 0)
         self.ecran = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.ecran_l, self.ecran_h = self.ecran.get_size()
         self.set_titre("Planning Poker : Plateau de jeu")
         self.set_couleur_fond((255, 255, 255))
+        self.mode_jeu = mode_jeu
         self.logs = []
 
-        # Création des rectangles
+        # Affichage du mode de jeu
+        bt_mode_jeu = BoiteTexte(self.ecran_l / 3 * 2, self.ecran_h / 10, f"Mode de jeu : {self.mode_jeu}", 40, (0, 0, 0), True, 100, self.ecran)
+        bt_mode_jeu.dessiner()
+
+        # Création des rectangles de logs et de chat
         self.rect_marge = 20
         self.rect_l = self.ecran_l / 3 - 2 * self.rect_marge
         self.rect_h = self.ecran_h / 2 - 1.5 * self.rect_marge
