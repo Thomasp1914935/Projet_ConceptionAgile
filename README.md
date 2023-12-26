@@ -7,6 +7,7 @@
     - os
     - datetime
     - json
+    - hashlib
     - tkinter
     - pygame
     - statistics

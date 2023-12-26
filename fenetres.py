@@ -5,7 +5,7 @@ import pygame
 from interface import Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie
 from jeu import Cartes
 
-class FntAccueil(Fenetre, Bouton):
+class FntAccueil(Fenetre, Bouton, BoiteTexte):
     """
     Classe représentant la fenêtre d'accueil du jeu Planning Poker.
 

@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
-import hashlib
 import json
+import hashlib
 import pygame
 
 from statistics import mean, median
@@ -118,12 +118,12 @@ class Partie:
         les cartes choisies dans un tableau.
         le nombre de taches.
     """
-    def __init__(self, mode, fenetre):
+    def __init__(self, mode, tache_actuelle, fenetre):
         self.mode = mode
         self.joueur_actuel = 0
         self.cartes_choisies = []
         self.log_cartes_choisies = []
-        self.tache_actuelle = 1
+        self.tache_actuelle = tache_actuelle
         self.premier_tour = True
         self.partie_finie = False
         self.fenetre = fenetre
@@ -255,14 +255,14 @@ class Partie:
         Fonction qui gère la fin de la partie.
         """
         if self.partie_finie == True:
-            print("[INFO] : Toutes les tâches ont été traitées!") # [DEBUG]
+            print("[INFO] : Toutes les tâches ont été traitées !") # [DEBUG]
             self.joueur_actuel = None
             self.cartes_choisies = []
             self.log_cartes_choisies = []
             self.tache_actuelle = None
             self.sauvergarde_partie()
         else:
-            print("[INFO] : Tous les joueurs ont choisi la carte café. La partie est mise en pause et enregistrée.") # [DEBUG]
+            print("[INFO] : Tous les joueurs ont choisi la carte café.") # [DEBUG]
             self.joueur_actuel = 0
             self.cartes_choisies = []
             self.log_cartes_choisies = []
@@ -314,6 +314,9 @@ class Partie:
         return 0
     
     def charger_sauvegarde(self):
+        """
+        Méthode pour charger une partie à partir d'une sauvegarde.
+        """
         # Vérifier si la partie est terminée
         partie_finie = self.data['partie_finie']
         

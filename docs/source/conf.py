@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Planning Poker'
+project = 'Planning Poker [v1.0]'
 copyright = '2023, COLLIN Hugo & BELIN Thomas'
 author = 'COLLIN Hugo & BELIN Thomas'
 release = '1.0'

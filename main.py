@@ -136,7 +136,7 @@ if __name__ == "__main__":
                             print("[WARNING] : Aucune partie sauvegardée") # [DEBUG]
                         if sauvegarde == True:
                             mode_jeu = None
-                            partie = Partie(mode_jeu, fnt_jeu)
+                            partie = Partie(mode_jeu, 0, fnt_jeu)
                             integrite_sauvegarde = partie.analyse_sauvegarde()
                             if integrite_sauvegarde == 0:
                                 print("[INFO] : L'intégrité de la sauvegarde a été vérifiée avec succès") # [DEBUG]
@@ -149,7 +149,7 @@ if __name__ == "__main__":
                                     fnt_accueil.fermer()
                                     fnt_accueil = None
                                     fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle - 1], Joueurs.joueurs[joueur_actuel])
-                                    partie = Partie(mode_jeu, fnt_jeu)
+                                    partie = Partie(mode_jeu, tache_actuelle, fnt_jeu)
                                     fnt_jeu.afficher()
                             elif integrite_sauvegarde == 1:
                                 print("[WARNING] : La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes") # [DEBUG]
@@ -273,10 +273,10 @@ if __name__ == "__main__":
                             fnt_config_taches.fermer()
                             fnt_config_taches = None
                             joueur_actuel = 0
-                            tache_actuelle = 0
+                            tache_actuelle = 1
                             partie_finie = 0
-                            fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle], Joueurs.joueurs[joueur_actuel])
-                            partie = Partie(mode_jeu, fnt_jeu)
+                            fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle - 1], Joueurs.joueurs[joueur_actuel])
+                            partie = Partie(mode_jeu, tache_actuelle, fnt_jeu)
                             fnt_jeu.afficher()
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
