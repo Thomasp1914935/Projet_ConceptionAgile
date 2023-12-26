@@ -15,16 +15,16 @@ class FntAccueil(Fenetre, Bouton):
     def __init__(self):
         # Paramètres de la fenêtre
         fnt_accueil_l = 450
-        fnt_accueil_h = 700
+        fnt_accueil_h = 800
         super().__init__(fnt_accueil_l, fnt_accueil_h)
         self.set_titre("Planning Poker : Accueil")
         self.set_couleur_fond((255, 255, 255))
-        btn_l = 270
-        btn_h = 50
-        btn_x = (fnt_accueil_l - btn_l) / 2
+        self.btn_l = 270
+        self.btn_h = 50
+        self.btn_x = (fnt_accueil_l - self.btn_l) / 2
         btn_espacement = 75
-        btn_taille_police = 30
-        btn_couleur_texte = (255, 255, 255)
+        self.btn_taille_police = 30
+        self.btn_couleur_texte = (255, 255, 255)
         btn_couleur = (0, 0, 0)
 
         # Affichage de l'icone de l'application
@@ -42,33 +42,42 @@ class FntAccueil(Fenetre, Bouton):
         # Création du message d'accueil
         bt_pp = BoiteTexte(fnt_accueil_l / 2, 100, "Planning Poker", 50, (0, 0, 0), True, 100, self.fenetre)
         bt_pp.dessiner()
-        bt_mode_jeu = BoiteTexte(fnt_accueil_l / 2, 200, "Choississez un mode de jeu :", 30, (0, 0, 0), True, 100, self.fenetre)
+        bt_mode_jeu = BoiteTexte(fnt_accueil_l / 2, 190, "Démarrez une nouvelle partie en choississant un mode de jeu :", 30, (0, 0, 0), True, 40, self.fenetre)
         bt_mode_jeu.dessiner()
 
         # Création du bouton "Mode strict"
         btn_strict_y = 250
-        self.btn_strict = Bouton(btn_x, btn_strict_y, btn_l, btn_h,  "Mode strict", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_strict = Bouton(self.btn_x, btn_strict_y, self.btn_l, self.btn_h, "Mode strict", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_strict.dessiner()
 
         # Création du bouton "Mode moyenne"
         btn_moyenne_y = btn_strict_y + btn_espacement
-        self.btn_moyenne = Bouton(btn_x, btn_moyenne_y, btn_l, btn_h,  "Mode moyenne", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_moyenne = Bouton(self.btn_x, btn_moyenne_y, self.btn_l, self.btn_h, "Mode moyenne", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_moyenne.dessiner()
 
         # Création du bouton "Mode médiane"
         btn_mediane_y = btn_moyenne_y + btn_espacement
-        self.btn_mediane = Bouton(btn_x, btn_mediane_y, btn_l, btn_h,  "Mode médiane", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_mediane = Bouton(self.btn_x, btn_mediane_y, self.btn_l, self.btn_h, "Mode médiane", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_mediane.dessiner()
 
         # Création du bouton "Mode majorité absolue"
         btn_majabs_y = btn_mediane_y + btn_espacement
-        self.btn_majabs = Bouton(btn_x, btn_majabs_y, btn_l, btn_h,  "Mode majorité absolue", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majabs = Bouton(self.btn_x, btn_majabs_y, self.btn_l, self.btn_h, "Mode majorité absolue", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_majabs.dessiner()
 
         # Création du bouton "Mode majorité relative"
         btn_majrel_y = btn_majabs_y + btn_espacement
-        self.btn_majrel = Bouton(btn_x, btn_majrel_y, btn_l, btn_h,  "Mode majorité relative", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majrel = Bouton(self.btn_x, btn_majrel_y, self.btn_l, self.btn_h, "Mode majorité relative", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
         self.btn_majrel.dessiner()
+        
+        # Création du message de reprise de partie
+        bt_reprendre_partie = BoiteTexte(fnt_accueil_l / 2, btn_majrel_y + 100, "Vous pouvez aussi reprendre la dernière partie enregistrée :", 30, (0, 0, 0), True, 40, self.fenetre)
+        bt_reprendre_partie.dessiner()
+
+        # Création du bouton "Reprendre la partie"
+        self.btn_reprendre_partie_y = btn_majrel_y + 160
+        self.btn_reprendre_partie = Bouton(self.btn_x, self.btn_reprendre_partie_y, self.btn_l, self.btn_h, "Reprendre la partie", self.btn_taille_police, self.btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_reprendre_partie.dessiner()
 
     def get_btn_strict(self):
         """
@@ -115,6 +124,24 @@ class FntAccueil(Fenetre, Bouton):
         """
         return self.btn_majrel
     
+    def get_btn_reprendre_partie(self):
+        """
+        Renvoie le bouton "Reprendre la partie" de la fenêtre d'accueil.
+
+        Renvoie:
+            Bouton: Le bouton "Reprendre la partie".
+        """
+        return self.btn_reprendre_partie
+    
+    def desactiver_btn_reprendre_partie(self):
+        """
+        Désactive le bouton "Reprendre la partie".
+
+        Cette méthode change l'apparence du bouton pour le rendre inactif.
+        """
+        self.btn_reprendre_partie = Bouton(self.btn_x, self.btn_reprendre_partie_y, self.btn_l, self.btn_h, "Reprendre la partie", self.btn_taille_police, self.btn_couleur_texte, (125, 125, 125), self.fenetre)
+        self.btn_reprendre_partie.dessiner()
+
     def afficher(self):
         """
         Affiche la fenêtre d'accueil.
@@ -609,7 +636,6 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         self.affichage_tache(tache)
         self.affichage_joueur(joueur)
         self.plateau_cartes()
-        self.log_debut_partie()
 
         # Création du bouton "Quitter la partie"
         btn_quitter_l = 200

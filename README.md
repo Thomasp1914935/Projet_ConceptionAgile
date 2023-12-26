@@ -6,6 +6,7 @@
 2. Assurez-vous d'avoir un noyau Python installé avec les bibliothèques suivantes :
     - os
     - datetime
+    - json
     - pygame
     - statistics
     - collections

@@ -1,3 +1,4 @@
+import os
 import pygame
 
 from interface import BoiteSaisie
@@ -11,6 +12,11 @@ if __name__ == "__main__":
     # Affichage de la fenêtre Accueil
     fnt_accueil = FntAccueil()
     fnt_accueil.afficher()
+    if not os.path.isfile('sauvegarde.json'):
+        sauvegarde = False
+        fnt_accueil.desactiver_btn_reprendre_partie()
+    else:
+        sauvegarde = True
 
     # Initialisation des autres fenêtres
     fnt_config_joueurs = None
@@ -39,6 +45,7 @@ if __name__ == "__main__":
                     elements.append(fnt_accueil.get_btn_mediane())
                     elements.append(fnt_accueil.get_btn_majabs())
                     elements.append(fnt_accueil.get_btn_majrel())
+                    elements.append(fnt_accueil.get_btn_reprendre_partie())
                 if fnt_config_joueurs is not None:
                     elements.extend(fnt_config_joueurs.get_bs_joueurs())
                     elements.append(fnt_config_joueurs.get_btn_ajouter_joueur())
@@ -121,7 +128,31 @@ if __name__ == "__main__":
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                         mode_jeu = "majorité relative"
                         nb_joueurs = 2
-                
+
+                    elif fnt_accueil.get_btn_reprendre_partie().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Reprendre la partie' cliqué")
+                        if sauvegarde == False:
+                            print("[WARNING] : Aucune partie sauvegardée") # [DEBUG]
+                        if sauvegarde == True:
+                            mode_jeu = None
+                            partie = Partie(mode_jeu, fnt_jeu)
+                            integrite_sauvegarde = partie.analyse_sauvegarde()
+                            if integrite_sauvegarde == 0:
+                                print("[INFO] : L'intégrité de la sauvegarde a été vérifiée avec succès") # [DEBUG]
+                                partie_finie = partie.charger_sauvegarde()
+                                if partie_finie == 1:
+                                    print("[WARNING] : La partie sauvegardée est terminée") # [DEBUG]
+                                elif partie_finie == 0:
+                                    fnt_accueil.fermer()
+                                    fnt_accueil = None
+                                    fnt_jeu = FntJeu(mode_jeu, tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                                    partie = Partie(mode_jeu, fnt_jeu)
+                                    fnt_jeu.afficher()
+                            elif integrite_sauvegarde == 1:
+                                print("[WARNING] : La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes") # [DEBUG]
+                            elif integrite_sauvegarde == 2:
+                                print("[WARNING] : La sauvegarde est corrompue ! La sauvegarde a été modifiée manuellement") # [DEBUG]
+
                 elif fnt_config_joueurs is not None:
                     if fnt_config_joueurs.get_btn_ajouter_joueur().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Ajouter un joueur' cliqué") # [DEBUG]
@@ -232,9 +263,9 @@ if __name__ == "__main__":
                             joueur_actuel = 0
                             nb_taches_traitees = 0
                             tache_actuelle = Taches.taches[nb_taches_traitees]
+                            partie_finie = 0
                             fnt_jeu = FntJeu(mode_jeu, tache_actuelle, Joueurs.joueurs[joueur_actuel])
                             partie = Partie(mode_jeu, fnt_jeu)
-                            fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
                             fnt_jeu.afficher()
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
@@ -249,7 +280,17 @@ if __name__ == "__main__":
                 elif fnt_jeu is not None:
                     for carte in fnt_jeu.liste_cartes:
                         if carte.est_clique(souris_x, souris_y):
-                            partie.jouer(carte)
+                            # Si la partie n'est pas finie
+                            if partie_finie == 0:
+                                partie_finie = partie.jouer(carte)
+                                # Si la partie est finie avec toutes les tâches traitées
+                                if partie_finie == 1:
+                                    print("PARTIE FINIE") # [DEBUG]
+                                    # AFFICHAGE GRAPHIQUE DE LA PARTIE FINIE
+                                # Si la partie est finie avec une pause café
+                                elif partie_finie == 2:
+                                    print("CAFE") # [DEBUG]
+                                    # AFFICHAGE GRAPHIQUE DE LA PAUSE CAFE
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
@@ -257,6 +298,11 @@ if __name__ == "__main__":
                         fnt_jeu = None
                         fnt_accueil = FntAccueil()
                         fnt_accueil.afficher()
+                        if not os.path.isfile('sauvegarde.json'):
+                            sauvegarde = False
+                            fnt_accueil.desactiver_btn_reprendre_partie()
+                        else:
+                            sauvegarde = True
             
             # Evénements si une touche du clavier est pressée
             elif event.type == pygame.KEYDOWN:

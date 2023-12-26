@@ -1,4 +1,7 @@
 import os
+from datetime import datetime
+import hashlib
+import json
 import pygame
 
 from statistics import mean, median
@@ -121,6 +124,7 @@ class Partie:
         self.cartes_choisies = []
         self.log_cartes_choisies = []
         self.tache_actuelle = 1
+        self.partie_finie = False
         self.fenetre = fenetre
 
     def jouer(self, carte):
@@ -138,21 +142,24 @@ class Partie:
                 self.log_cartes_choisies.append(carte)
                 self.joueur_actuel += 1
                 self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+                return 0
             elif self.joueur_actuel == len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
                 if carte.nom_carte != "interro" and carte.nom_carte != "cafe":
                     self.cartes_choisies.append(carte)
                 self.log_cartes_choisies.append(carte)
-                self.joueur_actuel += 1
                 if all(carte.nom_carte == "cafe" for carte in self.log_cartes_choisies):
-                        print("[INFO] : Tous les joueurs ont choisi la carte café. La partie est mise en pause et enregistrée.") # [DEBUG]
-                        # Rajouter le traitement pour enregistrer la partie
+                        self.fin_partie()
+                        return 2
                 else:
-                    self.fin_tour()
-        elif self.tache_actuelle > len(Taches.taches):
-            print("[INFO] : Toutes les tâches ont été traitées!") # [DEBUG]
-            # Rajouter le traitement pour enregistrer la partie
-
+                    tour_valide = self.fin_tour()
+                    if tour_valide == True and self.tache_actuelle > len(Taches.taches):
+                        self.partie_finie = True
+                        self.fin_partie()
+                        return 1
+                    else:
+                        return 0
+                    
     def fin_tour(self):
         """
         Fonction qui détermine l'issus du tour en fonction du mode de jeu.
@@ -161,21 +168,25 @@ class Partie:
             if not len(set(self.cartes_choisies)) <= 1:
                 print("[INFO] : Toutes les cartes choisies ne sont pas identiques !") # [DEBUG]
                 self.rejouer_tour()
+                return False
             else:
                 print("[INFO] : Toutes les cartes choisies sont identiques !") # [DEBUG]
                 strict = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
                 Taches.taches[self.tache_actuelle - 1].difficulte = strict
                 self.tache_suivante()
+                return True
         elif self.mode == "moyenne":
             moyenne = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
             print(f"[INFO] : La moyenne de difficulté est de {moyenne}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = moyenne
             self.tache_suivante()
+            return True
         elif self.mode == "médiane":
             mediane = median([int(carte.nom_carte) for carte in self.cartes_choisies])
             print(f"[INFO] : La médiane de difficulté est de {mediane}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = mediane
             self.tache_suivante()
+            return True
         elif self.mode == "majorité absolue":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
             compteur = Counter(valeurs_cartes)
@@ -184,9 +195,11 @@ class Partie:
                 Taches.taches[self.tache_actuelle - 1].difficulte = valeur
                 print(f"[INFO] : La difficulté {valeur} a la majorité absolue !") # [DEBUG]
                 self.tache_suivante()
+                return True
             else:
                 print("[INFO] : Aucune difficulté n'a la majorité absolue !")  # [DEBUG]
                 self.rejouer_tour()
+                return False
         elif self.mode == "majorité relative":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
             compteur = Counter(valeurs_cartes)
@@ -195,9 +208,11 @@ class Partie:
                 Taches.taches[self.tache_actuelle - 1].difficulte = valeur
                 print(f"[INFO] : La difficulté {valeur} a la majorité relative !") # [DEBUG]
                 self.tache_suivante()
+                return True
             else:
                 print("[INFO] : Aucune difficulté n'a la majorité relative !") # [DEBUG]
                 self.rejouer_tour()
+                return False
 
     def rejouer_tour(self):
         """
@@ -220,3 +235,84 @@ class Partie:
             print(f"[INFO] : Tâche suivante à traiter :\n", Taches.taches[self.tache_actuelle - 1]) # [DEBUG]
             self.fenetre.affichage_tache(Taches.taches[self.tache_actuelle - 1])
             self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+    
+    def fin_partie(self):
+        """
+        Fonction qui gère la fin de la partie.
+        """
+        if self.partie_finie == True:
+            print("[INFO] : Toutes les tâches ont été traitées!") # [DEBUG]
+            self.joueur_actuel = None
+            self.cartes_choisies = []
+            self.log_cartes_choisies = []
+            self.tache_actuelle = None
+            self.sauvergarde_partie()
+        else:
+            print("[INFO] : Tous les joueurs ont choisi la carte café. La partie est mise en pause et enregistrée.") # [DEBUG]
+            self.joueur_actuel = 0
+            self.cartes_choisies = []
+            self.log_cartes_choisies = []
+            self.sauvergarde_partie()                        
+
+    def sauvergarde_partie(self):
+        """
+        Fonction qui permet d'enregistrer la partie dans un fichier JSON.
+        """
+        sauvegarde = {
+            "horodatage": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            "partie_finie": self.partie_finie,
+            "mode_jeu": self.mode,
+            "joueur_actuel": self.joueur_actuel,
+            "cartes_choisies": [carte.nom_carte for carte in self.cartes_choisies],
+            "log_cartes_choisies": [carte.nom_carte for carte in self.log_cartes_choisies],
+            "tache_actuelle": self.tache_actuelle,
+            "joueurs": [{"numero": joueur.numero, "nom": joueur.nom} for joueur in Joueurs.joueurs],
+            "taches": [{"numero": tache.numero, "titre": tache.titre, "description": tache.description, "difficulte": tache.difficulte} for tache in Taches.taches]
+        }
+        
+        sauvegarde_str = json.dumps(sauvegarde, sort_keys=True)
+        sauvegarde_hash = hashlib.sha256(sauvegarde_str.encode()).hexdigest()
+        
+        with open('sauvegarde.json', 'w') as f:
+            json.dump({'data': sauvegarde, 'hash': sauvegarde_hash}, f)
+
+        print("[INFO] : La partie a été enregistrée avec succès") # [DEBUG]
+
+    def analyse_sauvegarde(self):
+        """
+        Méthode pour vérifier l'intégrité de la sauvegarde.
+        """
+        with open('sauvegarde.json', 'r') as f:
+            sauvegarde = json.load(f)
+        self.data = sauvegarde['data']
+        hash = sauvegarde['hash']
+        sauvegarde_str = json.dumps(self.data, sort_keys=True)
+        sauvegarde_hash = hashlib.sha256(sauvegarde_str.encode()).hexdigest()
+
+        if sauvegarde_hash != hash:
+            return 2
+
+        cles = ["horodatage", "partie_finie", "mode_jeu", "joueur_actuel", "cartes_choisies", "log_cartes_choisies", "tache_actuelle", "joueurs", "taches"]
+
+        for cle in cles:
+            if cle not in self.data:
+                return 1
+        return 0
+    
+    def charger_sauvegarde(self):
+        # Vérifier si la partie est terminée
+        if self.data['partie_finie'] == True:
+            return 1
+        
+        # Initialiser l'état du jeu à partir de la sauvegarde
+        self.horodatage = self.data['horodatage']
+        self.mode_jeu = self.data['mode_jeu']
+        self.joueur_actuel = self.data['joueur_actuel']
+        self.cartes_choisies = [Cartes(nom) for nom in self.data['cartes_choisies']]
+        self.log_cartes_choisies = [Cartes(nom) for nom in self.data['log_cartes_choisies']]
+        self.tache_actuelle = self.data['tache_actuelle']
+        Joueurs.joueurs = [Joueurs(joueur['numero'], joueur['nom']) for joueur in self.data['joueurs']]
+        Taches.taches = [Taches(tache['numero'], tache['titre'], tache['description'], tache['difficulte']) for tache in self.data['taches']]
+
+        print("[INFO] : La partie a été reprise avec succès") # [DEBUG]
+        return 0
