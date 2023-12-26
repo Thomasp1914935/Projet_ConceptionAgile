@@ -1,4 +1,5 @@
 import os
+from tkinter import messagebox
 import pygame
 
 from interface import BoiteSaisie
@@ -139,19 +140,23 @@ if __name__ == "__main__":
                             integrite_sauvegarde = partie.analyse_sauvegarde()
                             if integrite_sauvegarde == 0:
                                 print("[INFO] : L'intégrité de la sauvegarde a été vérifiée avec succès") # [DEBUG]
-                                partie_finie = partie.charger_sauvegarde()
-                                if partie_finie == 1:
+                                partie_finie, mode_jeu, tache_actuelle, joueur_actuel = partie.charger_sauvegarde()
+                                if partie_finie == True:
                                     print("[WARNING] : La partie sauvegardée est terminée") # [DEBUG]
-                                elif partie_finie == 0:
+                                    messagebox.showinfo("Planning Poker : Information", "La partie sauvegardée est terminée")
+                                else:
+                                    print("[INFO] : La partie a été reprise avec succès") # [DEBUG]
                                     fnt_accueil.fermer()
                                     fnt_accueil = None
-                                    fnt_jeu = FntJeu(mode_jeu, tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                                    fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle - 1], Joueurs.joueurs[joueur_actuel])
                                     partie = Partie(mode_jeu, fnt_jeu)
                                     fnt_jeu.afficher()
                             elif integrite_sauvegarde == 1:
                                 print("[WARNING] : La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes") # [DEBUG]
+                                messagebox.showwarning("Planning Poker : Erreur", "La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes.")
                             elif integrite_sauvegarde == 2:
                                 print("[WARNING] : La sauvegarde est corrompue ! La sauvegarde a été modifiée manuellement") # [DEBUG]
+                                messagebox.showwarning("Planning Poker : Erreur", "La sauvegarde est corrompue ! La sauvegarde a été modifiée manuellement.")
 
                 elif fnt_config_joueurs is not None:
                     if fnt_config_joueurs.get_btn_ajouter_joueur().est_clique(souris_x, souris_y):
@@ -261,10 +266,9 @@ if __name__ == "__main__":
                             fnt_config_taches.fermer()
                             fnt_config_taches = None
                             joueur_actuel = 0
-                            nb_taches_traitees = 0
-                            tache_actuelle = Taches.taches[nb_taches_traitees]
+                            tache_actuelle = 0
                             partie_finie = 0
-                            fnt_jeu = FntJeu(mode_jeu, tache_actuelle, Joueurs.joueurs[joueur_actuel])
+                            fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle], Joueurs.joueurs[joueur_actuel])
                             partie = Partie(mode_jeu, fnt_jeu)
                             fnt_jeu.afficher()
                 

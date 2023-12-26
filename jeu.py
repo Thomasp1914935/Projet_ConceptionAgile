@@ -157,8 +157,6 @@ class Partie:
                 else:
                     tour_valide = self.fin_tour()
                     if tour_valide == True:
-                        print(self.tache_actuelle)
-                        print(len(Taches.taches))
                         if self.tache_actuelle > len(Taches.taches):
                             self.partie_finie = True
                             self.fin_partie()
@@ -308,8 +306,7 @@ class Partie:
     
     def charger_sauvegarde(self):
         # Vérifier si la partie est terminée
-        if self.data['partie_finie'] == True:
-            return 1
+        partie_finie = self.data['partie_finie']
         
         # Initialiser l'état du jeu à partir de la sauvegarde
         self.horodatage = self.data['horodatage']
@@ -321,5 +318,5 @@ class Partie:
         Joueurs.joueurs = [Joueurs(joueur['numero'], joueur['nom']) for joueur in self.data['joueurs']]
         Taches.taches = [Taches(tache['numero'], tache['titre'], tache['description'], tache['difficulte']) for tache in self.data['taches']]
 
-        print("[INFO] : La partie a été reprise avec succès") # [DEBUG]
-        return 0
+        # Retourner les valeurs demandées
+        return partie_finie, self.mode_jeu, self.tache_actuelle, self.joueur_actuel
