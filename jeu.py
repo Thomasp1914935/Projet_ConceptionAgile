@@ -133,24 +133,29 @@ class Partie:
         if self.tache_actuelle <= len(Taches.taches):
             if self.joueur_actuel < len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                if carte.nom_carte != "interro":
+                if carte.nom_carte != "interro" and carte.nom_carte != "cafe":
                     self.cartes_choisies.append(carte)
                 self.log_cartes_choisies.append(carte)
                 self.joueur_actuel += 1
                 self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
             elif self.joueur_actuel == len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                if carte.nom_carte != "interro":
+                if carte.nom_carte != "interro" and carte.nom_carte != "cafe":
                     self.cartes_choisies.append(carte)
                 self.log_cartes_choisies.append(carte)
                 self.joueur_actuel += 1
-                self.mode_jeu()
+                if all(carte.nom_carte == "cafe" for carte in self.log_cartes_choisies):
+                        print("[INFO] : Tous les joueurs ont choisi la carte café. La partie est mise en pause et enregistrée.") # [DEBUG]
+                        # Rajouter le traitement pour enregistrer la partie
+                else:
+                    self.fin_tour()
         elif self.tache_actuelle > len(Taches.taches):
             print("[INFO] : Toutes les tâches ont été traitées!") # [DEBUG]
+            # Rajouter le traitement pour enregistrer la partie
 
-    def mode_jeu(self):
+    def fin_tour(self):
         """
-        Fonction qui permet de déterminer la difficulté de la tâche.
+        Fonction qui détermine l'issus du tour en fonction du mode de jeu.
         """
         if self.mode == "strict":
             if not len(set(self.cartes_choisies)) <= 1:
@@ -193,6 +198,15 @@ class Partie:
             else:
                 print("[INFO] : Aucune difficulté n'a la majorité relative !") # [DEBUG]
                 self.rejouer_tour()
+
+    def rejouer_tour(self):
+        """
+        Fonction qui permet de rejouer le tour.
+        """
+        print("[INFO] : Le tour doit être rejoué !") # [DEBUG]
+        self.joueur_actuel = 0
+        self.cartes_choisies = []
+        self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
     
     def tache_suivante(self):
         """
@@ -206,12 +220,3 @@ class Partie:
             print(f"[INFO] : Tâche suivante à traiter :\n", Taches.taches[self.tache_actuelle - 1]) # [DEBUG]
             self.fenetre.affichage_tache(Taches.taches[self.tache_actuelle - 1])
             self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
-    
-    def rejouer_tour(self):
-        """
-        Fonction qui permet de rejouer le tour.
-        """
-        print("[INFO] : Le tour doit être rejoué !") # [DEBUG]
-        self.joueur_actuel = 0
-        self.cartes_choisies = []
-        self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
