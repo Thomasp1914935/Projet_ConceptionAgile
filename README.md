@@ -7,6 +7,7 @@
     - os
     - datetime
     - json
+    - tkinter
     - pygame
     - statistics
     - collections
