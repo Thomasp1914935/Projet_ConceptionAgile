@@ -7,6 +7,8 @@
     - os
     - datetime
     - pygame
+    - statistics
+    - collections
     - textwrap
 
 ## Utilisation

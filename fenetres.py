@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import pygame
 
@@ -13,31 +14,106 @@ class FntAccueil(Fenetre, Bouton):
 
     def __init__(self):
         # Paramètres de la fenêtre
-        fnt_accueil_l = 400
-        fnt_accueil_h = 300
+        fnt_accueil_l = 450
+        fnt_accueil_h = 700
         super().__init__(fnt_accueil_l, fnt_accueil_h)
         self.set_titre("Planning Poker : Accueil")
         self.set_couleur_fond((255, 255, 255))
+        btn_l = 270
+        btn_h = 50
+        btn_x = (fnt_accueil_l - btn_l) / 2
+        btn_espacement = 75
         btn_taille_police = 30
         btn_couleur_texte = (255, 255, 255)
         btn_couleur = (0, 0, 0)
 
-        # Création du bouton "Lancer une partie"
-        btn_lancer_l = 250
-        btn_lancer_h = 50
-        btn_lancer_x = (fnt_accueil_l - btn_lancer_l) / 2
-        btn_lancer_y = (fnt_accueil_h - btn_lancer_h) / 2
-        self.btn_lancer = Bouton(btn_lancer_x, btn_lancer_y, btn_lancer_l, btn_lancer_h,  "Lancer une partie", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
-        self.btn_lancer.dessiner()
+        # Affichage de l'icone de l'application
+        chemin_script = os.path.dirname(__file__)
+        chemin_icone = (chemin_script, 'ressources', 'icone.png')
+        chemin_icone = os.path.join(os.path.sep, *chemin_icone)
+        icone = pygame.image.load(chemin_icone)
+        img_icone_l = 50
+        img_icone_h = 50
+        icone = pygame.transform.scale(icone, (img_icone_l, img_icone_h))
+        img_icone_x = fnt_accueil_l / 2 - icone.get_width() / 2
+        img_icone_y = 50
+        self.fenetre.blit(icone, (img_icone_x, img_icone_y))
 
-    def get_btn_lancer(self):
+        # Création du message d'accueil
+        bt_pp = BoiteTexte(fnt_accueil_l / 2, 100, "Planning Poker", 50, (0, 0, 0), True, 100, self.fenetre)
+        bt_pp.dessiner()
+        bt_mode_jeu = BoiteTexte(fnt_accueil_l / 2, 200, "Choississez un mode de jeu :", 30, (0, 0, 0), True, 100, self.fenetre)
+        bt_mode_jeu.dessiner()
+
+        # Création du bouton "Mode strict"
+        btn_strict_y = 250
+        self.btn_strict = Bouton(btn_x, btn_strict_y, btn_l, btn_h,  "Mode strict", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_strict.dessiner()
+
+        # Création du bouton "Mode moyenne"
+        btn_moyenne_y = btn_strict_y + btn_espacement
+        self.btn_moyenne = Bouton(btn_x, btn_moyenne_y, btn_l, btn_h,  "Mode moyenne", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_moyenne.dessiner()
+
+        # Création du bouton "Mode mediane"
+        btn_mediane_y = btn_moyenne_y + btn_espacement
+        self.btn_mediane = Bouton(btn_x, btn_mediane_y, btn_l, btn_h,  "Mode mediane", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_mediane.dessiner()
+
+        # Création du bouton "Mode majorite absolue"
+        btn_majabs_y = btn_mediane_y + btn_espacement
+        self.btn_majabs = Bouton(btn_x, btn_majabs_y, btn_l, btn_h,  "Mode majorite absolue", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majabs.dessiner()
+
+        # Création du bouton "Mode majorite relative"
+        btn_majrel_y = btn_majabs_y + btn_espacement
+        self.btn_majrel = Bouton(btn_x, btn_majrel_y, btn_l, btn_h,  "Mode majorite relative", btn_taille_police, btn_couleur_texte, btn_couleur, self.fenetre)
+        self.btn_majrel.dessiner()
+
+    def get_btn_strict(self):
         """
-        Renvoie le bouton "Lancer une partie" de la fenêtre d'accueil.
+        Renvoie le bouton "Mode strict" de la fenêtre d'accueil.
 
         Renvoie:
-            Bouton: Le bouton "Lancer une partie".
+            Bouton: Le bouton "Mode strict".
         """
-        return self.btn_lancer
+        return self.btn_strict
+    
+    def get_btn_moyenne(self):
+        """
+        Renvoie le bouton "Mode moyenne" de la fenêtre d'accueil.
+
+        Renvoie:
+            Bouton: Le bouton "Mode moyenne".
+        """
+        return self.btn_moyenne
+    
+    def get_btn_mediane(self):
+        """
+        Renvoie le bouton "Mode mediane" de la fenêtre d'accueil.
+
+        Renvoie:
+            Bouton: Le bouton "Mode mediane".
+        """
+        return self.btn_mediane
+    
+    def get_btn_majabs(self):
+        """
+        Renvoie le bouton "Mode majorite absolue" de la fenêtre d'accueil.
+        
+        Renvoie:
+            Bouton: Le bouton "Mode majorite absolue".
+        """
+        return self.btn_majabs
+    
+    def get_btn_majrel(self):
+        """
+        Renvoie le bouton "Mode majorite relative" de la fenêtre d'accueil.
+
+        Renvoie:
+            Bouton: Le bouton "Mode majorite relative".
+        """
+        return self.btn_majrel
     
     def afficher(self):
         """

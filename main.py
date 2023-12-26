@@ -34,7 +34,11 @@ if __name__ == "__main__":
                 # Création d'une liste de tous les éléments interactifs (boutons et boîtes de saisie)
                 elements = []
                 if fnt_accueil is not None:
-                    elements.append(fnt_accueil.get_btn_lancer())
+                    elements.append(fnt_accueil.get_btn_strict())
+                    elements.append(fnt_accueil.get_btn_moyenne())
+                    elements.append(fnt_accueil.get_btn_mediane())
+                    elements.append(fnt_accueil.get_btn_majabs())
+                    elements.append(fnt_accueil.get_btn_majrel())
                 if fnt_config_joueurs is not None:
                     elements.extend(fnt_config_joueurs.get_bs_joueurs())
                     elements.append(fnt_config_joueurs.get_btn_ajouter_joueur())
@@ -68,14 +72,55 @@ if __name__ == "__main__":
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 if fnt_accueil is not None:
-                    if fnt_accueil.get_btn_lancer().est_clique(souris_x, souris_y):
-                        print("[EVENT] : Bouton 'Lancer une partie' cliqué") # [DEBUG]
+                    if fnt_accueil.get_btn_strict().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Mode strict' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
                         fnt_accueil = None
                         fnt_config_joueurs = FntConfigJoueurs()
                         fnt_config_joueurs.afficher()
-                        nb_joueurs = 2
                         fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        mode_jeu = "strict"
+                        nb_joueurs = 2
+                    
+                    elif fnt_accueil.get_btn_moyenne().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Mode moyenne' cliqué") # [DEBUG]
+                        fnt_accueil.fermer()
+                        fnt_accueil = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        mode_jeu = "moyenne"
+                        nb_joueurs = 2
+
+                    elif fnt_accueil.get_btn_mediane().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Mode médiane' cliqué") # [DEBUG]
+                        fnt_accueil.fermer()
+                        fnt_accueil = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        mode_jeu = "mediane"
+                        nb_joueurs = 2
+                    
+                    elif fnt_accueil.get_btn_majabs().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Mode moyenne absolue' cliqué") # [DEBUG]
+                        fnt_accueil.fermer()
+                        fnt_accueil = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        mode_jeu = "majabs"
+                        nb_joueurs = 2
+                    
+                    elif fnt_accueil.get_btn_majrel().est_clique(souris_x, souris_y):
+                        print("[EVENT] : Bouton 'Mode moyenne relative' cliqué") # [DEBUG]
+                        fnt_accueil.fermer()
+                        fnt_accueil = None
+                        fnt_config_joueurs = FntConfigJoueurs()
+                        fnt_config_joueurs.afficher()
+                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        mode_jeu = "majrel"
+                        nb_joueurs = 2
                 
                 elif fnt_config_joueurs is not None:
                     if fnt_config_joueurs.get_btn_ajouter_joueur().est_clique(souris_x, souris_y):
@@ -122,7 +167,7 @@ if __name__ == "__main__":
                         # Vérifier si tous les joueurs ont un nom non vide
                         if all(joueur.nom for joueur in Joueurs.joueurs):
                             # Afficher la liste des joueurs [DEBUG]
-                            print("Liste des joueurs :")
+                            print("[INFO] : Liste des joueurs :")
                             for joueur in Joueurs.joueurs:
                                 print(joueur)
                             
@@ -169,7 +214,7 @@ if __name__ == "__main__":
                             fnt_config_taches.reset_bs()
                             print(f"[INFO] : La tâche '{titre}' enregistrée avec succès") # [DEBUG]
                             # Afficher la liste des tâches [DEBUG]
-                            print("Liste des tâches :")
+                            print("[INFO] : Liste des tâches :")
                             for tache in Taches.taches:
                                 print(tache)
                         else:
@@ -188,7 +233,7 @@ if __name__ == "__main__":
                             nb_taches_traitees = 0
                             tache_actuelle = Taches.taches[nb_taches_traitees]
                             fnt_jeu = FntJeu(tache_actuelle, Joueurs.joueurs[joueur_actuel])
-                            partie = Partie('strict', fnt_jeu) # a modifier par une variable globale
+                            partie = Partie(mode_jeu, fnt_jeu)
                             fnt_jeu.log_tour_joueur(Joueurs.joueurs[joueur_actuel])
                             fnt_jeu.afficher()
                 

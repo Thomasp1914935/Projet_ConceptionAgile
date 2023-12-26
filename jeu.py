@@ -1,6 +1,9 @@
 import os
 import pygame
 
+from statistics import mean, median
+from collections import Counter
+
 class Joueurs:
     """
     Classe représentant un joueur du jeu.
@@ -120,9 +123,13 @@ class Partie:
         self.fenetre = fenetre
 
     def jouer(self, carte):
-        # Si toutes les tâches n'ont pas été traitées
+        """
+        Fonction qui permet de jouer une carte.
+        
+        Arguments:
+            carte (Cartes): La carte à jouer.
+        """
         if self.tache_actuelle <= len(Taches.taches):
-            # Si tout les joueurs n'ont pas joué
             if self.joueur_actuel < len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
                 self.cartes_choisies.append(carte)
@@ -134,20 +141,72 @@ class Partie:
                 self.joueur_actuel += 1
                 self.mode_jeu()
         elif self.tache_actuelle > len(Taches.taches):
-            print("Toutes les tâches ont été traitées!") # [DEBUG]
+            print("[INFO] : Toutes les tâches ont été traitées!") # [DEBUG]
 
     def mode_jeu(self):
+        """
+        Fonction qui permet de déterminer la difficulté de la tâche.
+        """
         if self.mode == "strict":
             if not len(set(self.cartes_choisies)) <= 1:
-                print("Toutes les cartes choisies ne sont pas identiques !") # [DEBUG]
-                self.joueur_actuel = 0
-                self.cartes_choisies = []
-                self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+                print("[INFO] : Toutes les cartes choisies ne sont pas identiques !") # [DEBUG]
+                self.rejouer_tour()
             else:
-                print("Toutes les cartes choisies sont identiques !") # [DEBUG]
-                self.tache_actuelle += 1
-                self.joueur_actuel = 0
-                self.cartes_choisies = []
-                if self.tache_actuelle <= len(Taches.taches):
-                    self.fenetre.affichage_tache(Taches.taches[self.tache_actuelle - 1])
-                    self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+                print("[INFO] : Toutes les cartes choisies sont identiques !") # [DEBUG]
+                strict = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
+                Taches.taches[self.tache_actuelle - 1].difficulte = strict
+                self.tache_suivante()
+        elif self.mode == "moyenne":
+            moyenne = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
+            print(f"[INFO] : La moyenne de difficulté est de {moyenne}") # [DEBUG]
+            Taches.taches[self.tache_actuelle - 1].difficulte = moyenne
+            self.tache_suivante()
+        elif self.mode == "mediane":
+            mediane = median([int(carte.nom_carte) for carte in self.cartes_choisies])
+            print(f"[INFO] : La médiane de difficulté est de {mediane}") # [DEBUG]
+            Taches.taches[self.tache_actuelle - 1].difficulte = mediane
+            self.tache_suivante()
+        elif self.mode == "majabs":
+            valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
+            compteur = Counter(valeurs_cartes)
+            valeur, nombre = compteur.most_common(1)[0]
+            if nombre / len(valeurs_cartes) > 0.5:
+                Taches.taches[self.tache_actuelle - 1].difficulte = valeur
+                print(f"[INFO] : La difficulté {valeur} a la majorité absolue !") # [DEBUG]
+                self.tache_suivante()
+            else:
+                print("[INFO] : Aucune difficulté n'a la majorité absolue !")  # [DEBUG]
+                self.rejouer_tour()
+        elif self.mode == "majrel":
+            valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
+            compteur = Counter(valeurs_cartes)
+            valeur, nombre = compteur.most_common(1)[0]
+            if nombre > 1:
+                Taches.taches[self.tache_actuelle - 1].difficulte = valeur
+                print(f"[INFO] : La difficulté {valeur} a la majorité relative !") # [DEBUG]
+                self.tache_suivante()
+            else:
+                print("[INFO] : Aucune difficulté n'a la majorité relative !") # [DEBUG]
+                self.rejouer_tour()
+    
+    def tache_suivante(self):
+        """
+        Fonction qui permet de passer à la tâche suivante.
+        """
+        print(f"[INFO] : Résultat de la tâche :\n", Taches.taches[self.tache_actuelle - 1]) # [DEBUG]
+        self.tache_actuelle += 1
+        self.joueur_actuel = 0
+        self.cartes_choisies = []
+        if self.tache_actuelle <= len(Taches.taches):
+            print(f"[INFO] : Tâche suivante à traiter :\n", Taches.taches[self.tache_actuelle - 1]) # [DEBUG]
+            self.fenetre.affichage_tache(Taches.taches[self.tache_actuelle - 1])
+            self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
+    
+    def rejouer_tour(self):
+        """
+        Fonction qui permet de rejouer le tour.
+        """
+        print("[INFO] : Le tour doit être rejoué !") # [DEBUG]
+        self.joueur_actuel = 0
+        self.cartes_choisies = []
+        self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
