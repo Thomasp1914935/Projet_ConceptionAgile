@@ -119,6 +119,7 @@ class Partie:
         self.mode = mode
         self.joueur_actuel = 0
         self.cartes_choisies = []
+        self.log_cartes_choisies = []
         self.tache_actuelle = 1
         self.fenetre = fenetre
 
@@ -132,12 +133,16 @@ class Partie:
         if self.tache_actuelle <= len(Taches.taches):
             if self.joueur_actuel < len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                self.cartes_choisies.append(carte)
+                if carte.nom_carte != "interro":
+                    self.cartes_choisies.append(carte)
+                self.log_cartes_choisies.append(carte)
                 self.joueur_actuel += 1
                 self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
             elif self.joueur_actuel == len(Joueurs.joueurs) - 1:
                 print(f"[EVENT] : Carte '{carte.nom_carte}' cliquée") # [DEBUG]
-                self.cartes_choisies.append(carte)
+                if carte.nom_carte != "interro":
+                    self.cartes_choisies.append(carte)
+                self.log_cartes_choisies.append(carte)
                 self.joueur_actuel += 1
                 self.mode_jeu()
         elif self.tache_actuelle > len(Taches.taches):
