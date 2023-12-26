@@ -5,17 +5,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Module Fenetres &#8212; Documentation Planning Poker 0.5</title>
+    <title>Module Fenetres &#8212; Documentation Planning Poker 1.0</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script src="_static/documentation_options.js?v=53f40b44"></script>
+    <script src="_static/documentation_options.js?v=7a28dfa3"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/translations.js?v=d99ca74e"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Module Interface" href="interface.html" />
-    <link rel="prev" title="Welcome to Planning Poker’s documentation!" href="index.html" />
+    <link rel="prev" title="Bienvenue sur la documentation de Planning Poker !" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -46,17 +46,74 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.desactiver_btn_reprendre_partie">
+<span class="sig-name descname"><span class="pre">desactiver_btn_reprendre_partie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.desactiver_btn_reprendre_partie" title="Link to this definition">¶</a></dt>
+<dd><p>Désactive le bouton « Reprendre la partie ».</p>
+<p>Cette méthode change l’apparence du bouton pour le rendre inactif.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="fenetres.FntAccueil.fermer">
 <span class="sig-name descname"><span class="pre">fermer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.fermer" title="Link to this definition">¶</a></dt>
 <dd><p>Ferme la fenêtre d’accueil.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_lancer">
-<span class="sig-name descname"><span class="pre">get_btn_lancer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_lancer" title="Link to this definition">¶</a></dt>
-<dd><p>Renvoie le bouton « Lancer une partie » de la fenêtre d’accueil.</p>
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_majabs">
+<span class="sig-name descname"><span class="pre">get_btn_majabs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_majabs" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Mode majorite absolue » de la fenêtre d’accueil.</p>
 <dl class="simple">
-<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Lancer une partie ».</p>
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Mode majorite absolue ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_majrel">
+<span class="sig-name descname"><span class="pre">get_btn_majrel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_majrel" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Mode majorite relative » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Mode majorite relative ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_mediane">
+<span class="sig-name descname"><span class="pre">get_btn_mediane</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_mediane" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Mode mediane » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Mode mediane ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_moyenne">
+<span class="sig-name descname"><span class="pre">get_btn_moyenne</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_moyenne" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Mode moyenne » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Mode moyenne ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_reprendre_partie">
+<span class="sig-name descname"><span class="pre">get_btn_reprendre_partie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_reprendre_partie" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Reprendre la partie » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Reprendre la partie ».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntAccueil.get_btn_strict">
+<span class="sig-name descname"><span class="pre">get_btn_strict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.get_btn_strict" title="Link to this definition">¶</a></dt>
+<dd><p>Renvoie le bouton « Mode strict » de la fenêtre d’accueil.</p>
+<dl class="simple">
+<dt>Renvoie:</dt><dd><p>Bouton: Le bouton « Mode strict ».</p>
 </dd>
 </dl>
 </dd></dl>
@@ -309,7 +366,7 @@ ainsi que des boutons pour enregistrer, valider et retourner à la fenêtre pré
 
 <dl class="py class">
 <dt class="sig sig-object py" id="fenetres.FntJeu">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntJeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntJeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode_jeu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant la fenêtre de jeu.</p>
 <p>Cette fenêtre affiche les différentes cartes du planning poker, ainsi que les logs et le chat.</p>
 <dl class="simple">
@@ -326,6 +383,17 @@ liste_cartes (list): Liste des cartes.
 btn_quitter (Bouton): Bouton pour quitter la partie.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="fenetres.FntJeu.affichage_fin_jeu">
+<span class="sig-name descname"><span class="pre">affichage_fin_jeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.affichage_fin_jeu" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche la fin du jeu.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>option (str): L’option d’affichage.</p>
+</dd>
+</dl>
+<p>Cette méthode affiche la fin du jeu dans la boîte de texte des logs.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="fenetres.FntJeu.affichage_joueur">
 <span class="sig-name descname"><span class="pre">affichage_joueur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu.affichage_joueur" title="Link to this definition">¶</a></dt>
@@ -459,7 +527,7 @@ btn_quitter (Bouton): Bouton pour quitter la partie.</p>
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contenu de la documentation :</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Module Fenetres</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#fenetres.FntAccueil"><code class="docutils literal notranslate"><span class="pre">FntAccueil</span></code></a></li>
@@ -477,7 +545,7 @@ btn_quitter (Bouton): Bouton pour quitter la partie.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="Chapitre précédent">Welcome to Planning Poker’s documentation!</a></li>
+      <li>Previous: <a href="index.html" title="Chapitre précédent">Bienvenue sur la documentation de Planning Poker !</a></li>
       <li>Next: <a href="interface.html" title="Chapitre suivant">Module Interface</a></li>
   </ul></li>
 </ul>

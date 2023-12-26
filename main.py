@@ -143,7 +143,7 @@ if __name__ == "__main__":
                                 partie_finie, mode_jeu, tache_actuelle, joueur_actuel = partie.charger_sauvegarde()
                                 if partie_finie == True:
                                     print("[WARNING] : La partie sauvegardée est terminée") # [DEBUG]
-                                    messagebox.showinfo("Planning Poker : Information", "La partie sauvegardée est terminée")
+                                    messagebox.showinfo("Planning Poker : Information", "La partie sauvegardée est terminée.")
                                 else:
                                     print("[INFO] : La partie a été reprise avec succès") # [DEBUG]
                                     fnt_accueil.fermer()
@@ -219,10 +219,17 @@ if __name__ == "__main__":
                 
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
-                        fnt_config_joueurs.fermer()
-                        fnt_config_joueurs = None
-                        fnt_accueil = FntAccueil()
-                        fnt_accueil.afficher()
+                        confirmation = messagebox.askquestion("Planning Poker : Confirmation", "Êtes-vous sûr de vouloir retourner à l'accueil ? Toutes les données renseignées seront perdues !")
+                        if confirmation == 'yes':
+                            fnt_config_joueurs.fermer()
+                            fnt_config_joueurs = None
+                            fnt_accueil = FntAccueil()
+                            fnt_accueil.afficher()
+                            if not os.path.isfile('sauvegarde.json'):
+                                sauvegarde = False
+                                fnt_accueil.desactiver_btn_reprendre_partie()
+                            else:
+                                sauvegarde = True
 
                 elif fnt_config_taches is not None:
                     if fnt_config_taches.get_btn_enregistrer().est_clique(souris_x, souris_y):
@@ -274,12 +281,14 @@ if __name__ == "__main__":
                 
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
-                        fnt_config_taches.fermer()
-                        fnt_config_taches = None
-                        fnt_config_joueurs = FntConfigJoueurs()
-                        fnt_config_joueurs.afficher()
-                        nb_joueurs = 2
-                        fnt_config_joueurs.desactiver_btn_supprimer_joueur()
+                        confirmation = messagebox.askquestion("Planning Poker : Confirmation", "Êtes-vous sûr de vouloir revenir en arrière ? Toutes les données renseignées seront perdues !")
+                        if confirmation == 'yes':
+                            fnt_config_taches.fermer()
+                            fnt_config_taches = None
+                            fnt_config_joueurs = FntConfigJoueurs()
+                            fnt_config_joueurs.afficher()
+                            nb_joueurs = 2
+                            fnt_config_joueurs.desactiver_btn_supprimer_joueur()
                     
                 elif fnt_jeu is not None:
                     for carte in fnt_jeu.liste_cartes:
@@ -289,24 +298,29 @@ if __name__ == "__main__":
                                 partie_finie = partie.jouer(carte)
                                 # Si la partie est finie avec toutes les tâches traitées
                                 if partie_finie == 1:
-                                    print("PARTIE FINIE") # [DEBUG]
-                                    # AFFICHAGE GRAPHIQUE DE LA PARTIE FINIE
+                                    print("[INFO] : La partie est terminée") # [DEBUG]
+                                    fnt_jeu.affichage_fin_jeu(partie_finie)
                                 # Si la partie est finie avec une pause café
                                 elif partie_finie == 2:
-                                    print("CAFE") # [DEBUG]
-                                    # AFFICHAGE GRAPHIQUE DE LA PAUSE CAFE
+                                    print("[INFO] : La partie a été mise en pause") # [DEBUG]
+                                    fnt_jeu.affichage_fin_jeu(partie_finie)
 
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
-                        fnt_jeu.fermer()
-                        fnt_jeu = None
-                        fnt_accueil = FntAccueil()
-                        fnt_accueil.afficher()
-                        if not os.path.isfile('sauvegarde.json'):
-                            sauvegarde = False
-                            fnt_accueil.desactiver_btn_reprendre_partie()
+                        if partie_finie == 0:
+                            confirmation = messagebox.askquestion("Planning Poker : Confirmation", "Êtes-vous sûr de vouloir quitter la partie ? Celle-ci ne sera pas enregistrée !")
                         else:
-                            sauvegarde = True
+                            confirmation = 'yes'
+                        if confirmation == 'yes':
+                            fnt_jeu.fermer()
+                            fnt_jeu = None
+                            fnt_accueil = FntAccueil()
+                            fnt_accueil.afficher()
+                            if not os.path.isfile('sauvegarde.json'):
+                                sauvegarde = False
+                                fnt_accueil.desactiver_btn_reprendre_partie()
+                            else:
+                                sauvegarde = True
             
             # Evénements si une touche du clavier est pressée
             elif event.type == pygame.KEYDOWN:

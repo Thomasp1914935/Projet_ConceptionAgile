@@ -758,6 +758,33 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         # Mettre à jour l'affichage
         pygame.display.flip()
 
+    def affichage_fin_jeu(self, option):
+        """
+        Affiche la fin du jeu.
+
+        Arguments:
+            option (str): L'option d'affichage.
+        
+        Cette méthode affiche la fin du jeu dans la boîte de texte des logs.
+        """
+        # Calculer les coordonnées pour l'affichage de la fin du jeu
+        x = self.ecran_l / 3 * 2
+        y = self.ecran_h / 4
+
+        Rectangle(self.ecran_l / 5 * 1.95, self.ecran_h / 10, 800, 400, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+
+        # Créer une boîte de texte pour la fin du jeu
+        if option == 1:
+            bt_fin_jeu = BoiteTexte(x, y, "Toutes les tâches ont été traitées. La partie est terminée et sauvegardée avec succès, vous pouvez quitter le jeu.", 40, (0, 0, 0), True, 50, self.ecran)
+        elif option == 2:
+            bt_fin_jeu = BoiteTexte(x, y, "Tous les joueurs ont choisi la carte café. La partie est mise en pause et sauvegardée avec succès, vous pouvez quitter le jeu.", 40, (0, 0, 0), True, 50, self.ecran)
+
+        # Dessiner la boîte de texte
+        bt_fin_jeu.dessiner()
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
+
     def plateau_cartes(self):
         """
         Affiche le plateau de cartes.
