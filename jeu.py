@@ -148,17 +148,22 @@ class Partie:
                 if carte.nom_carte != "interro" and carte.nom_carte != "cafe":
                     self.cartes_choisies.append(carte)
                 self.log_cartes_choisies.append(carte)
-                if all(carte.nom_carte == "cafe" for carte in self.log_cartes_choisies):
-                        self.fin_partie()
-                        return 2
+                if all(carte.nom_carte == "interro" for carte in self.log_cartes_choisies):
+                    self.rejouer_tour()
+                    return 0
+                elif all(carte.nom_carte == "cafe" for carte in self.log_cartes_choisies):
+                    self.fin_partie()
+                    return 2
                 else:
                     tour_valide = self.fin_tour()
-                    if tour_valide == True and self.tache_actuelle > len(Taches.taches):
-                        self.partie_finie = True
-                        self.fin_partie()
-                        return 1
-                    else:
-                        return 0
+                    if tour_valide == True:
+                        print(self.tache_actuelle)
+                        print(len(Taches.taches))
+                        if self.tache_actuelle > len(Taches.taches):
+                            self.partie_finie = True
+                            self.fin_partie()
+                            return 1
+                    return 0
                     
     def fin_tour(self):
         """
@@ -221,6 +226,7 @@ class Partie:
         print("[INFO] : Le tour doit être rejoué !") # [DEBUG]
         self.joueur_actuel = 0
         self.cartes_choisies = []
+        self.log_cartes_choisies = []
         self.fenetre.affichage_joueur(Joueurs.joueurs[self.joueur_actuel])
     
     def tache_suivante(self):
@@ -231,6 +237,7 @@ class Partie:
         self.tache_actuelle += 1
         self.joueur_actuel = 0
         self.cartes_choisies = []
+        self.log_cartes_choisies = []
         if self.tache_actuelle <= len(Taches.taches):
             print(f"[INFO] : Tâche suivante à traiter :\n", Taches.taches[self.tache_actuelle - 1]) # [DEBUG]
             self.fenetre.affichage_tache(Taches.taches[self.tache_actuelle - 1])
