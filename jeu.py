@@ -124,6 +124,7 @@ class Partie:
         self.cartes_choisies = []
         self.log_cartes_choisies = []
         self.tache_actuelle = 1
+        self.premier_tour = True
         self.partie_finie = False
         self.fenetre = fenetre
 
@@ -167,28 +168,32 @@ class Partie:
         """
         Fonction qui détermine l'issus du tour en fonction du mode de jeu.
         """
-        if self.mode == "strict":
+        if self.mode == "strict" or self.premier_tour == True:
             if not len(set(self.cartes_choisies)) <= 1:
                 print("[INFO] : Toutes les cartes choisies ne sont pas identiques !") # [DEBUG]
                 self.rejouer_tour()
+                self.premier_tour = False
                 return False
             else:
                 print("[INFO] : Toutes les cartes choisies sont identiques !") # [DEBUG]
                 strict = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
                 Taches.taches[self.tache_actuelle - 1].difficulte = strict
                 self.tache_suivante()
+                self.premier_tour = True
                 return True
         elif self.mode == "moyenne":
             moyenne = mean([int(carte.nom_carte) for carte in self.cartes_choisies])
-            print(f"[INFO] : La moyenne de difficulté est de {moyenne}") # [DEBUG]
+            print(f"[INFO] : La moyenne des cartes est de {moyenne}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = moyenne
             self.tache_suivante()
+            self.premier_tour = True
             return True
         elif self.mode == "médiane":
             mediane = median([int(carte.nom_carte) for carte in self.cartes_choisies])
-            print(f"[INFO] : La médiane de difficulté est de {mediane}") # [DEBUG]
+            print(f"[INFO] : La médiane des cartes est de {mediane}") # [DEBUG]
             Taches.taches[self.tache_actuelle - 1].difficulte = mediane
             self.tache_suivante()
+            self.premier_tour = True
             return True
         elif self.mode == "majorité absolue":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
@@ -196,12 +201,14 @@ class Partie:
             valeur, nombre = compteur.most_common(1)[0]
             if nombre / len(valeurs_cartes) > 0.5:
                 Taches.taches[self.tache_actuelle - 1].difficulte = valeur
-                print(f"[INFO] : La difficulté {valeur} a la majorité absolue !") # [DEBUG]
+                print(f"[INFO] : La carte {valeur} a la majorité absolue !") # [DEBUG]
                 self.tache_suivante()
+                self.premier_tour = True
                 return True
             else:
-                print("[INFO] : Aucune difficulté n'a la majorité absolue !")  # [DEBUG]
+                print("[INFO] : Aucune carte n'a la majorité absolue !")  # [DEBUG]
                 self.rejouer_tour()
+                self.premier_tour = False
                 return False
         elif self.mode == "majorité relative":
             valeurs_cartes = [int(carte.nom_carte) for carte in self.cartes_choisies]
@@ -209,12 +216,14 @@ class Partie:
             valeur, nombre = compteur.most_common(1)[0]
             if nombre > 1:
                 Taches.taches[self.tache_actuelle - 1].difficulte = valeur
-                print(f"[INFO] : La difficulté {valeur} a la majorité relative !") # [DEBUG]
+                print(f"[INFO] : La carte {valeur} a la majorité relative !") # [DEBUG]
                 self.tache_suivante()
+                self.premier_tour = True
                 return True
             else:
-                print("[INFO] : Aucune difficulté n'a la majorité relative !") # [DEBUG]
+                print("[INFO] : Aucune carte n'a la majorité relative !") # [DEBUG]
                 self.rejouer_tour()
+                self.premier_tour = False
                 return False
 
     def rejouer_tour(self):
