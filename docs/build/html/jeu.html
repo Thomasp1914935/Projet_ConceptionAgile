@@ -38,6 +38,7 @@
 <dt class="sig sig-object py" id="jeu.Cartes">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jeu.</span></span><span class="sig-name descname"><span class="pre">Cartes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nom_carte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Cartes" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant une carte du jeu.</p>
+<p>Cette classe est utilisée pour créer des objets représentant les cartes du jeu.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>nom_carte (str): Le nom de la carte.
 position (tuple): La position de la carte sur la fenêtre.
@@ -83,6 +84,8 @@ souris_y (int): La position en y de la souris.</p>
 <dt class="sig sig-object py" id="jeu.Joueurs">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jeu.</span></span><span class="sig-name descname"><span class="pre">Joueurs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Joueurs" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant un joueur du jeu.</p>
+<p>Cette classe est utilisée pour créer des objets représentant les joueurs du jeu. 
+Chaque joueur a un numéro unique et un nom.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>joueurs (list): Liste de classe pour stocker tous les joueurs.
 numero (int): Le numéro du joueur.
@@ -95,17 +98,22 @@ nom (str): Le nom du joueur.</p>
 <dt class="sig sig-object py" id="jeu.Partie">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jeu.</span></span><span class="sig-name descname"><span class="pre">Partie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tache_actuelle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Partie" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant la partie, le mode de jeu.</p>
+<p>Cette classe est utilisée pour créer des objets représentant la partie, le mode de jeu, et le déroulement de la partie.</p>
 <dl class="simple">
-<dt>Attributs:</dt><dd><p>self.mode: Le mode de jeu.
-joueur_actuel: Le nb joueur en tain de jouer.
-les cartes choisies dans un tableau.
-le nombre de taches.</p>
+<dt>Attributs:</dt><dd><p>mode (str): Le mode de jeu.
+joueur_actuel (int): Le numéro du joueur actuel.
+cartes_choisies (list): La liste des cartes choisies par les joueurs.
+log_cartes_choisies (list): La liste des cartes choisies par les joueurs, y compris les cartes café.
+tache_actuelle (int): Le numéro de la tâche actuelle.
+premier_tour (bool): True si c’est le premier tour, False sinon.
+partie_finie (bool): True si la partie est terminée, False sinon.
+fenetre (pygame.Surface): La fenêtre d’affichage du jeu.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jeu.Partie.analyse_sauvegarde">
 <span class="sig-name descname"><span class="pre">analyse_sauvegarde</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Partie.analyse_sauvegarde" title="Link to this definition">¶</a></dt>
-<dd><p>Méthode pour vérifier l’intégrité de la sauvegarde.</p>
+<dd><p>Méthode pour vérifier l’intégrité de la sauvegarde, au niveau du hash et de sa structure.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -145,7 +153,7 @@ le nombre de taches.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="jeu.Partie.sauvergarde_partie">
 <span class="sig-name descname"><span class="pre">sauvergarde_partie</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Partie.sauvergarde_partie" title="Link to this definition">¶</a></dt>
-<dd><p>Fonction qui permet d’enregistrer la partie dans un fichier JSON.</p>
+<dd><p>Fonction qui permet d’enregistrer la partie dans un fichier JSON en le protégeant par un hash (SHA256).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -160,6 +168,7 @@ le nombre de taches.</p>
 <dt class="sig sig-object py" id="jeu.Taches">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jeu.</span></span><span class="sig-name descname"><span class="pre">Taches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">titre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">difficulte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jeu.Taches" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant une tâche du jeu.</p>
+<p>Cette classe est utilisée pour créer des objets représentant les tâches du jeu.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>taches (list): Liste de classe pour stocker toutes les tâches.
 numero (int): Le numéro de la tâche.

@@ -9,6 +9,10 @@ class Fenetre:
     """
     Classe représentant une fenêtre graphique.
 
+    Cette classe est utilisée pour créer et gérer une fenêtre graphique à l'aide de pygame. 
+    Elle permet de définir la taille de la fenêtre, de définir le titre et la couleur de fond de la fenêtre, 
+    et d'afficher ou de mettre à jour la fenêtre.
+
     Attributs:
         largeur (int): La largeur de la fenêtre.
         hauteur (int): La hauteur de la fenêtre.
@@ -60,6 +64,9 @@ class Rectangle:
     """
     Classe représentant un rectangle.
 
+    Cette classe est utilisée pour créer et gérer un rectangle. Elle permet de définir la position, 
+    la taille, la couleur de fond, la couleur du bord du rectangle et la surface sur laquelle le rectangle est dessiné.
+
     Attributs:
         x (int): La coordonnée x du coin supérieur gauche du rectangle.
         y (int): La coordonnée y du coin supérieur gauche du rectangle.
@@ -89,6 +96,9 @@ class Rectangle:
 class Bouton:
     """
     Classe représentant un bouton dans une interface graphique.
+
+    Cette classe est utilisée pour créer et gérer un bouton. Elle permet de définir la position, 
+    la taille, le texte, la taille de la police, la couleur du texte, la couleur du bouton et la surface sur laquelle le bouton est dessiné.
 
     Attributs:
         x (int): La coordonnée x du coin supérieur gauche du bouton.
@@ -161,6 +171,10 @@ class Bouton:
 class BoiteTexte:
     """
     Classe représentant une boîte de texte.
+
+    Cette classe est utilisée pour créer et gérer une boîte de texte. Elle permet de définir la position, 
+    le texte, la taille de la police, la couleur du texte, l'alignement du texte, la longueur maximale d'une ligne de texte 
+    et la surface sur laquelle la boîte de texte est dessinée.
 
     Attributs:
         x (int): La position horizontale de la boîte de texte.
@@ -239,6 +253,10 @@ class BoiteTexte:
 class BoiteSaisie:
     """
     Classe représentant une boîte de saisie.
+
+    Cette classe est utilisée pour créer et gérer une boîte de saisie. Elle permet de définir la position, 
+    la taille, la taille de la police, la couleur, le nombre maximum de caractères, la longueur maximale d'une ligne de texte 
+    et la surface sur laquelle la boîte de saisie est dessinée.
 
     Attributs:
         x (int): La coordonnée x de la boîte de saisie.

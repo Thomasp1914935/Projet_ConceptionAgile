@@ -9,6 +9,9 @@ from collections import Counter
 class Joueurs:
     """
     Classe représentant un joueur du jeu.
+
+    Cette classe est utilisée pour créer des objets représentant les joueurs du jeu. 
+    Chaque joueur a un numéro unique et un nom.
     
     Attributs:
         joueurs (list): Liste de classe pour stocker tous les joueurs.
@@ -21,13 +24,15 @@ class Joueurs:
         self.numero = numero
         self.nom = nom
 
-    # [DEBUG] : Affiche les informations du joueur
+    # [DEBUG]
     def __repr__(self):
         return f"   Joueur {self.numero} : {self.nom}"
     
 class Taches:
     """
     Classe représentant une tâche du jeu.
+
+    Cette classe est utilisée pour créer des objets représentant les tâches du jeu.
 
     Attributs:
         taches (list): Liste de classe pour stocker toutes les tâches.
@@ -44,13 +49,15 @@ class Taches:
         self.description = description
         self.difficulte = difficulte
 
-    # [DEBUG] : Affiche les informations de la tâche
+    # [DEBUG]
     def __repr__(self):
         return f"Tâche {self.numero} :\n   Titre : {self.titre}\n   Description : {self.description}\n   Difficulté : {self.difficulte}"
 
 class Cartes:
     """
     Classe représentant une carte du jeu.
+
+    Cette classe est utilisée pour créer des objets représentant les cartes du jeu.
 
     Attributs:
         nom_carte (str): Le nom de la carte.
@@ -111,11 +118,17 @@ class Partie:
     """
     Classe représentant la partie, le mode de jeu.
 
+    Cette classe est utilisée pour créer des objets représentant la partie, le mode de jeu, et le déroulement de la partie.
+
     Attributs:
-        self.mode: Le mode de jeu.
-        joueur_actuel: Le nb joueur en tain de jouer.
-        les cartes choisies dans un tableau.
-        le nombre de taches.
+        mode (str): Le mode de jeu.
+        joueur_actuel (int): Le numéro du joueur actuel.
+        cartes_choisies (list): La liste des cartes choisies par les joueurs.
+        log_cartes_choisies (list): La liste des cartes choisies par les joueurs, y compris les cartes café.
+        tache_actuelle (int): Le numéro de la tâche actuelle.
+        premier_tour (bool): True si c'est le premier tour, False sinon.
+        partie_finie (bool): True si la partie est terminée, False sinon.
+        fenetre (pygame.Surface): La fenêtre d'affichage du jeu.
     """
     def __init__(self, mode, tache_actuelle, fenetre):
         self.mode = mode
@@ -269,8 +282,9 @@ class Partie:
 
     def sauvergarde_partie(self):
         """
-        Fonction qui permet d'enregistrer la partie dans un fichier JSON.
+        Fonction qui permet d'enregistrer la partie dans un fichier JSON en le protégeant par un hash (SHA256).
         """
+        # Création du dictionnaire à sauvegarder
         sauvegarde = {
             "horodatage": datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
             "partie_finie": self.partie_finie,
@@ -283,9 +297,11 @@ class Partie:
             "taches": [{"numero": tache.numero, "titre": tache.titre, "description": tache.description, "difficulte": tache.difficulte} for tache in Taches.taches]
         }
         
+        # Création du hash de la sauvegarde
         sauvegarde_str = json.dumps(sauvegarde, sort_keys=True)
         sauvegarde_hash = hashlib.sha256(sauvegarde_str.encode()).hexdigest()
         
+        # Enregistrement de la sauvegarde
         with open('sauvegarde.json', 'w') as f:
             json.dump({'data': sauvegarde, 'hash': sauvegarde_hash}, f)
 
@@ -293,8 +309,9 @@ class Partie:
 
     def analyse_sauvegarde(self):
         """
-        Méthode pour vérifier l'intégrité de la sauvegarde.
+        Méthode pour vérifier l'intégrité de la sauvegarde, au niveau du hash et de sa structure.
         """
+        # Vérification de l'intégrité de la sauvegarde au niveau du hash
         with open('sauvegarde.json', 'r') as f:
             sauvegarde = json.load(f)
         self.data = sauvegarde['data']
@@ -305,6 +322,7 @@ class Partie:
         if sauvegarde_hash != hash:
             return 2
 
+        # Vérification de l'intégrité de la sauvegarde au niveau de la structure
         cles = ["horodatage", "partie_finie", "mode_jeu", "joueur_actuel", "cartes_choisies", "log_cartes_choisies", "tache_actuelle", "joueurs", "taches"]
 
         for cle in cles:
@@ -316,10 +334,10 @@ class Partie:
         """
         Méthode pour charger une partie à partir d'une sauvegarde.
         """
-        # Vérifier si la partie est terminée
+        # Vérification si la partie est terminée
         partie_finie = self.data['partie_finie']
         
-        # Initialiser l'état du jeu à partir de la sauvegarde
+        # Initialisation de l'état du jeu à partir de la sauvegarde
         self.horodatage = self.data['horodatage']
         self.mode_jeu = self.data['mode_jeu']
         self.joueur_actuel = self.data['joueur_actuel']
@@ -329,5 +347,5 @@ class Partie:
         Joueurs.joueurs = [Joueurs(joueur['numero'], joueur['nom']) for joueur in self.data['joueurs']]
         Taches.taches = [Taches(tache['numero'], tache['titre'], tache['description'], tache['difficulte']) for tache in self.data['taches']]
 
-        # Retourner les valeurs demandées
+        # Renvoie des valeurs de l'état de la partie sauvegardée
         return partie_finie, self.mode_jeu, self.tache_actuelle, self.joueur_actuel

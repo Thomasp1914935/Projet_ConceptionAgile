@@ -28,17 +28,17 @@ if __name__ == "__main__":
     running = True
     while running:
         # Définition des variables globales
-        horloge.tick(120) # Limiter la fréquence de rafraîchissement à 120 FPS
+        horloge.tick(120) # Limitation de la fréquence de rafraîchissement à 120 FPS
         souris_x, souris_y = pygame.mouse.get_pos() # Récupération des coordonnées de la souris
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-            # Evénements si la souris est déplacée
+            # [EVENEMENT] : Souris déplacée
             elif event.type == pygame.MOUSEMOTION:
 
-                # Création d'une liste de tous les éléments interactifs (boutons et boîtes de saisie)
+                # Création d'une liste de tous les éléments interactifs (boutons et boîtes de saisie) de l'application
                 elements = []
                 if fnt_accueil is not None:
                     elements.append(fnt_accueil.get_btn_strict())
@@ -76,10 +76,12 @@ if __name__ == "__main__":
                 # Changement du curseur de la souris
                 pygame.mouse.set_cursor(cursor)
 
-            # Evénements si un bouton de la souris est cliqué
+            # [EVENEMENT] : Clic de la souris
             elif event.type == pygame.MOUSEBUTTONDOWN:
-
+                
+                # Evénements de la fenêtre Accueil
                 if fnt_accueil is not None:
+                    # Evénement du bouton 'Mode strict'
                     if fnt_accueil.get_btn_strict().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Mode strict' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
@@ -90,6 +92,7 @@ if __name__ == "__main__":
                         mode_jeu = "strict"
                         nb_joueurs = 2
                     
+                    # Evénement du bouton 'Mode moyenne'
                     elif fnt_accueil.get_btn_moyenne().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Mode moyenne' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
@@ -100,6 +103,7 @@ if __name__ == "__main__":
                         mode_jeu = "moyenne"
                         nb_joueurs = 2
 
+                    # Evénement du bouton 'Mode médiane'
                     elif fnt_accueil.get_btn_mediane().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Mode médiane' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
@@ -110,6 +114,7 @@ if __name__ == "__main__":
                         mode_jeu = "médiane"
                         nb_joueurs = 2
                     
+                    # Evénement du bouton 'Mode majorité absolue'
                     elif fnt_accueil.get_btn_majabs().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Mode moyenne absolue' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
@@ -120,6 +125,7 @@ if __name__ == "__main__":
                         mode_jeu = "majorité absolue"
                         nb_joueurs = 2
                     
+                    # Evénement du bouton 'Mode majorité relative'
                     elif fnt_accueil.get_btn_majrel().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Mode moyenne relative' cliqué") # [DEBUG]
                         fnt_accueil.fermer()
@@ -130,20 +136,26 @@ if __name__ == "__main__":
                         mode_jeu = "majorité relative"
                         nb_joueurs = 2
 
+                    # Evénement du bouton 'Reprendre la partie'
                     elif fnt_accueil.get_btn_reprendre_partie().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Reprendre la partie' cliqué")
+                        # Si aucune partie n'a été sauvegardée sur la machine
                         if sauvegarde == False:
                             print("[WARNING] : Aucune partie sauvegardée") # [DEBUG]
+                        # Si une partie a été sauvegardée sur la machine
                         if sauvegarde == True:
                             mode_jeu = None
                             partie = Partie(mode_jeu, 0, fnt_jeu)
-                            integrite_sauvegarde = partie.analyse_sauvegarde()
+                            integrite_sauvegarde = partie.analyse_sauvegarde() # Analyse de l'intégrité de la sauvegarde
+                            # Si la sauvegarde est intègre
                             if integrite_sauvegarde == 0:
                                 print("[INFO] : L'intégrité de la sauvegarde a été vérifiée avec succès") # [DEBUG]
-                                partie_finie, mode_jeu, tache_actuelle, joueur_actuel = partie.charger_sauvegarde()
+                                partie_finie, mode_jeu, tache_actuelle, joueur_actuel = partie.charger_sauvegarde() # Chargement de la sauvegarde
+                                # Si la partie sauvegardée est terminée
                                 if partie_finie == True:
                                     print("[WARNING] : La partie sauvegardée est terminée") # [DEBUG]
                                     messagebox.showinfo("Planning Poker : Information", "La partie sauvegardée est terminée.")
+                                # Si la partie sauvegardée est n'est pas terminée alors elle est chargée
                                 else:
                                     print("[INFO] : La partie a été reprise avec succès") # [DEBUG]
                                     fnt_accueil.fermer()
@@ -151,14 +163,18 @@ if __name__ == "__main__":
                                     fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle - 1], Joueurs.joueurs[joueur_actuel])
                                     partie = Partie(mode_jeu, tache_actuelle, fnt_jeu)
                                     fnt_jeu.afficher()
+                            # Si la sauvegarde est corrompue par des clés manquantes
                             elif integrite_sauvegarde == 1:
                                 print("[WARNING] : La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes") # [DEBUG]
                                 messagebox.showwarning("Planning Poker : Erreur", "La sauvegarde est corrompue ! Une ou plusieurs clés sont manquantes.")
+                            # Si la sauvegarde est corrompue par une modification manuelle
                             elif integrite_sauvegarde == 2:
                                 print("[WARNING] : La sauvegarde est corrompue ! La sauvegarde a été modifiée manuellement") # [DEBUG]
                                 messagebox.showwarning("Planning Poker : Erreur", "La sauvegarde est corrompue ! La sauvegarde a été modifiée manuellement.")
 
+                # Evénements de la fenêtre ConfigJoueurs
                 elif fnt_config_joueurs is not None:
+                    # Evènement du bouton 'Ajouter un joueur'
                     if fnt_config_joueurs.get_btn_ajouter_joueur().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Ajouter un joueur' cliqué") # [DEBUG]
                         if nb_joueurs < 4:
@@ -173,6 +189,7 @@ if __name__ == "__main__":
                         else:
                             print("[WARNING] : Nombre de joueurs maximum atteint") # [DEBUG]
                     
+                    # Evènement du bouton 'Supprimer un joueur'
                     elif fnt_config_joueurs.get_btn_supprimer_joueur().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Supprimer un joueur' cliqué") # [DEBUG]
                         if nb_joueurs > 3:
@@ -187,23 +204,23 @@ if __name__ == "__main__":
                         else:
                             print("[WARNING] : Nombre de joueurs minimum atteint") # [DEBUG]
                 
-
+                    # Evènement du bouton 'Valider'
                     elif fnt_config_joueurs.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         
                         Joueurs.joueurs = []
-                        # Parcourir toutes les boîtes de saisie
+                        # Parcour de toutes les boîtes de saisie
                         for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
-                            # Créer un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
+                            # Création d'un nouveau joueur avec le numéro et le texte de la boîte de saisie comme nom
                             joueur = Joueurs(i+1, boite_saisie.get_texte())
 
-                            # Ajouter le joueur à la liste des joueurs
+                            # Ajout du joueur à la liste des joueurs
                             Joueurs.joueurs.append(joueur)
 
-                        # Vérifier si tous les joueurs ont un nom non vide
+                        # Vérification si tous les joueurs ont un nom non vide
                         if all(joueur.nom for joueur in Joueurs.joueurs):
-                            # Afficher la liste des joueurs [DEBUG]
-                            print("[INFO] : Liste des joueurs :")
+                            
+                            print("[INFO] : Liste des joueurs :") # [DEBUG]
                             for joueur in Joueurs.joueurs:
                                 print(joueur)
                             
@@ -216,7 +233,8 @@ if __name__ == "__main__":
                         else:
                             print("[WARNING] : Tous les joueurs doivent avoir un nom") # [DEBUG]
                             fnt_config_joueurs.afficher_msg_erreur("Attention : tous les joueurs doivent avoir un nom !")
-                
+
+                    # Evènement du bouton 'Retour'
                     elif fnt_config_joueurs.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
                         confirmation = messagebox.askquestion("Planning Poker : Confirmation", "Êtes-vous sûr de vouloir retourner à l'accueil ? Toutes les données renseignées seront perdues !")
@@ -231,24 +249,28 @@ if __name__ == "__main__":
                             else:
                                 sauvegarde = True
 
+                # Evénements de la fenêtre ConfigTaches
                 elif fnt_config_taches is not None:
+                    # Evènement du bouton 'Enregistrer cette tâche'
                     if fnt_config_taches.get_btn_enregistrer().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Enregistrer cette tache' cliqué") # [DEBUG]
 
                         titre = fnt_config_taches.get_bs_titre().get_texte()
                         description = fnt_config_taches.get_bs_description().get_texte()
 
-                        if titre:  # Vérifier si le titre n'est pas vide
-                            if not description:  # Si la description est vide
-                                description = "Aucune description"  # Définir la description par défaut
+                        # Vérification si le titre n'est pas vide
+                        if titre:
+                            # Vérification si la description est vide
+                            if not description:
+                                description = "Aucune description"  # Définition d'une description par défaut
 
-                            # Enregistrer la tâche
+                            # Enregistrement de la tâche
                             numero = len(Taches.taches) + 1
                             difficulte = None
                             tache = Taches(numero, titre, description, difficulte)
                             Taches.taches.append(tache)
 
-                            # Incrémenter le nombre de tâches
+                            # Incrémentation du nombre de tâches
                             nb_taches += 1
 
                             # Actualisation de l'affichage
@@ -256,14 +278,15 @@ if __name__ == "__main__":
                             fnt_config_taches.actualiser_bt_description(nb_taches+1)
                             fnt_config_taches.reset_bs()
                             print(f"[INFO] : La tâche '{titre}' enregistrée avec succès") # [DEBUG]
-                            # Afficher la liste des tâches [DEBUG]
-                            print("[INFO] : Liste des tâches :")
+                            
+                            print("[INFO] : Liste des tâches :") # [DEBUG]
                             for tache in Taches.taches:
                                 print(tache)
                         else:
                             print("[WARNING] : Le titre de la tâche ne peut pas être vide") # [DEBUG]
                             fnt_config_taches.afficher_msg_erreur("Attention : le titre de la tâche ne peut pas être vide !")
 
+                    # Evènement du bouton 'Valider'
                     elif fnt_config_taches.get_btn_valider().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Valider' cliqué") # [DEBUG]
                         if nb_taches == 0:
@@ -278,7 +301,8 @@ if __name__ == "__main__":
                             fnt_jeu = FntJeu(mode_jeu, Taches.taches[tache_actuelle - 1], Joueurs.joueurs[joueur_actuel])
                             partie = Partie(mode_jeu, tache_actuelle, fnt_jeu)
                             fnt_jeu.afficher()
-                
+
+                    # Evènement du bouton 'Retour'
                     elif fnt_config_taches.get_btn_retour().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Retour' cliqué") # [DEBUG]
                         confirmation = messagebox.askquestion("Planning Poker : Confirmation", "Êtes-vous sûr de vouloir revenir en arrière ? Toutes les données renseignées seront perdues !")
@@ -289,8 +313,10 @@ if __name__ == "__main__":
                             fnt_config_joueurs.afficher()
                             nb_joueurs = 2
                             fnt_config_joueurs.desactiver_btn_supprimer_joueur()
-                    
+
+                # Evénements de la fenêtre Jeu    
                 elif fnt_jeu is not None:
+                    # Evènement du plateau de cartes
                     for carte in fnt_jeu.liste_cartes:
                         if carte.est_clique(souris_x, souris_y):
                             # Si la partie n'est pas finie
@@ -305,6 +331,7 @@ if __name__ == "__main__":
                                     print("[INFO] : La partie a été mise en pause") # [DEBUG]
                                     fnt_jeu.affichage_fin_jeu(partie_finie)
 
+                    # Evènement du bouton 'Quitter la partie'
                     if fnt_jeu.get_btn_quitter().est_clique(souris_x, souris_y):
                         print("[EVENT] : Bouton 'Quitter la partie' cliqué") # [DEBUG]
                         if partie_finie == 0:
@@ -322,21 +349,25 @@ if __name__ == "__main__":
                             else:
                                 sauvegarde = True
             
-            # Evénements si une touche du clavier est pressée
+            # [EVENEMENT] : Touche du clavier enfoncée
             elif event.type == pygame.KEYDOWN:
-
+                
+                # Evènements de la fenêtre ConfigJoueurs
                 if fnt_config_joueurs is not None:
-                    # Parcourir toutes les boîtes de saisie
+                    # Parcour de toutes les boîtes de saisie
                     for i, boite_saisie in enumerate(fnt_config_joueurs.get_bs_joueurs()):
                         if boite_saisie.est_clique(souris_x, souris_y):
                             boite_saisie.evenement(event)
                             print("[UPDATE] Boite de saisie {} : ".format(i+1) + boite_saisie.get_texte()) # [DEBUG]
                 
+                # Evènements de la fenêtre ConfigTaches
                 elif fnt_config_taches is not None:
+                    # Evènement de la boîte de saisie 'Titre'
                     if fnt_config_taches.get_bs_titre().est_clique(souris_x, souris_y):
                         fnt_config_taches.get_bs_titre().evenement(event)
                         print("[UPDATE] Boite de saisie 'Titre' : " + fnt_config_taches.get_bs_titre().get_texte()) # [DEBUG]
-                        
+
+                    # Evènement de la boîte de saisie 'Description' 
                     elif fnt_config_taches.get_bs_description().est_clique(souris_x, souris_y):
                         fnt_config_taches.get_bs_description().evenement(event)
                         print("[UPDATE] Boite de saisie 'Description' : " + fnt_config_taches.get_bs_description().get_texte()) # [DEBUG]

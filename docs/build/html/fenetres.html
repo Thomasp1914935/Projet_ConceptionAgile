@@ -38,7 +38,7 @@
 <dt class="sig sig-object py" id="fenetres.FntAccueil">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntAccueil</span></span><a class="headerlink" href="#fenetres.FntAccueil" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant la fenêtre d’accueil du jeu Planning Poker.</p>
-<p>Cette fenêtre affiche un bouton permettant de lancer une partie.</p>
+<p>Elle permet aux utilisateurs de démarrer une nouvelle partie selon le mode choisi ou de charger une partie existante.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="fenetres.FntAccueil.afficher">
 <span class="sig-name descname"><span class="pre">afficher</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntAccueil.afficher" title="Link to this definition">¶</a></dt>
@@ -124,7 +124,7 @@
 <dt class="sig sig-object py" id="fenetres.FntConfigJoueurs">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntConfigJoueurs</span></span><a class="headerlink" href="#fenetres.FntConfigJoueurs" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant la fenêtre de configuration des joueurs.</p>
-<p>Cette classe hérite des classes Fenetre, Bouton, BoiteTexte et BoiteSaisie.</p>
+<p>Cette fenêtre permet de configurer les différents joueurs du jeu.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>fnt_config_joueurs_l (int): Largeur de la fenêtre.
 fnt_config_joueurs_h (int): Hauteur de la fenêtre.
@@ -170,8 +170,7 @@ btn_retour (Bouton): Bouton « Retour ».</p>
 <dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.ajouter_bs_joueur">
 <span class="sig-name descname"><span class="pre">ajouter_bs_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.ajouter_bs_joueur" title="Link to this definition">¶</a></dt>
 <dd><p>Ajoute une boîte de saisie pour un nouveau joueur.</p>
-<p>Cette méthode crée une nouvelle boîte de saisie en dessous de la dernière,
-ainsi qu’une nouvelle étiquette correspondante.
+<p>Cette méthode crée une nouvelle boîte de saisie en dessous de la dernière, ainsi qu’une nouvelle étiquette correspondante.
 Elle met également à jour la position des boutons « Ajouter un joueur » et « Supprimer un joueur ».</p>
 </dd></dl>
 
@@ -250,8 +249,7 @@ Elle met également à jour la position des boutons « Ajouter un joueur » et
 <dt class="sig sig-object py" id="fenetres.FntConfigJoueurs.supprimer_bs_joueur">
 <span class="sig-name descname"><span class="pre">supprimer_bs_joueur</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigJoueurs.supprimer_bs_joueur" title="Link to this definition">¶</a></dt>
 <dd><p>Supprime la dernière boîte de saisie et son étiquette correspondante.</p>
-<p>Cette méthode supprime la dernière boîte de saisie de la liste,
-ainsi que son étiquette correspondante.
+<p>Cette méthode supprime la dernière boîte de saisie de la liste, ainsi que son étiquette correspondante.
 Elle met également à jour la position des boutons « Ajouter un joueur » et « Supprimer un joueur ».</p>
 </dd></dl>
 
@@ -264,6 +262,18 @@ Elle met également à jour la position des boutons « Ajouter un joueur » et
 <p>Cette fenêtre permet de configurer les différentes tâches du planning poker.
 Elle contient des boîtes de saisie pour le titre et la description de chaque tâche,
 ainsi que des boutons pour enregistrer, valider et retourner à la fenêtre précédente.</p>
+<dl class="simple">
+<dt>Attributs:</dt><dd><p>fnt_config_taches_l (int): Largeur de la fenêtre.
+fnt_config_taches_h (int): Hauteur de la fenêtre.
+bs_titre (BoiteSaisie): Boîte de saisie du titre de la tâche.
+bt_titre (BoiteTexte): Texte au-dessus de la boîte de saisie du titre de la tâche.
+bs_description (BoiteSaisie): Boîte de saisie de la description de la tâche.
+bt_description (BoiteTexte): Texte au-dessus de la boîte de saisie de la description de la tâche.
+btn_enregistrer (Bouton): Bouton « Enregistrer cette tâche ».
+btn_valider (Bouton): Bouton « Valider ».
+btn_retour (Bouton): Bouton « Retour ».</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fenetres.FntConfigTaches.actualiser_bt_description">
 <span class="sig-name descname"><span class="pre">actualiser_bt_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nb_taches</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntConfigTaches.actualiser_bt_description" title="Link to this definition">¶</a></dt>
@@ -368,7 +378,7 @@ ainsi que des boutons pour enregistrer, valider et retourner à la fenêtre pré
 <dt class="sig sig-object py" id="fenetres.FntJeu">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fenetres.</span></span><span class="sig-name descname"><span class="pre">FntJeu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode_jeu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joueur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fenetres.FntJeu" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant la fenêtre de jeu.</p>
-<p>Cette fenêtre affiche les différentes cartes du planning poker, ainsi que les logs et le chat.</p>
+<p>Cette fenêtre affiche les informations utiles au bon déroulement du jeu, le plateau de carte, ainsi que les logs et le chat.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>ecran (pygame.Surface): L’écran sur lequel s’affiche la fenêtre.
 ecran_l (int): Largeur de l’écran.

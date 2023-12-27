@@ -38,6 +38,9 @@
 <dt class="sig sig-object py" id="interface.BoiteSaisie">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">BoiteSaisie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_caracteres</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_ligne</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteSaisie" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant une boîte de saisie.</p>
+<p>Cette classe est utilisée pour créer et gérer une boîte de saisie. Elle permet de définir la position, 
+la taille, la taille de la police, la couleur, le nombre maximum de caractères, la longueur maximale d’une ligne de texte 
+et la surface sur laquelle la boîte de saisie est dessinée.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>x (int): La coordonnée x de la boîte de saisie.
 y (int): La coordonnée y de la boîte de saisie.
@@ -115,6 +118,9 @@ souris_y (int): La coordonnée y de la souris.</p>
 <dt class="sig sig-object py" id="interface.BoiteTexte">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">BoiteTexte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte_centre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longueur_ligne</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.BoiteTexte" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant une boîte de texte.</p>
+<p>Cette classe est utilisée pour créer et gérer une boîte de texte. Elle permet de définir la position, 
+le texte, la taille de la police, la couleur du texte, l’alignement du texte, la longueur maximale d’une ligne de texte 
+et la surface sur laquelle la boîte de texte est dessinée.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>x (int): La position horizontale de la boîte de texte.
 y (int): La position verticale de la boîte de texte.
@@ -164,6 +170,8 @@ fenetre (pygame.Surface): La surface de la fenêtre où la boîte de texte est a
 <dt class="sig sig-object py" id="interface.Bouton">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Bouton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille_police</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_texte</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_bouton</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Bouton" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant un bouton dans une interface graphique.</p>
+<p>Cette classe est utilisée pour créer et gérer un bouton. Elle permet de définir la position, 
+la taille, le texte, la taille de la police, la couleur du texte, la couleur du bouton et la surface sur laquelle le bouton est dessiné.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>x (int): La coordonnée x du coin supérieur gauche du bouton.
 y (int): La coordonnée y du coin supérieur gauche du bouton.
@@ -214,6 +222,9 @@ souris_y (int): La coordonnée y de la position de la souris.</p>
 <dt class="sig sig-object py" id="interface.Fenetre">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Fenetre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Fenetre" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant une fenêtre graphique.</p>
+<p>Cette classe est utilisée pour créer et gérer une fenêtre graphique à l’aide de pygame. 
+Elle permet de définir la taille de la fenêtre, de définir le titre et la couleur de fond de la fenêtre, 
+et d’afficher ou de mettre à jour la fenêtre.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>largeur (int): La largeur de la fenêtre.
 hauteur (int): La hauteur de la fenêtre.
@@ -258,6 +269,8 @@ fenetre (pygame.Surface): La surface de la fenêtre.</p>
 <dt class="sig sig-object py" id="interface.Rectangle">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface.</span></span><span class="sig-name descname"><span class="pre">Rectangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">largeur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hauteur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_fond</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">couleur_bord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fenetre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface.Rectangle" title="Link to this definition">¶</a></dt>
 <dd><p>Classe représentant un rectangle.</p>
+<p>Cette classe est utilisée pour créer et gérer un rectangle. Elle permet de définir la position, 
+la taille, la couleur de fond, la couleur du bord du rectangle et la surface sur laquelle le rectangle est dessiné.</p>
 <dl class="simple">
 <dt>Attributs:</dt><dd><p>x (int): La coordonnée x du coin supérieur gauche du rectangle.
 y (int): La coordonnée y du coin supérieur gauche du rectangle.
