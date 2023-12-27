@@ -770,11 +770,17 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         Cette méthode affiche la fin du jeu dans la boîte de texte des logs.
         """
         # Calcul des coordonnées pour l'affichage de la fin du jeu
+        y = self.ecran_h / 9
+        Rectangle(self.ecran_l / 5 * 1.95, y - 10, 800, 45, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+
+        y = self.ecran_h / 5
+        Rectangle(self.ecran_l / 5 * 1.95, y - 10, 800, 260, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+        
+        y = self.ecran_h / 2
+        Rectangle(self.ecran_l / 5 * 1.95, y - 10, 800, 45, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 4
-
-        Rectangle(self.ecran_l / 5 * 1.95, self.ecran_h / 10, 800, self.ecran_l / 3.6, (255, 255, 255), (0, 0, 0), self.fenetre).dessiner()
-
         # Création d'une boîte de texte pour la fin du jeu
         if option == 1:
             bt_fin_jeu = BoiteTexte(x, y, "Toutes les tâches ont été traitées. La partie est terminée et sauvegardée avec succès, vous pouvez quitter le jeu.", 40, (0, 0, 0), True, 50, self.ecran)
