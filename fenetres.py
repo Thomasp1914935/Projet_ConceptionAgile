@@ -773,7 +773,7 @@ class FntJeu(Fenetre, Rectangle, Bouton, BoiteTexte, BoiteSaisie, Cartes):
         x = self.ecran_l / 3 * 2
         y = self.ecran_h / 4
 
-        Rectangle(self.ecran_l / 5 * 1.95, self.ecran_h / 10, 800, 400, (255, 255, 255), (255, 255, 255), self.fenetre).dessiner()
+        Rectangle(self.ecran_l / 5 * 1.95, self.ecran_h / 10, self.ecran_h / 2 * 1.8, self.ecran_l / 3 * 0.83, (255, 255, 255), (0, 0, 0), self.fenetre).dessiner()
 
         # Création d'une boîte de texte pour la fin du jeu
         if option == 1:
