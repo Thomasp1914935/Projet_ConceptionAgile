@@ -1,4 +1,4 @@
-# Projet Conception Agile : Planning Poker
+# Planning Poker
 
 ## Installation
 
