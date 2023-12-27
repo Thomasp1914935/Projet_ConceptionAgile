@@ -13,6 +13,10 @@
     - statistics
     - collections
     - textwrap
+    - pytest*
+    - warnings*
+
+**Ces bibliothèques ne sont pas nécessaires au fonctionnement de l'application, celles-ci sont seulement utiles pour tester le code de l'application.*
 
 ## Utilisation
 

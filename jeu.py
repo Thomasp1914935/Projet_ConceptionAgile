@@ -3,7 +3,6 @@ from datetime import datetime
 import json
 import hashlib
 import pygame
-
 from statistics import mean, median
 from collections import Counter
 

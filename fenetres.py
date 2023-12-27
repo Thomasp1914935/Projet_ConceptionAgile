@@ -8,8 +8,6 @@ from jeu import Cartes
 class FntAccueil(Fenetre, Bouton, BoiteTexte):
     """
     Classe représentant la fenêtre d'accueil du jeu Planning Poker.
-
-    Cette fenêtre affiche un bouton permettant de lancer une partie.
     """
 
     def __init__(self):
